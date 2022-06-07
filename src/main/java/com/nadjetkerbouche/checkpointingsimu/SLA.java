@@ -11,19 +11,19 @@ package com.nadjetkerbouche.checkpointingsimu;
 public class SLA {
      private int slaID;
     private int customerID;
-    private int instructionNumber;
+    private int instructionCount;
     private int responseTime;
     private int deadline;
     private int price;
-    private int penaltyPercentage1;
-    private int penaltyPercentage2;
-    private int penaltyPercentage3;
+    private float penaltyPercentage1;
+    private float penaltyPercentage2;
+    private float penaltyPercentage3;
     private String status;
 
-    public SLA(int slaID, int customerID, int instructionNumber, int responseTime, int deadline, int price, int penaltyPercentage1, int penaltyPercentage2, int penaltyPercentage3, String status) {
+    public SLA(int slaID, int customerID, int instructionCount, int responseTime, int deadline, int price, float penaltyPercentage1, float penaltyPercentage2, float penaltyPercentage3, String status) {
         this.slaID = slaID;
         this.customerID = customerID;
-        this.instructionNumber = instructionNumber;
+        this.instructionCount = instructionCount;
         this.responseTime = responseTime;
         this.deadline = deadline;
         this.price = price;
@@ -50,11 +50,11 @@ public class SLA {
     }
 
     public int getInstructionNumber() {
-        return instructionNumber;
+        return instructionCount;
     }
 
-    public void setInstructionNumber(int instructionNumber) {
-        this.instructionNumber = instructionNumber;
+    public void setInstructionNumber(int instructionCount) {
+        this.instructionCount = instructionCount;
     }
 
     public int getResponseTime() {
@@ -81,7 +81,7 @@ public class SLA {
         this.price = price;
     }
 
-    public int getPenaltyPercentage1() {
+    public float getPenaltyPercentage1() {
         return penaltyPercentage1;
     }
 
@@ -89,7 +89,7 @@ public class SLA {
         this.penaltyPercentage1 = penaltyPercentage1;
     }
 
-    public int getPenaltyPercentage2() {
+    public float getPenaltyPercentage2() {
         return penaltyPercentage2;
     }
 
@@ -97,7 +97,7 @@ public class SLA {
         this.penaltyPercentage2 = penaltyPercentage2;
     }
 
-    public int getPenaltyPercentage3() {
+    public float getPenaltyPercentage3() {
         return penaltyPercentage3;
     }
 

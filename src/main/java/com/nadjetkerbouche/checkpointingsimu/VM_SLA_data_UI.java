@@ -1,10 +1,13 @@
 package com.nadjetkerbouche.checkpointingsimu;
 
+import java.awt.List;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Arrays;
+import static java.util.Collections.list;
 import java.util.logging.Level;
 import static java.util.logging.Level.parse;
 import java.util.logging.Logger;
@@ -35,12 +38,13 @@ public class VM_SLA_data_UI extends javax.swing.JFrame {
         vmsTable = new javax.swing.JTable();
         importSLAFileBtn = new javax.swing.JButton();
         clearTableBtn = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        slaTable = new javax.swing.JTable();
         importVMFileBtn1 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        slaTable = new javax.swing.JTable();
+        bestVMs = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -95,7 +99,7 @@ public class VM_SLA_data_UI extends javax.swing.JFrame {
         sidePanel.setLayout(sidePanelLayout);
         sidePanelLayout.setHorizontalGroup(
             sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(vmBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
+            .addComponent(vmBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
             .addComponent(dashboardBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(slaBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(customerBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -111,10 +115,10 @@ public class VM_SLA_data_UI extends javax.swing.JFrame {
                 .addComponent(slaBtn)
                 .addGap(14, 14, 14)
                 .addComponent(customerBtn)
-                .addContainerGap(509, Short.MAX_VALUE))
+                .addContainerGap(407, Short.MAX_VALUE))
         );
 
-        getContentPane().add(sidePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 230, 820));
+        getContentPane().add(sidePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 200, 720));
 
         vmsTable.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         vmsTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -138,7 +142,7 @@ public class VM_SLA_data_UI extends javax.swing.JFrame {
         jScrollPane1.setViewportView(vmsTable);
         vmsTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 90, 1100, 310));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 90, 1010, 270));
 
         importSLAFileBtn.setBackground(new java.awt.Color(50, 130, 184));
         importSLAFileBtn.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -161,6 +165,31 @@ public class VM_SLA_data_UI extends javax.swing.JFrame {
             }
         });
         getContentPane().add(clearTableBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(1100, 20, 140, 40));
+
+        importVMFileBtn1.setBackground(new java.awt.Color(50, 130, 184));
+        importVMFileBtn1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        importVMFileBtn1.setForeground(new java.awt.Color(187, 225, 250));
+        importVMFileBtn1.setText("Import VMs Data");
+        importVMFileBtn1.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        importVMFileBtn1.setBorderPainted(false);
+        importVMFileBtn1.setFocusPainted(false);
+        importVMFileBtn1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                importVMFileBtn1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(importVMFileBtn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 20, 160, 40));
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(27, 38, 44));
+        jLabel2.setText("Virtual Machines");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 60, -1, -1));
+
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(27, 38, 44));
+        jLabel1.setText("Service Level Agreements");
 
         slaTable.setAutoCreateRowSorter(true);
         slaTable.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
@@ -185,52 +214,51 @@ public class VM_SLA_data_UI extends javax.swing.JFrame {
         jScrollPane2.setViewportView(slaTable);
         slaTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
-        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 440, 1100, 340));
-
-        importVMFileBtn1.setBackground(new java.awt.Color(50, 130, 184));
-        importVMFileBtn1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        importVMFileBtn1.setForeground(new java.awt.Color(187, 225, 250));
-        importVMFileBtn1.setText("Import VMs Data");
-        importVMFileBtn1.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        importVMFileBtn1.setBorderPainted(false);
-        importVMFileBtn1.setFocusPainted(false);
-        importVMFileBtn1.addActionListener(new java.awt.event.ActionListener() {
+        bestVMs.setText("Generate Best VMs List");
+        bestVMs.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                importVMFileBtn1ActionPerformed(evt);
+                bestVMsActionPerformed(evt);
             }
         });
-        getContentPane().add(importVMFileBtn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 20, 160, 40));
-
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(27, 38, 44));
-        jLabel1.setText("Service Level Agreements");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 410, -1, -1));
-
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(27, 38, 44));
-        jLabel2.setText("Virtual Machines");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 60, -1, -1));
-
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1140, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addComponent(jLabel1))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1010, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(114, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(bestVMs)
+                .addGap(104, 104, 104))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 810, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(373, 373, 373)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(bestVMs)
+                .addContainerGap(133, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 0, 1140, 810));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-ArrayList<VirtualMachine> vmList = null ;
-ArrayList<SLA> slaList ;
-VirtualMachine vm; 
+
+public static ArrayList<SLA> slaList  = null;
+public static ArrayList<VirtualMachine> vmList = null;
+
     private void customerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customerBtnActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_customerBtnActionPerformed
@@ -264,16 +292,31 @@ JFileChooser fileChooser = new JFileChooser();
         DefaultTableModel model = (DefaultTableModel)slaTable.getModel();
         // get lines from txt file
         Object[] tableLines = br.lines().toArray();
+                slaList = new ArrayList<SLA>();
+
         // extratct data from lines
         // set data to jtable model
-        for (Object tableLine : tableLines) {
          for(int i = 0; i < tableLines.length; i++)
             {
                 String line = tableLines[i].toString().trim();
                 String[] dataRow = line.split(" ");
-                model.addRow(dataRow);
-            }
-            
+                                model.addRow(dataRow);
+
+                  int slaID = Integer.parseInt(dataRow[0]);
+                  int customerID = Integer.parseInt(dataRow[1]);
+                 int instructionCount = Integer.parseInt(dataRow[2]);
+                 int responseTime = Integer.parseInt(dataRow[3]);
+                 int deadline = Integer.parseInt(dataRow[4]); 
+                 int price = Integer.parseInt(dataRow[5]);
+                 float penaltyPercentage1 = Float.parseFloat(dataRow[6]);
+                 float penaltyPercentage2 = Float.parseFloat(dataRow[7]);
+                 float penaltyPercentage3 = Float.parseFloat(dataRow[8]);
+                 String status = dataRow[9];
+                     
+SLA sla = new SLA(slaID, customerID, instructionCount, responseTime, deadline, price, penaltyPercentage1, penaltyPercentage2, penaltyPercentage3, status);
+
+slaList.add(sla);
+           
         }
         
     }//GEN-LAST:event_importSLAFileBtnActionPerformed
@@ -283,34 +326,60 @@ JFileChooser fileChooser = new JFileChooser();
     }//GEN-LAST:event_slaBtnActionPerformed
 
     private void importVMFileBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_importVMFileBtn1ActionPerformed
-     BufferedReader br = null;
+    
+        // Defining BufferReader instance
+        BufferedReader br = null;
+    
         try {
+            // Initializing BufferReader instance
             br = new BufferedReader(new FileReader(filePath()));
             
         } catch (FileNotFoundException ex) {
             Logger.getLogger(VM_SLA_data_UI.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        // Defining vmsTable Model
         DefaultTableModel model = (DefaultTableModel)vmsTable.getModel();
         // get lines from txt file
         Object[] tableLines = br.lines().toArray();
+        // Initializing vmList
+        vmList = new ArrayList<VirtualMachine>();
         // extratct data from lines
-        // set data to jtable model
         for (Object tableLine : tableLines) {
             String line = tableLine.toString().trim();
             String[] dataRow = line.split(" ");
             
-/*vm = new VirtualMachine(Integer.parseInt(dataRow[0]), dataRow[1], Integer.parseInt(dataRow[2]), Integer.parseInt(dataRow[3]), Integer.parseInt(dataRow[4]), Float.parseFloat(dataRow[5]),dataRow[6]);
+             int vmID = Integer.parseInt(dataRow[0]);
+             String vType = dataRow[1];
+             int vCPU = Integer.parseInt(dataRow[2]);
+             int vRAM = Integer.parseInt(dataRow[3]);
+             int vStorage = Integer.parseInt(dataRow[4]);
+             float failure = Float.parseFloat(dataRow[5]);
+             String status = dataRow[6];
+        // Initializing vm instance
+             
+VirtualMachine vm = new VirtualMachine(vmID, vType, vCPU, vRAM, vStorage, failure, status);
+     // adding vms to vmList
 vmList.add(vm);
-            System.out.println("vm " + vmList.toString());*/
+
+        // set data to jtable model
         model.addRow(dataRow);
         }
             
             }//GEN-LAST:event_importVMFileBtn1ActionPerformed
 
     private void clearTableBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearTableBtnActionPerformed
-vmsTable.setModel(new DefaultTableModel());
-    }//GEN-LAST:event_clearTableBtnActionPerformed
+ DefaultTableModel tabVM = (DefaultTableModel) vmsTable.getModel();
+        tabVM.setRowCount(0);
+        DefaultTableModel tabSLA = (DefaultTableModel) slaTable.getModel();
+        tabSLA.setRowCount(0);    }//GEN-LAST:event_clearTableBtnActionPerformed
 
+    private void bestVMsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bestVMsActionPerformed
+
+new BestVmsList().setVisible(true);    }//GEN-LAST:event_bestVMsActionPerformed
+
+    
+    
     
     /**
      * @param args the command line arguments
@@ -319,7 +388,7 @@ vmsTable.setModel(new DefaultTableModel());
        
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -340,6 +409,7 @@ vmsTable.setModel(new DefaultTableModel());
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bestVMs;
     private javax.swing.JButton clearTableBtn;
     private javax.swing.JButton customerBtn;
     private javax.swing.JButton dashboardBtn;
