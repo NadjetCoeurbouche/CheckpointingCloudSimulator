@@ -301,9 +301,9 @@ JFileChooser fileChooser = new JFileChooser();
                 String line = tableLines[i].toString().trim();
                 String[] dataRow = line.split(" ");
                                 model.addRow(dataRow);
-
-                  int slaID = Integer.parseInt(dataRow[0]);
-                  int customerID = Integer.parseInt(dataRow[1]);
+ 
+                int slaID = Integer.parseInt(dataRow[0]);
+                int customerID = Integer.parseInt(dataRow[1]);
                  int instructionCount = Integer.parseInt(dataRow[2]);
                  int responseTime = Integer.parseInt(dataRow[3]);
                  int deadline = Integer.parseInt(dataRow[4]); 
@@ -316,7 +316,8 @@ JFileChooser fileChooser = new JFileChooser();
 SLA sla = new SLA(slaID, customerID, instructionCount, responseTime, deadline, price, penaltyPercentage1, penaltyPercentage2, penaltyPercentage3, status);
 
 slaList.add(sla);
-           
+
+System.out.println("List" + slaList.get(i));   
         }
         
     }//GEN-LAST:event_importSLAFileBtnActionPerformed
@@ -427,4 +428,8 @@ new BestVmsList().setVisible(true);    }//GEN-LAST:event_bestVMsActionPerformed
     private javax.swing.JButton vmBtn;
     private javax.swing.JTable vmsTable;
     // End of variables declaration//GEN-END:variables
+
+    private String SLA(SLA get) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

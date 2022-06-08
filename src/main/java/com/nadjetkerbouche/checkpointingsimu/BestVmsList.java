@@ -1,9 +1,13 @@
 package com.nadjetkerbouche.checkpointingsimu;
 
+import java.awt.List;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import static javafx.scene.input.KeyCode.T;
 import javax.swing.DefaultListModel;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JList;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -28,14 +32,17 @@ public class BestVmsList extends javax.swing.JFrame {
     private void initComponents() {
 
         jFileChooser1 = new javax.swing.JFileChooser();
+        jRadioButtonMenuItem1 = new javax.swing.JRadioButtonMenuItem();
         jScrollPane1 = new javax.swing.JScrollPane();
         bestVMsTable = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jScrollPane2 = new javax.swing.JScrollPane();
+        jScrollPane4 = new javax.swing.JScrollPane();
         tasksList = new javax.swing.JList<>();
-        jLabel2 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
+
+        jRadioButtonMenuItem1.setSelected(true);
+        jRadioButtonMenuItem1.setText("jRadioButtonMenuItem1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -46,11 +53,11 @@ public class BestVmsList extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Ranking", "vm ID", "Response time", "10% ", "25%", "50%"
+                "Ranking", "vm ID", "Response time", "Failure Percentage", "10% ", "25%", "50%"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Integer.class, java.lang.Float.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -59,7 +66,7 @@ public class BestVmsList extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(bestVMsTable);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 80, 760, 590));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 0, 810, 480));
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 40, -1, -1));
 
         jButton1.setText("Show tasks");
@@ -70,43 +77,117 @@ public class BestVmsList extends javax.swing.JFrame {
         });
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, -1, -1));
 
-        jScrollPane2.setViewportView(tasksList);
+        tasksList.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        tasksList.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        tasksList.setSelectionBackground(new java.awt.Color(204, 255, 204));
+        tasksList.setSelectionForeground(new java.awt.Color(255, 255, 255));
+        tasksList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tasksListMousePressed(evt);
+            }
+        });
+        jScrollPane4.setViewportView(tasksList);
 
-        jScrollPane3.setViewportView(jScrollPane2);
+        getContentPane().add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 250, 590));
 
-        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 90, 190, 580));
-
-        jLabel2.setText("jLabel2");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 190, -1, -1));
+        jButton2.setText("Generate Final assignment list");
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 510, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
  VM_SLA_data_UI vm_sla = new  VM_SLA_data_UI();
+    int vmID;
+    float responseTimeExpected;
+    float faultPercentage;
+    float penaltyPercentage1;
+    float penaltyPercentage2;
+    float penaltyPercentage3;
+    int ranking = 1;
 
-public void best_vms_list(){
+    public BestVmsList( int vmID, float responseTimeExpected, float faultPercentage, float penaltyPercentage1, float penaltyPercentage2, float penaltyPercentage3) {
+        this.vmID = vmID;
+        this.responseTimeExpected = responseTimeExpected;
+        this.faultPercentage = faultPercentage;
+        this.penaltyPercentage1 = penaltyPercentage1;
+        this.penaltyPercentage2 = penaltyPercentage2;
+        this.penaltyPercentage3 = penaltyPercentage3;
+    }
+public static ArrayList<BestVmsList> bestVmsList = null;
+    
+ public String toString() {
+        return " " + vmID + "\t" + responseTimeExpected + "\t" + faultPercentage +  "\t" + penaltyPercentage1 + "\t" + penaltyPercentage2 + "\t" + penaltyPercentage3;
+     
+    }
+public void tasks_list(){
 
     DefaultListModel list_model = new DefaultListModel();
 
 // creating button for each task
-
+ 
   for(int i =0; i < vm_sla.slaList.size(); i++){
     
-      //convert slaList to String
     
-
       //ArrayList to JList (tasks List)
     
-     list_model.addElement(vm_sla.slaList.toString());
+     list_model.addElement(vm_sla.slaList.get(i).slaID);
   }
   tasksList.setModel(list_model);
 }
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-best_vms_list();
+tasks_list();
         // TODO add your handling code here:
          
     }//GEN-LAST:event_jButton1ActionPerformed
 
+   
+    public void fill_table(int selectedTask ){
+    int insCount;
+    bestVmsList = new ArrayList<BestVmsList>();
+                DefaultTableModel vmsModel = (DefaultTableModel)bestVMsTable.getModel();
+String[] dataRow = null;
+
+    insCount = vm_sla.slaList.get(selectedTask).instructionCount;
+        System.out.println("size " + vm_sla.vmList.size() );
+for (int i =0; i< vm_sla.vmList.size(); i ++){
+        vmID = vm_sla.vmList.get(i).vmID;
+        responseTimeExpected = insCount / vm_sla.vmList.get(i).computeCapacity;
+        faultPercentage = vm_sla.vmList.get(i).faultPercentage;
+        penaltyPercentage1 = vm_sla.slaList.get(selectedTask).price  * vm_sla.slaList.get(selectedTask).penaltyPercentage1;
+        penaltyPercentage2 = vm_sla.slaList.get(selectedTask).price  * vm_sla.slaList.get(selectedTask).penaltyPercentage2;
+        penaltyPercentage3 = vm_sla.slaList.get(selectedTask).price  * vm_sla.slaList.get(selectedTask).penaltyPercentage3;
+                           
+   Object[] data = {i, vmID, responseTimeExpected, faultPercentage, penaltyPercentage1, penaltyPercentage2, penaltyPercentage3};
+         
+vmsModel.addRow(data);
+
+BestVmsList  firstList = new BestVmsList(vmID, responseTimeExpected, faultPercentage, penaltyPercentage1, penaltyPercentage2, penaltyPercentage3);
+
+bestVmsList.add(firstList);
+   // System.out.println("vms penaltyPercentage1 yaaay: " + bestVmsList.get(i) );
+
+
+}
+
+}
+
+  
+    private void tasksListMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tasksListMousePressed
+                DefaultTableModel vmsModel = (DefaultTableModel)bestVMsTable.getModel();
+
+        vmsModel.setRowCount(0);
+
+ int index = tasksList.getSelectedIndex();
+
+        Object taskID = tasksList.getSelectedValue();  
+        Integer selectedTask = Integer.parseInt(taskID.toString());
+
+                System.out.println("Selected Task ID" + selectedTask );
+                 fill_table(selectedTask);
+                
+    }//GEN-LAST:event_tasksListMousePressed
+
+     
     /**
      * @param args the command line arguments
      */
@@ -145,12 +226,12 @@ best_vms_list();
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable bestVMsTable;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JList<String> tasksList;
     // End of variables declaration//GEN-END:variables
 }
