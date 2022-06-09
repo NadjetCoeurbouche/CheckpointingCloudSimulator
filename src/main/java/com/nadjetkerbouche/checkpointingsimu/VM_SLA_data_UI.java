@@ -1,15 +1,11 @@
 package com.nadjetkerbouche.checkpointingsimu;
 
-import java.awt.List;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.Arrays;
-import static java.util.Collections.list;
 import java.util.logging.Level;
-import static java.util.logging.Level.parse;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.table.DefaultTableModel;
@@ -341,10 +337,13 @@ System.out.println("List" + slaList.get(i));
         
         // Defining vmsTable Model
         DefaultTableModel model = (DefaultTableModel)vmsTable.getModel();
+        
         // get lines from txt file
         Object[] tableLines = br.lines().toArray();
+        
         // Initializing vmList
         vmList = new ArrayList<VirtualMachine>();
+        
         // extratct data from lines
         for (Object tableLine : tableLines) {
             String line = tableLine.toString().trim();
@@ -357,9 +356,11 @@ System.out.println("List" + slaList.get(i));
              int vStorage = Integer.parseInt(dataRow[4]);
              float failure = Float.parseFloat(dataRow[5]);
              String status = dataRow[6];
-        // Initializing vm instance
+             
+        // Initializing the vm instance
              
 VirtualMachine vm = new VirtualMachine(vmID, vType, vCPU, vRAM, vStorage, failure, status);
+
      // adding vms to vmList
 vmList.add(vm);
 
