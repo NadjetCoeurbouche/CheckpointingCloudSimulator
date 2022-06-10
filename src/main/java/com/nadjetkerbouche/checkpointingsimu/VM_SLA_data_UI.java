@@ -251,8 +251,9 @@ public class VM_SLA_data_UI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+// a list to store tasks data
 public static ArrayList<SLA> slaList  = null;
+// a list to store virtual machines data
 public static ArrayList<VirtualMachine> vmList = null;
 
     private void customerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customerBtnActionPerformed
@@ -262,7 +263,9 @@ public static ArrayList<VirtualMachine> vmList = null;
     private void vmBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vmBtnActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_vmBtnActionPerformed
- private String filePath(){
+ 
+    // searching for file path
+    private String filePath(){
  
 JFileChooser fileChooser = new JFileChooser();        
       String filePath = null ;
@@ -275,42 +278,54 @@ JFileChooser fileChooser = new JFileChooser();
 }  
       return filePath;
 
-    }       
+    }     
+    
+    // method to load SLA data text file 
     private void importSLAFileBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_importSLAFileBtnActionPerformed
-
+        
+        // slaTable model to insert SLA data
+        DefaultTableModel model = (DefaultTableModel)slaTable.getModel();
+        
+        // Defining BufferReader instance
         BufferedReader br = null;
+       
+        // initialzing slaList
+         slaList = new ArrayList<SLA>();
+
         try {
+            // initialzing BufferReader instance using filePath method
             br = new BufferedReader(new FileReader(filePath()));
             
         } catch (FileNotFoundException ex) {
             Logger.getLogger(VM_SLA_data_UI.class.getName()).log(Level.SEVERE, null, ex);
         }
-        DefaultTableModel model = (DefaultTableModel)slaTable.getModel();
+       
+      
         // get lines from txt file
         Object[] tableLines = br.lines().toArray();
-                slaList = new ArrayList<SLA>();
 
         // extratct data from lines
-        // set data to jtable model
          for(int i = 0; i < tableLines.length; i++)
             {
                 String line = tableLines[i].toString().trim();
                 String[] dataRow = line.split(" ");
-                                model.addRow(dataRow);
+                // insert data from dataRow Array to slaTable model    
+                model.addRow(dataRow);
  
-                int slaID = Integer.parseInt(dataRow[0]);
-                int customerID = Integer.parseInt(dataRow[1]);
-                 int instructionCount = Integer.parseInt(dataRow[2]);
-                 int responseTime = Integer.parseInt(dataRow[3]);
-                 int deadline = Integer.parseInt(dataRow[4]); 
-                 int price = Integer.parseInt(dataRow[5]);
-                 float penaltyPercentage1 = Float.parseFloat(dataRow[6]);
-                 float penaltyPercentage2 = Float.parseFloat(dataRow[7]);
-                 float penaltyPercentage3 = Float.parseFloat(dataRow[8]);
-                 String status = dataRow[9];
-                     
-SLA sla = new SLA(slaID, customerID, instructionCount, responseTime, deadline, price, penaltyPercentage1, penaltyPercentage2, penaltyPercentage3, status);
+                // initializing sla instance 
+                    int slaID = Integer.parseInt(dataRow[0]);
+                    int customerID = Integer.parseInt(dataRow[1]);
+                    int instructionCount = Integer.parseInt(dataRow[2]);
+                    int responseTime = Integer.parseInt(dataRow[3]);
+                    int deadline = Integer.parseInt(dataRow[4]); 
+                    int price = Integer.parseInt(dataRow[5]);
+                    float penaltyPercentage1 = Float.parseFloat(dataRow[6]);
+                    float penaltyPercentage2 = Float.parseFloat(dataRow[7]);
+                    float penaltyPercentage3 = Float.parseFloat(dataRow[8]);
+                    String status = dataRow[9];
 
+SLA sla = new SLA(slaID, customerID, instructionCount, responseTime, deadline, price, penaltyPercentage1, penaltyPercentage2, penaltyPercentage3, status);
+// adding initilized sla instance to our slaList
 slaList.add(sla);
 
 System.out.println("List" + slaList.get(i));   
@@ -322,11 +337,19 @@ System.out.println("List" + slaList.get(i));
         // TODO add your handling code here:
     }//GEN-LAST:event_slaBtnActionPerformed
 
+        // method to load Virtual Machines data from text file 
+
     private void importVMFileBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_importVMFileBtn1ActionPerformed
-    
+      
+        // Initializing vmList
+        vmList = new ArrayList<VirtualMachine>();
+        
         // Defining BufferReader instance
         BufferedReader br = null;
-    
+     
+        // Defining vmsTable Model
+        DefaultTableModel model = (DefaultTableModel)vmsTable.getModel();
+        
         try {
             // Initializing BufferReader instance
             br = new BufferedReader(new FileReader(filePath()));
@@ -335,20 +358,18 @@ System.out.println("List" + slaList.get(i));
             Logger.getLogger(VM_SLA_data_UI.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        // Defining vmsTable Model
-        DefaultTableModel model = (DefaultTableModel)vmsTable.getModel();
-        
         // get lines from txt file
         Object[] tableLines = br.lines().toArray();
-        
-        // Initializing vmList
-        vmList = new ArrayList<VirtualMachine>();
         
         // extratct data from lines
         for (Object tableLine : tableLines) {
             String line = tableLine.toString().trim();
             String[] dataRow = line.split(" ");
+   
+            // set data to jtable model
+            model.addRow(dataRow);
             
+            // Initializing the vm instance
              int vmID = Integer.parseInt(dataRow[0]);
              String vType = dataRow[1];
              int vCPU = Integer.parseInt(dataRow[2]);
@@ -357,27 +378,25 @@ System.out.println("List" + slaList.get(i));
              float failure = Float.parseFloat(dataRow[5]);
              String status = dataRow[6];
              
-        // Initializing the vm instance
              
 VirtualMachine vm = new VirtualMachine(vmID, vType, vCPU, vRAM, vStorage, failure, status);
 
-     // adding vms to vmList
+// adding vms to vmList
 vmList.add(vm);
-
-        // set data to jtable model
-        model.addRow(dataRow);
         }
             
             }//GEN-LAST:event_importVMFileBtn1ActionPerformed
 
+    // Clear table button
     private void clearTableBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearTableBtnActionPerformed
  DefaultTableModel tabVM = (DefaultTableModel) vmsTable.getModel();
         tabVM.setRowCount(0);
         DefaultTableModel tabSLA = (DefaultTableModel) slaTable.getModel();
         tabSLA.setRowCount(0);    }//GEN-LAST:event_clearTableBtnActionPerformed
 
+    // Generate best vms list button
     private void bestVMsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bestVMsActionPerformed
-
+      
 new BestVmsList().setVisible(true);    }//GEN-LAST:event_bestVMsActionPerformed
 
     

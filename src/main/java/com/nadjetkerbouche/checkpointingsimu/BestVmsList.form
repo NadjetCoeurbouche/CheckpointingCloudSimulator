@@ -44,7 +44,7 @@
       </AuxValues>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="280" y="70" width="810" height="440"/>
+          <AbsoluteConstraints x="270" y="80" width="810" height="440"/>
         </Constraint>
       </Constraints>
 
@@ -53,7 +53,7 @@
         <Component class="javax.swing.JTable" name="bestVMsTable">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="7" rowCount="0">
+              <Table columnCount="8" rowCount="0">
                 <Column editable="false" title="Ranking" type="java.lang.Object"/>
                 <Column editable="false" title="vm ID" type="java.lang.Object"/>
                 <Column editable="false" title="Response time" type="java.lang.Object"/>
@@ -61,10 +61,16 @@
                 <Column editable="false" title="10% " type="java.lang.Object"/>
                 <Column editable="false" title="25%" type="java.lang.Object"/>
                 <Column editable="false" title="50%" type="java.lang.Object"/>
+                <Column editable="true" title="Total Penalty Cost" type="java.lang.Object"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
               <TableColumnModel selectionModel="0">
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                   <Title/>
                   <Editor/>

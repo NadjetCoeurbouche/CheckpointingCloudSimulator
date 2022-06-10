@@ -49,11 +49,11 @@ public class BestVmsList extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Ranking", "vm ID", "Response time", "Failure Percentage", "10% ", "25%", "50%"
+                "Ranking", "vm ID", "Response time", "Failure Percentage", "10% ", "25%", "50%", "Total Penalty Cost"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -62,7 +62,7 @@ public class BestVmsList extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(bestVMsTable);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 70, 810, 440));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 80, 810, 440));
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 40, -1, -1));
 
         jButton1.setText("Show tasks");
@@ -97,28 +97,10 @@ public class BestVmsList extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
  VM_SLA_data_UI vm_sla = new  VM_SLA_data_UI();
-    int vmID;
-    float responseTimeExpected;
-    float faultPercentage;
-    float penaltyPercentage1;
-    float penaltyPercentage2;
-    float penaltyPercentage3;
 
-    public BestVmsList( int vmID, float responseTimeExpected, float faultPercentage, float penaltyPercentage1, float penaltyPercentage2, float penaltyPercentage3) {
-        this.vmID = vmID;
-        this.responseTimeExpected = responseTimeExpected;
-        this.faultPercentage = faultPercentage;
-        this.penaltyPercentage1 = penaltyPercentage1;
-        this.penaltyPercentage2 = penaltyPercentage2;
-        this.penaltyPercentage3 = penaltyPercentage3;
-    }
-public static ArrayList<BestVmsList> bestVmsList = null;
- public String toString() {
-        return " " + vmID + "\t" + responseTimeExpected + "\t" + faultPercentage +  "\t" + penaltyPercentage1 + "\t" + penaltyPercentage2 + "\t" + penaltyPercentage3;
-     
-    }
+public static ArrayList<BestVMs> bestVmsList = null;
+
  
-  
     
 public void tasks_list(){
 
@@ -145,27 +127,48 @@ tasks_list();
    
     public void fill_table(int selectedTask ){
     int insCount;
-    bestVmsList = new ArrayList<BestVmsList>();
-                DefaultTableModel vmsModel = (DefaultTableModel)bestVMsTable.getModel();
-String[] dataRow = null;
+    
+    int vmID = 0;
+    float responseTimeExpected = 0;
+    float faultPercentage = 0;
+    float penaltyPercentage1 = 0;
+    float penaltyPercentage2 = 0;
+    float penaltyPercentage3 = 0;
+   float total_penalty_cost = 0;
+   BestVMs bestVM = new BestVMs(vmID, responseTimeExpected, faultPercentage, penaltyPercentage1, penaltyPercentage2,penaltyPercentage3,total_penalty_cost  ); 
 
-    insCount = vm_sla.slaList.get(selectedTask).instructionCount;
+    bestVmsList = new ArrayList<BestVMs>();
+    
+
+            insCount = vm_sla.slaList.get(selectedTask).instructionCount;
+        System.out.println("task id filltable " + selectedTask );
+
+    DefaultTableModel vmsModel = (DefaultTableModel)bestVMsTable.getModel();
+                
+                
+
         System.out.println("size " + vm_sla.vmList.size() );
         
-for (int i =0; i< vm_sla.vmList.size(); i ++){
+    for (int i =0; i < vm_sla.vmList.size(); i ++){
     
-        vmID = vm_sla.vmList.get(i).vmID;
-        responseTimeExpected = insCount / vm_sla.vmList.get(i).computeCapacity;
-        faultPercentage = vm_sla.vmList.get(i).faultPercentage;
-        penaltyPercentage1 = vm_sla.slaList.get(selectedTask).price  * vm_sla.slaList.get(selectedTask).penaltyPercentage1;
-        penaltyPercentage2 = vm_sla.slaList.get(selectedTask).price  * vm_sla.slaList.get(selectedTask).penaltyPercentage2;
-        penaltyPercentage3 = vm_sla.slaList.get(selectedTask).price  * vm_sla.slaList.get(selectedTask).penaltyPercentage3;
-                           
-   Object[] data = {i, vmID, responseTimeExpected, faultPercentage, penaltyPercentage1, penaltyPercentage2, penaltyPercentage3};
+        bestVM.vmID = vm_sla.vmList.get(i).vmID;
+        bestVM.responseTimeExpected = (float) insCount / (float) vm_sla.vmList.get(i).computeCapacity;
+        bestVM.faultPercentage = vm_sla.vmList.get(i).faultPercentage;
+        bestVM.penaltyPercentage1 =(float) vm_sla.slaList.get(selectedTask).price  * (float)vm_sla.slaList.get(selectedTask).penaltyPercentage1;
+        bestVM.penaltyPercentage2 = (float)vm_sla.slaList.get(selectedTask).price  * (float) vm_sla.slaList.get(selectedTask).penaltyPercentage2;
+        bestVM.penaltyPercentage3 = (float) vm_sla.slaList.get(selectedTask).price  * (float) vm_sla.slaList.get(selectedTask).penaltyPercentage3;
+        bestVM.total_penalty_cost = ((vm_sla.slaList.get(selectedTask).penaltyPercentage1 + vm_sla.slaList.get(selectedTask).penaltyPercentage2 + vm_sla.slaList.get(selectedTask).penaltyPercentage3)/3) * vm_sla.slaList.get(selectedTask).price;
+        
+        //String[] dataRow = new String [] { String.valueOf(i), String.valueOf(vmID), String.valueOf(responseTimeExpected),  String.valueOf(faultPercentage),  String.valueOf(penaltyPercentage1),  String.valueOf(penaltyPercentage2),  String.valueOf(penaltyPercentage3)};     
+   Object[] data = {i, bestVM.vmID, bestVM.responseTimeExpected, bestVM.faultPercentage, bestVM.penaltyPercentage1, bestVM.penaltyPercentage2, bestVM.penaltyPercentage3, bestVM.total_penalty_cost};
+   
+// sorting data by responseTimeExpected property
+  //Arrays.sort(data);
+
 //adding data to our best vms table        
 vmsModel.addRow(data);
 
-BestVmsList  firstList = new BestVmsList(vmID, responseTimeExpected, faultPercentage, penaltyPercentage1, penaltyPercentage2, penaltyPercentage3);
+BestVMs  firstList = new BestVMs(bestVM.vmID,  bestVM.responseTimeExpected, bestVM.faultPercentage, bestVM.penaltyPercentage1, bestVM.penaltyPercentage2, bestVM.penaltyPercentage3, bestVM.total_penalty_cost);
 bestVmsList.add(firstList);
 	//   Collections.sort(bestVmsList);
  
@@ -174,21 +177,22 @@ bestVmsList.add(firstList);
 
 }}
 
-
-
-  
     private void tasksListMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tasksListMousePressed
+                
                 DefaultTableModel vmsModel = (DefaultTableModel)bestVMsTable.getModel();
-
-        vmsModel.setRowCount(0);
-
- int index = tasksList.getSelectedIndex();
+              
+                // every time I click on the task ID the table have to be cleared from previous data
+                vmsModel.setRowCount(0);
+                
+        int index = tasksList.getSelectedIndex();
 
         Object taskID = tasksList.getSelectedValue();  
+        
         Integer selectedTask = Integer.parseInt(taskID.toString());
 
-                System.out.println("Selected Task ID" + selectedTask );
-                 fill_table(selectedTask);
+                System.out.println("Selected Task ID   " + selectedTask );
+        
+                fill_table(selectedTask-1);
                 
     }//GEN-LAST:event_tasksListMousePressed
 
