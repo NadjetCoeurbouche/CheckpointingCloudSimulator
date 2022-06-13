@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
@@ -264,6 +266,7 @@ public static ArrayList<VirtualMachine> vmList = null;
         // TODO add your handling code here:
     }//GEN-LAST:event_vmBtnActionPerformed
  
+ 
     // searching for file path
     private String filePath(){
  
@@ -279,7 +282,7 @@ JFileChooser fileChooser = new JFileChooser();
       return filePath;
 
     }     
-    
+     
     // method to load SLA data text file 
     private void importSLAFileBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_importSLAFileBtnActionPerformed
         
@@ -323,14 +326,18 @@ JFileChooser fileChooser = new JFileChooser();
                     float penaltyPercentage2 = Float.parseFloat(dataRow[7]);
                     float penaltyPercentage3 = Float.parseFloat(dataRow[8]);
                     String status = dataRow[9];
+                    float penaltyCost = (((penaltyPercentage1 + penaltyPercentage2 + penaltyPercentage3)*price)/3);
 
-SLA sla = new SLA(slaID, customerID, instructionCount, responseTime, deadline, price, penaltyPercentage1, penaltyPercentage2, penaltyPercentage3, status);
+SLA sla = new SLA(slaID, customerID, instructionCount, responseTime, deadline, price, penaltyPercentage1, penaltyPercentage2, penaltyPercentage3, penaltyCost, status);
 // adding initilized sla instance to our slaList
 slaList.add(sla);
 
-System.out.println("List" + slaList.get(i));   
         }
-        
+         Collections.sort(slaList);
+
+         for(int s = 0; s<slaList.size(); s++){
+        System.out.println("List" + slaList.get(s));   
+         }
     }//GEN-LAST:event_importSLAFileBtnActionPerformed
 
     private void slaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_slaBtnActionPerformed
@@ -449,7 +456,5 @@ new BestVmsList().setVisible(true);    }//GEN-LAST:event_bestVMsActionPerformed
     private javax.swing.JTable vmsTable;
     // End of variables declaration//GEN-END:variables
 
-    private String SLA(SLA get) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+   
 }

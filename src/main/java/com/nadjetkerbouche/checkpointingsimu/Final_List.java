@@ -1,6 +1,7 @@
 package com.nadjetkerbouche.checkpointingsimu;
 
 import static com.nadjetkerbouche.checkpointingsimu.BestVmsList.bestVmsList;
+import static com.nadjetkerbouche.checkpointingsimu.VM_SLA_data_UI.slaList;
 import java.util.ArrayList;
 import java.util.Collections;
 import javax.swing.table.DefaultTableModel;
@@ -35,15 +36,16 @@ public class Final_List extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Task ID", "Response time expected", "Penalty cost", "Checkpointing count", "checkpointing interval"
+                "Task ID", "VM ID", "Response time expected", "Penalty cost", "Checkpointing count", "checkpointing interval"
             }
         ));
+        finalListTable.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(finalListTable);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, 850, 560));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 870, 440));
 
         AssignTasksBtn.setText("Assign tasks");
-        getContentPane().add(AssignTasksBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 610, -1, -1));
+        getContentPane().add(AssignTasksBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 540, -1, -1));
 
         jButton1.setText("show");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -57,7 +59,7 @@ public class Final_List extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    assignment();        
+assignment();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -74,7 +76,10 @@ public class Final_List extends javax.swing.JFrame {
     float penaltyPercentage;
     float checkpointing;
     float interval;
-
+    int fidelity = 1;
+    int [] vmRanking  = new int [vm_sla.vmList.size()] ; 
+    int [] tasksRanking = new int [vm_sla.slaList.size()] ; 
+    
     public Final_List(int vmID, float responseTimeExpected, float penaltyPercentage, float checkpointing, float interval) {
         this.vmID = vmID;
         this.responseTimeExpected = responseTimeExpected;
@@ -87,13 +92,74 @@ public class Final_List extends javax.swing.JFrame {
         return " " + vmID + "\t" + responseTimeExpected + "\t"  + penaltyPercentage + "\t" + checkpointing + "\t" + interval;
      
     }
-        
-    Final_List finalList = null;
+
+  /*    
+    public boolean exist (int k){
+     boolean valide = true;
+ for (int i = 0; i < vmRanking.length; i++ ){
+    if (k == vmRanking[i]){
+    valide = false;
+    }   
+ }
+ return valide;
+ }*/
+ 
+    /*
+ int [] sortVMs(ArrayList<VirtualMachine> vmsList){
+
+     int [] vmTest  = new int [vmsList.size()] ; 
+ 
+ for(int i = 0; i< vmsList.size(); i++){
+  vmTest [i] =  vmsList.get(i).computeCapacity;
+ }
+  int s = 0;
+  int i=0;
+  int max;
+
+    while( i < vmsList.size()){ 
+        // initializing best vm as vm[0]
+        max = i;
+    //searching for vm with max CPU capacity    
+   for(int j=i+1; j <vmsList.size(); j++ ){
+
+ if(!exist(j) && max < vmTest[j]) {
+    max = j;
+}
+
+}
+vmRanking[s] = vmsList.get(max).vmID;
+
+} 
+s++;
+   
+        return vmRanking;
+ }*/
+ 
 // Fisrt I thought of finding the highest penalty cost bcz all the tasks have the same VMs ranking
  // I need to compare current task deadline with all vms expctd res_time to calculate checkpointing interval in next step
-
 public void assignment(){
-   float highest_penalty_cost = 0;
+     for(int s = 0; s<slaList.size(); s++){
+        System.out.println("ana f final: " + slaList.get(s)); 
+         System.out.println("fill_table" + bestVMs.fill_table(s));
+         }
+    DefaultTableModel finalModel = (DefaultTableModel)finalListTable.getModel();
+    Object data [] = new Object [vm_sla.slaList.size()];   
+    float responseTimeExpected;
+     for (int i =0; i < vm_sla.slaList.size(); i ++){
+ data[0] = slaList.get(i).slaID;
+ data[1] = bestVmsList.get(i).vmID;
+ responseTimeExpected = vm_sla.slaList.get(i).instructionCount / vm_sla.vmList.get(i).computeCapacity; 
+data[2] = bestVMs.fill_table(slaList.get(i).slaID - 1).get(i).responseTimeExpected;
+ data[3] = bestVMs.fill_table(i).get(i).total_penalty_cost;
+ checkpointing =  bestVMs.fill_table(i).get(i).total_penalty_cost * fidelity * bestVMs.fill_table(slaList.get(i).slaID - 1).get(i).responseTimeExpected* bestVMs.fill_table(slaList.get(i).slaID - 1).get(i).faultPercentage;
+ data[4] = checkpointing; 
+ interval = bestVMs.fill_table(slaList.get(i).slaID - 1).get(i).responseTimeExpected / checkpointing;
+ data[5] = interval;
+    
+ finalModel.addRow(data);
+
+   }
+   /*float highest_penalty_cost = 0;
    float fidelity = 1;
        finalVmsList = new ArrayList<Final_List>();
        
@@ -143,7 +209,7 @@ DefaultTableModel finalModel = (DefaultTableModel)finalListTable.getModel();
             finalVmsList.add(finalList);  
 
                                
-
+*/
 }
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
