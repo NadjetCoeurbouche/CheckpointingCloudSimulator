@@ -1,5 +1,6 @@
 package com.nadjetkerbouche.checkpointingsimu;
 
+import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -9,7 +10,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JButton;
 import javax.swing.JFileChooser;
+import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -20,6 +23,7 @@ public class VM_SLA_data_UI extends javax.swing.JFrame {
 
     public VM_SLA_data_UI() {
         initComponents();
+         setColor(dashboardBtn); 
     }
 
     @SuppressWarnings("unchecked")
@@ -32,17 +36,17 @@ public class VM_SLA_data_UI extends javax.swing.JFrame {
         vmBtn = new javax.swing.JButton();
         customerBtn = new javax.swing.JButton();
         slaBtn = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        vmsTable = new javax.swing.JTable();
-        importSLAFileBtn = new javax.swing.JButton();
-        clearTableBtn = new javax.swing.JButton();
-        importVMFileBtn1 = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         slaTable = new javax.swing.JTable();
         bestVMs = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        vmsTable = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
+        clearTableBtn = new javax.swing.JButton();
+        importVMFileBtn1 = new javax.swing.JButton();
+        importSLAFileBtn = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -65,10 +69,19 @@ public class VM_SLA_data_UI extends javax.swing.JFrame {
         dashboardBtn.setBackground(new java.awt.Color(187, 225, 250));
         dashboardBtn.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
         dashboardBtn.setText("Dashboard");
+        dashboardBtn.setBorderPainted(false);
+        dashboardBtn.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        dashboardBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dashboardBtnActionPerformed(evt);
+            }
+        });
 
         vmBtn.setBackground(new java.awt.Color(187, 225, 250));
         vmBtn.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
         vmBtn.setText("Virtual Machines");
+        vmBtn.setBorderPainted(false);
+        vmBtn.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         vmBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 vmBtnActionPerformed(evt);
@@ -78,6 +91,8 @@ public class VM_SLA_data_UI extends javax.swing.JFrame {
         customerBtn.setBackground(new java.awt.Color(187, 225, 250));
         customerBtn.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
         customerBtn.setText("Customers");
+        customerBtn.setBorderPainted(false);
+        customerBtn.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         customerBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 customerBtnActionPerformed(evt);
@@ -87,6 +102,8 @@ public class VM_SLA_data_UI extends javax.swing.JFrame {
         slaBtn.setBackground(new java.awt.Color(187, 225, 250));
         slaBtn.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
         slaBtn.setText("SLAs");
+        slaBtn.setBorderPainted(false);
+        slaBtn.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         slaBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 slaBtnActionPerformed(evt);
@@ -117,71 +134,6 @@ public class VM_SLA_data_UI extends javax.swing.JFrame {
         );
 
         getContentPane().add(sidePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 200, 720));
-
-        vmsTable.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
-        vmsTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "VM ID", "Type", "vCPU", "vRAM", "vStorage", "Failure Percentage", "Status"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        vmsTable.setToolTipText("");
-        vmsTable.setColumnSelectionAllowed(true);
-        jScrollPane1.setViewportView(vmsTable);
-        vmsTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 90, 1010, 270));
-
-        importSLAFileBtn.setBackground(new java.awt.Color(50, 130, 184));
-        importSLAFileBtn.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        importSLAFileBtn.setForeground(new java.awt.Color(187, 225, 250));
-        importSLAFileBtn.setText("Import SLAs Data");
-        importSLAFileBtn.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        importSLAFileBtn.setBorderPainted(false);
-        importSLAFileBtn.setFocusPainted(false);
-        importSLAFileBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                importSLAFileBtnActionPerformed(evt);
-            }
-        });
-        getContentPane().add(importSLAFileBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 20, 160, 40));
-
-        clearTableBtn.setText("Clear Table");
-        clearTableBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                clearTableBtnActionPerformed(evt);
-            }
-        });
-        getContentPane().add(clearTableBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(1100, 20, 140, 40));
-
-        importVMFileBtn1.setBackground(new java.awt.Color(50, 130, 184));
-        importVMFileBtn1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        importVMFileBtn1.setForeground(new java.awt.Color(187, 225, 250));
-        importVMFileBtn1.setText("Import VMs Data");
-        importVMFileBtn1.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        importVMFileBtn1.setBorderPainted(false);
-        importVMFileBtn1.setFocusPainted(false);
-        importVMFileBtn1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                importVMFileBtn1ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(importVMFileBtn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 20, 160, 40));
-
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(27, 38, 44));
-        jLabel2.setText("Virtual Machines");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 60, -1, -1));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -219,6 +171,68 @@ public class VM_SLA_data_UI extends javax.swing.JFrame {
             }
         });
 
+        vmsTable.setAutoCreateRowSorter(true);
+        vmsTable.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
+        vmsTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "VM ID", "Type", "vCPU", "vRAM", "vStorage", "Failure Percentage", "Status"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        vmsTable.setToolTipText("");
+        vmsTable.setColumnSelectionAllowed(true);
+        vmsTable.setGridColor(new java.awt.Color(255, 255, 255));
+        vmsTable.setSelectionBackground(new java.awt.Color(51, 204, 255));
+        jScrollPane1.setViewportView(vmsTable);
+        vmsTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(27, 38, 44));
+        jLabel2.setText("Virtual Machines");
+
+        clearTableBtn.setText("Clear Table");
+        clearTableBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearTableBtnActionPerformed(evt);
+            }
+        });
+
+        importVMFileBtn1.setBackground(new java.awt.Color(50, 130, 184));
+        importVMFileBtn1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        importVMFileBtn1.setForeground(new java.awt.Color(187, 225, 250));
+        importVMFileBtn1.setText("Import VMs Data");
+        importVMFileBtn1.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        importVMFileBtn1.setBorderPainted(false);
+        importVMFileBtn1.setFocusPainted(false);
+        importVMFileBtn1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                importVMFileBtn1ActionPerformed(evt);
+            }
+        });
+
+        importSLAFileBtn.setBackground(new java.awt.Color(50, 130, 184));
+        importSLAFileBtn.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        importSLAFileBtn.setForeground(new java.awt.Color(187, 225, 250));
+        importSLAFileBtn.setText("Import SLAs Data");
+        importSLAFileBtn.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        importSLAFileBtn.setBorderPainted(false);
+        importSLAFileBtn.setFocusPainted(false);
+        importSLAFileBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                importSLAFileBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -226,30 +240,49 @@ public class VM_SLA_data_UI extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
+                        .addGap(48, 48, 48)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1010, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(bestVMs)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1010, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(61, 61, 61)
                         .addComponent(jLabel1))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(16, 16, 16)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1010, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(114, Short.MAX_VALUE))
+                        .addGap(59, 59, 59)
+                        .addComponent(jLabel2)))
+                .addContainerGap(112, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(bestVMs)
-                .addGap(104, 104, 104))
+                .addComponent(importSLAFileBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(importVMFileBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addComponent(clearTableBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(130, 130, 130))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(373, 373, 373)
+                .addGap(24, 24, 24)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(importSLAFileBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(importVMFileBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(clearTableBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(bestVMs)
-                .addContainerGap(133, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(bestVMs, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(53, 53, 53))
         );
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 0, 1140, 810));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 0, 1170, 670));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -335,9 +368,7 @@ slaList.add(sla);
         }
          Collections.sort(slaList);
 
-         for(int s = 0; s<slaList.size(); s++){
-        System.out.println("List" + slaList.get(s));   
-         }
+        
     }//GEN-LAST:event_importSLAFileBtnActionPerformed
 
     private void slaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_slaBtnActionPerformed
@@ -406,14 +437,32 @@ vmList.add(vm);
       
 new BestVmsList().setVisible(true);    }//GEN-LAST:event_bestVMsActionPerformed
 
+    private void dashboardBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dashboardBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_dashboardBtnActionPerformed
+
     
+        private void setColor(JButton pane)
+    {
+        pane.setBackground(new Color(50, 130, 184));
+    }
     
+    private void resetColor(JPanel [] pane, JPanel [] indicators)
+    {
+        for(int i=0;i<pane.length;i++){
+           pane[i].setBackground(new Color(23,35,51));
+           
+        } for(int i=0;i<indicators.length;i++){
+           indicators[i].setOpaque(false);           
+        }
+        
+    }
     
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-       
+
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Windows".equals(info.getName())) {

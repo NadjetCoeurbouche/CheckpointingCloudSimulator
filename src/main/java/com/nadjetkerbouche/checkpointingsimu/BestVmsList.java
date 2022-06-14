@@ -19,6 +19,7 @@ public class BestVmsList extends javax.swing.JFrame {
      */
     public BestVmsList() {
         initComponents();
+        tasks_list();
     }
    
     /**
@@ -35,7 +36,6 @@ public class BestVmsList extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         bestVMsTable = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         tasksList = new javax.swing.JList<>();
         jButton2 = new javax.swing.JButton();
@@ -68,14 +68,6 @@ public class BestVmsList extends javax.swing.JFrame {
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 80, 810, 440));
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 40, -1, -1));
 
-        jButton1.setText("Show tasks");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 20, -1, -1));
-
         tasksList.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         tasksList.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         tasksList.setSelectionBackground(new java.awt.Color(204, 255, 204));
@@ -87,7 +79,7 @@ public class BestVmsList extends javax.swing.JFrame {
         });
         jScrollPane4.setViewportView(tasksList);
 
-        getContentPane().add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 250, 590));
+        getContentPane().add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 200, 440));
 
         jButton2.setText("Generate Final assignment list");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -133,12 +125,6 @@ public void tasks_list(){
 }
 
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-tasks_list();
-        // TODO add your handling code here:
-         
-    }//GEN-LAST:event_jButton1ActionPerformed
-
    public static void sort(ArrayList<BestVMs> list) {
    
         list.sort(new Comparator<BestVMs>() {
@@ -153,14 +139,15 @@ tasks_list();
     }
     public ArrayList<BestVMs> fill_table(int selectedTask ){
     int insCount;
-    
+    float delayValue1;
+    float delayValue2;
+    float delayValue3;
    
 
     bestVmsList = new ArrayList<BestVMs>();
     
 
             insCount = vm_sla.slaList.get(selectedTask).instructionCount;
-        System.out.println("task id filltable " + selectedTask );
 
     DefaultTableModel vmsModel = (DefaultTableModel)bestVMsTable.getModel();
     Object data [] = new Object [8];            
@@ -173,15 +160,15 @@ tasks_list();
         penaltyPercentage1 = (float) vm_sla.slaList.get(selectedTask).price  * (float)vm_sla.slaList.get(selectedTask).penaltyPercentage1;
         penaltyPercentage2 = (float)vm_sla.slaList.get(selectedTask).price  * (float) vm_sla.slaList.get(selectedTask).penaltyPercentage2;
         penaltyPercentage3 = (float) vm_sla.slaList.get(selectedTask).price  * (float) vm_sla.slaList.get(selectedTask).penaltyPercentage3;
+        delayValue1 =  (float) (0.1 * (float) vm_sla.slaList.get(selectedTask).deadline);
+        delayValue2 =  (float) (0.25 * (float) vm_sla.slaList.get(selectedTask).deadline);
+        delayValue3 =  (float) (0.50 * (float) vm_sla.slaList.get(selectedTask).deadline);
         total_penalty_cost = vm_sla.slaList.get(selectedTask).penaltyCost ;
 
         BestVMs firstList = new BestVMs(vmID, responseTimeExpected, faultPercentage, penaltyPercentage1, 
            penaltyPercentage2, penaltyPercentage3, total_penalty_cost);
 bestVmsList.add(firstList);
 Collections.sort(bestVmsList);
-
-   // System.out.println("vms penaltyPercentage1 yaaay: " + bestVmsList.get(i) );
-
 
 }
    for (int i =0; i < vm_sla.vmList.size(); i ++){
@@ -211,8 +198,6 @@ Collections.sort(bestVmsList);
         Object taskID = tasksList.getSelectedValue();  
         
         Integer selectedTask = Integer.parseInt(taskID.toString());
-
-                System.out.println("Selected Task ID   " + selectedTask );
         
                 fill_table(index);
                 
@@ -223,44 +208,10 @@ new Final_List().setVisible(true);         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
      
-    /**
-     * @param args the command line arguments
-     */
   
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(BestVmsList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(BestVmsList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(BestVmsList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(BestVmsList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new BestVmsList().setVisible(true);
-            }
-        });
-    }
-
+       
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable bestVMsTable;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JLabel jLabel1;
