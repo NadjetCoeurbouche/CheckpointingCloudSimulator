@@ -112,19 +112,15 @@ public void tasks_list(){
 
     DefaultListModel list_model = new DefaultListModel();
 
-// creating button for each task
+    // creating button for each task
+   for(int i =0; i < vm_sla.slaList.size(); i++){
  
-  for(int i =0; i < vm_sla.slaList.size(); i++){
-    
-    
-      //ArrayList to JList (tasks List)
-    
+      //ArrayList to JList (tasks List)  
      list_model.addElement(vm_sla.slaList.get(i).slaID);
   }
   tasksList.setModel(list_model);
 }
-
-
+// sorting method by response time
    public static void sort(ArrayList<BestVMs> list) {
    
         list.sort(new Comparator<BestVMs>() {
