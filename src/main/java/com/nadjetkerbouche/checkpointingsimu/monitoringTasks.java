@@ -13,6 +13,9 @@ import javax.swing.table.DefaultTableModel;
  */
 public class monitoringTasks extends javax.swing.JFrame {
 
+    int progress;
+    int lastCheckpoint;
+    
     /**
      * Creates new form monitoringTasks
      */
@@ -21,15 +24,7 @@ public class monitoringTasks extends javax.swing.JFrame {
         
        exeTable();
     }
- /*  public void start() {
-        long startTime = System.currentTimeMillis();
-    }
 
-    public float getElapsedTimeSeconds() {
-        long startTime = 0;
-        return (System.currentTimeMillis() - startTime) / 1000f;
-    }*/
-    
     public void exeTable(){
      
     DefaultTableModel exeModel = (DefaultTableModel)exeTable.getModel();
@@ -44,88 +39,7 @@ data[3] = "in progress";
  exeModel.addRow(data);
 }
      }
-   /*   private Timer timer;
-        private long startTime = 0;
-        long endTime = 30;
-        private long duration = 5000;
-    long timeLeft;
-
-        private JLabel label;
-public void timerStart(){
-    timeLeft -=10;
-  int delay = 100; //milliseconds
-  
-  ActionListener taskPerformer = new ActionListener() {
-      
-      public void actionPerformed(ActionEvent evt) {
-            SimpleDateFormat df=new SimpleDateFormat("mm:ss:S");
-        timerLabel.setText(df.format(timeLeft));
-          System.out.println(".actionPerformed()" + df.format(timeLeft));
-          //...Perform a task...
-      }
-  };
-  new Timer(delay, taskPerformer).start();
-}*/
-      
-
-/*       ActionListener countDown = new ActionListener()
-{
-    public void actionPerformed(ActionEvent e)
-    {
-        timeLeft -= 100;
-        SimpleDateFormat df=new SimpleDateFormat("mm:ss:S");
-        timerLabel.setText(df.format(timeLeft));
-        if(timeLeft<=0)
-        {
-            timer.stop();
-        }
-    }
-
-};         
-       Timer timer = new Timer(100, countDown);
-
-  public void timerStart() throws InterruptedException{
-  if (startTime < 0) {
-                        startTime = System.currentTimeMillis();
-                    }
-                    long now = System.currentTimeMillis();
-                    long clockTime = now - startTime;
-                    if (clockTime >= duration) {
-                        clockTime = duration;
-                        timer.stop();
-                    }
-                    SimpleDateFormat df = new SimpleDateFormat("mm:ss:SSS");
-                    timerLabel.setText(df.format(duration - clockTime));
-                }
-            
-           
-         
-        */
-
-       
- /*
-         long start = System.currentTimeMillis();
-      for (int i = 0; i <200; i+=10) {
-         Thread.sleep(60);
-      }
-      // finding the time after the operation is executed
-      long end = System.currentTimeMillis();
-      //finding the time difference and converting it into seconds
-      float sec = (end - start) / 1000F;
-      
-      
-      System.out.println(sec + " seconds");
-  
-      monitoringTasks stopwatch = new monitoringTasks();
-stopwatch.start();
-Thread.sleep(2000);
-System.out.println("Time elapsed in seconds: " + stopwatch.getElapsedTimeSeconds());
-     
-timerLabel.setText("Counting");
-Timer timer = new Timer(2000, e -> timerLabel.setText("Done"));
-timer.setRepeats(false);
-timer.start();*/
-        
+ 
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -155,7 +69,7 @@ timer.start();*/
 
             },
             new String [] {
-                "Task ID", "VM ID", "Progress", "State", "Last checkpoint"
+                "Task ID", "VM ID", "Last checkpoint", "Progress", "State"
             }
         ));
         jScrollPane1.setViewportView(exeTable);
