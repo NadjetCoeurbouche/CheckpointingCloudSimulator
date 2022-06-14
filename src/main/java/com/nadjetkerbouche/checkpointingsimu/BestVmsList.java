@@ -93,15 +93,17 @@ public class BestVmsList extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
  VM_SLA_data_UI vm_sla = new  VM_SLA_data_UI();
  
-   int ranking;
-   int vmID;
+    int ranking;
+    int vmID;
     float responseTimeExpected ;
     float faultPercentage ;
     float penaltyPercentage1;
     float penaltyPercentage2 ;
     float penaltyPercentage3;
-   float total_penalty_cost;
-public static ArrayList<BestVMs> bestVmsList = null;
+    float total_penalty_cost;
+    public static ArrayList<BestVMs> bestVmsList = null;
+    
+    
  public String toString() {
         return " "+ ranking + "\t" + vmID + "\t" + responseTimeExpected + "\t" + faultPercentage +  "\t" + penaltyPercentage1 + "\t" + penaltyPercentage2 + "\t" + penaltyPercentage3 + "\t" + total_penalty_cost;
      
@@ -109,7 +111,6 @@ public static ArrayList<BestVMs> bestVmsList = null;
  
     
 public void tasks_list(){
-
     DefaultListModel list_model = new DefaultListModel();
 
     // creating button for each task
@@ -133,17 +134,17 @@ public void tasks_list(){
             }
         });
     }
+   
+   
     public ArrayList<BestVMs> fill_table(int selectedTask ){
-    int insCount;
+    int insCount = vm_sla.slaList.get(selectedTask).instructionCount;
     float delayValue1;
     float delayValue2;
     float delayValue3;
-   
 
     bestVmsList = new ArrayList<BestVMs>();
-    
-
-            insCount = vm_sla.slaList.get(selectedTask).instructionCount;
+   
+            
 
     DefaultTableModel vmsModel = (DefaultTableModel)bestVMsTable.getModel();
     Object data [] = new Object [8];            
