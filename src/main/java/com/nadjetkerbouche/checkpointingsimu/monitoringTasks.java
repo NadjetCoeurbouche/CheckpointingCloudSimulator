@@ -3,7 +3,9 @@ package com.nadjetkerbouche.checkpointingsimu;
 import static com.nadjetkerbouche.checkpointingsimu.Final_List.finalVmsList;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 
@@ -15,7 +17,7 @@ public class monitoringTasks extends javax.swing.JFrame {
 
     int progress;
     int lastCheckpoint;
-    
+
     /**
      * Creates new form monitoringTasks
      */
@@ -33,13 +35,47 @@ public class monitoringTasks extends javax.swing.JFrame {
                    
 data[0] = finalVmsList.get(i).slaID;
 data[1] = finalVmsList.get(i).vmID;
-data[2] = "50%";
-data[3] = "in progress";
+data[2] = "00:00:00";
+data[3] = "00:00:00" ;
 
  exeModel.addRow(data);
 }
      }
  
+    public void timeDifference () throws ParseException{
+    String time1 = "16:00:00";
+    String time2 = "19:00:00";
+
+SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+Date date1 = format.parse(time1);
+Date date2 = format.parse(time2);
+long difference = date2.getTime() - date1.getTime(); 
+    }
+    
+       
+    public String updateInterval(String startingTime){
+        
+            DefaultTableModel exeModel = (DefaultTableModel)exeTable.getModel();
+             SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
+   
+            Object data [] = new Object [finalVmsList.size()];   
+            float interval = finalVmsList.get(2).interval;
+            int sec = (int) (interval % 60);
+                    int min = (int) ((interval / 60)%60);
+		    int hours = (int) ((interval/60)/60);
+           
+		String intervalString = String.format("%02d:%02d:%02d", hours, min, sec);
+         //String newInterval = df.format(intervalString);
+
+  
+          
+     exeModel.setValueAt(intervalString,2, 2);
+
+    
+      return intervalString = intervalString + intervalString  ;
+       
+}
+    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -50,28 +86,29 @@ data[3] = "in progress";
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        timerLabel = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         exeTable = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        timerLabel = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
+        FailurePercentqge = new javax.swing.JTextField();
+        faultOccurrenceTF1 = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        timerLabel.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-        timerLabel.setText("jLabel1");
 
         exeTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Task ID", "VM ID", "Last checkpoint", "Progress", "State"
+                "Task ID", "VM ID", "Last checkpoint", "Time Left", "State"
             }
         ));
+        exeTable.setGridColor(new java.awt.Color(255, 255, 255));
         jScrollPane1.setViewportView(exeTable);
 
         jButton1.setText("Run tasks");
@@ -81,40 +118,14 @@ data[3] = "in progress";
             }
         });
 
-        jLabel1.setText("Failure percentage: 10%");
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel1.setText("Failure percentage: ");
 
-        jLabel2.setText("Failure occurence: 20 seconds");
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel2.setText("Failure occurence:");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jButton1)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(47, 47, 47)
-                        .addComponent(jLabel1))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addComponent(jLabel2)))
-                .addContainerGap(105, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(33, 33, 33)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel2))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(45, 45, 45)
-                        .addComponent(jButton1)))
-                .addContainerGap(126, Short.MAX_VALUE))
-        );
+        timerLabel.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        timerLabel.setText(" 00:00:00");
 
         jButton2.setText("Stop timer");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -123,43 +134,99 @@ data[3] = "in progress";
             }
         });
 
+        FailurePercentqge.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                FailurePercentqgeActionPerformed(evt);
+            }
+        });
+
+        faultOccurrenceTF1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                faultOccurrenceTF1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(FailurePercentqge, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(1, 1, 1)
+                                .addComponent(faultOccurrenceTF1, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(27, 27, 27)
+                                .addComponent(jButton1)
+                                .addGap(202, 202, 202)
+                                .addComponent(jButton2))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(181, 181, 181)
+                                .addComponent(timerLabel)))
+                        .addGap(0, 50, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(FailurePercentqge, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(47, 47, 47)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(faultOccurrenceTF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton2)
+                    .addComponent(jButton1))
+                .addGap(29, 29, 29)
+                .addComponent(timerLabel)
+                .addContainerGap(98, Short.MAX_VALUE))
+        );
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel3.setText("Monitoring");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(14, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(70, 70, 70)
-                                .addComponent(timerLabel)
-                                .addGap(210, 210, 210))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton2)
-                                .addGap(39, 39, 39))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 687, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(117, 117, 117))))
+                .addGap(101, 101, 101)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 687, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 119, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(jLabel3)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
+                        .addGap(71, 71, 71)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(54, 54, 54)
-                        .addComponent(timerLabel)
-                        .addGap(20, 20, 20)
-                        .addComponent(jButton2)))
-                .addGap(18, 18, 18)
+                        .addGap(47, 47, 47)
+                        .addComponent(jLabel3)))
+                .addGap(47, 47, 47)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(278, Short.MAX_VALUE))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
 
         pack();
@@ -175,30 +242,64 @@ data[3] = "in progress";
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void FailurePercentqgeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FailurePercentqgeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_FailurePercentqgeActionPerformed
+
+    private void faultOccurrenceTF1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_faultOccurrenceTF1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_faultOccurrenceTF1ActionPerformed
+
+    
+    
+    
+    
     long startingTime = 0; //400 seconds
 
     
-ActionListener countDown =new ActionListener()
+ActionListener counter = new ActionListener()
 {
     public void actionPerformed(ActionEvent e)
     {
         startingTime+= 12;
-        SimpleDateFormat df=new SimpleDateFormat("mm:ss:S");
-        timerLabel.setText(df.format(startingTime));
+        SimpleDateFormat df=new SimpleDateFormat("HH:mm:ss:S");
+      String st =  df.format(startingTime);
+      
+      timerLabel.setText(df.format(startingTime));
+      
+    /*  float interval = finalVmsList.get(2).interval;
+                    int sec = (int) (interval % 60);
+		    int min = (int) ((interval / 60)%60);
+		    int hours = (int) ((interval/60)/60);
+           
+		String intervalString = String.format("%02d:%02d:%02d", hours, min, sec);
+                
+     if(st == intervalString){
+         System.out.println("ana intervalString " + intervalString);
+         System.out.println("st");
+         intervalString = intervalString + intervalString;
+     }*/
         if(startingTime >= 400000)
         {
             timer.stop();
         }
     }
 };       
-Timer timer=new Timer(1,countDown);
+Timer timer=new Timer(1,counter);
 
+public void fault_tolerance(){
+
+
+}
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField FailurePercentqge;
     private javax.swing.JTable exeTable;
+    private javax.swing.JTextField faultOccurrenceTF1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel timerLabel;

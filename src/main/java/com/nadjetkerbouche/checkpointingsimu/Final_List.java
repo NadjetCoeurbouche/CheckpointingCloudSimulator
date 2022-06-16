@@ -28,6 +28,7 @@ public class Final_List extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         finalListTable = new javax.swing.JTable();
         AssignTasksBtn = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -37,9 +38,11 @@ public class Final_List extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Task ID", "VM ID", "Response time expected", "Penalty cost", "Checkpointing count", "checkpointing interval"
+                "Task ID", "VM ID", "Response time expected", "Penalty cost", "Checkpoint count", "checkpointing interval"
             }
         ));
+        finalListTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        finalListTable.setGridColor(new java.awt.Color(255, 255, 255));
         finalListTable.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(finalListTable);
 
@@ -52,6 +55,10 @@ public class Final_List extends javax.swing.JFrame {
             }
         });
         getContentPane().add(AssignTasksBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 530, -1, -1));
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel1.setText("Tasks Final Assignement List");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -109,15 +116,28 @@ public void assignment(){
          
  data[0] = slaList.get(i).slaID;
  data[1] = bestVmsList.get(i).vmID;
- responseTimeExpected = vm_sla.slaList.get(i).instructionCount / vm_sla.vmList.get(i).computeCapacity; 
- data[2] = bestVMs.fill_table(slaList.get(i).slaID - 1).get(i).responseTimeExpected;
+ responseTimeExpected = bestVMs.fill_table(slaList.get(i).slaID - 1).get(i).responseTimeExpected; 
+			int seco = (int) (responseTimeExpected % 60);
+		    int minu = (int) ((responseTimeExpected / 60)%60);
+		    int hourss = (int) ((responseTimeExpected/60)/60);
+            
+		   
+
+		String timeString = String.format("%02d:%02d:%02d", hourss, minu, seco);
+ data[2] =timeString;
  data[3] = bestVMs.fill_table(i).get(i).total_penalty_cost;
  float penaltycostFactor = bestVMs.fill_table(i).get(i).total_penalty_cost / bestVMs.fill_table(0).get(0).total_penalty_cost;
  checkpointing =   penaltycostFactor* fidelity * bestVMs.fill_table(slaList.get(i).slaID - 1).get(i).responseTimeExpected* bestVMs.fill_table(slaList.get(i).slaID - 1).get(i).faultPercentage;
          
  data[4] = checkpointing; 
  interval = bestVMs.fill_table(slaList.get(i).slaID - 1).get(i).responseTimeExpected / checkpointing;
- data[5] = interval;
+ 
+                    int sec = (int) (interval % 60);
+		    int min = (int) ((interval / 60)%60);
+		    int hours = (int) ((interval/60)/60);
+           
+		String intervalString = String.format("%02d:%02d:%02d", hours, min, sec);
+ data[5] = intervalString;
  Final_List finalList = new Final_List  (slaID, vmID, responseTimeExpected,penaltycostFactor,checkpointing,interval );
  finalModel.addRow(data);
  finalVmsList.add(finalList);
@@ -128,6 +148,7 @@ public void assignment(){
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AssignTasksBtn;
     private javax.swing.JTable finalListTable;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

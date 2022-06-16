@@ -39,6 +39,7 @@ public class BestVmsList extends javax.swing.JFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         tasksList = new javax.swing.JList<>();
         jButton2 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
 
         jRadioButtonMenuItem1.setSelected(true);
         jRadioButtonMenuItem1.setText("jRadioButtonMenuItem1");
@@ -63,6 +64,7 @@ public class BestVmsList extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        bestVMsTable.setGridColor(new java.awt.Color(255, 255, 255));
         jScrollPane1.setViewportView(bestVMsTable);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 80, 810, 440));
@@ -88,6 +90,10 @@ public class BestVmsList extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 540, -1, -1));
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel2.setText("Best Virtual Machines List");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -212,6 +218,7 @@ new Final_List().setVisible(true);         // TODO add your handling code here:
     private javax.swing.JButton jButton2;
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane4;
