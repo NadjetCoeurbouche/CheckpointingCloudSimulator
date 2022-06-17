@@ -24,6 +24,7 @@ public class VM_SLA_data_UI extends javax.swing.JFrame {
     public VM_SLA_data_UI() {
         initComponents();
          setColor(dashboardBtn); 
+
     }
 
     @SuppressWarnings("unchecked")
@@ -434,7 +435,6 @@ vmList.add(vm);
 
     // Generate best vms list button
     private void bestVMsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bestVMsActionPerformed
-      
 new BestVmsList().setVisible(true);    }//GEN-LAST:event_bestVMsActionPerformed
 
     private void dashboardBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dashboardBtnActionPerformed

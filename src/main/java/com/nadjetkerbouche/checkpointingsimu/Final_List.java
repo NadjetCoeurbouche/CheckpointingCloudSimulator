@@ -19,6 +19,7 @@ public class Final_List extends javax.swing.JFrame {
     public Final_List() {
         initComponents();
         assignment();
+
     }
 
     @SuppressWarnings("unchecked")
@@ -33,6 +34,7 @@ public class Final_List extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        finalListTable.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         finalListTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -46,7 +48,7 @@ public class Final_List extends javax.swing.JFrame {
         finalListTable.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(finalListTable);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 870, 440));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 870, 260));
 
         AssignTasksBtn.setText("Run tasks");
         AssignTasksBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -54,11 +56,11 @@ public class Final_List extends javax.swing.JFrame {
                 AssignTasksBtnActionPerformed(evt);
             }
         });
-        getContentPane().add(AssignTasksBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 530, -1, -1));
+        getContentPane().add(AssignTasksBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 390, -1, -1));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setText("Tasks Final Assignement List");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, -1, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -84,8 +86,8 @@ public class Final_List extends javax.swing.JFrame {
     float responseTimeExpected;
     float faultPercentage;
     float penaltyPercentage;
-    float checkpointing;
-    float interval;
+   public float checkpointing;
+    public float interval;
     float fidelity = (float) 0.4;
     
     
@@ -117,34 +119,30 @@ public void assignment(){
  data[0] = slaList.get(i).slaID;
  data[1] = bestVmsList.get(i).vmID;
  responseTimeExpected = bestVMs.fill_table(slaList.get(i).slaID - 1).get(i).responseTimeExpected; 
-			int seco = (int) (responseTimeExpected % 60);
-		    int minu = (int) ((responseTimeExpected / 60)%60);
-		    int hourss = (int) ((responseTimeExpected/60)/60);
-            
-		   
-
-		String timeString = String.format("%02d:%02d:%02d", hourss, minu, seco);
- data[2] =timeString;
+			
+ data[2] = convertTime(responseTimeExpected);
  data[3] = bestVMs.fill_table(i).get(i).total_penalty_cost;
  float penaltycostFactor = bestVMs.fill_table(i).get(i).total_penalty_cost / bestVMs.fill_table(0).get(0).total_penalty_cost;
  checkpointing =   penaltycostFactor* fidelity * bestVMs.fill_table(slaList.get(i).slaID - 1).get(i).responseTimeExpected* bestVMs.fill_table(slaList.get(i).slaID - 1).get(i).faultPercentage;
          
  data[4] = checkpointing; 
  interval = bestVMs.fill_table(slaList.get(i).slaID - 1).get(i).responseTimeExpected / checkpointing;
- 
-                    int sec = (int) (interval % 60);
-		    int min = (int) ((interval / 60)%60);
-		    int hours = (int) ((interval/60)/60);
-           
-		String intervalString = String.format("%02d:%02d:%02d", hours, min, sec);
- data[5] = intervalString;
+                  
+ data[5] = convertTime(interval);
  Final_List finalList = new Final_List  (slaID, vmID, responseTimeExpected,penaltycostFactor,checkpointing,interval );
  finalModel.addRow(data);
  finalVmsList.add(finalList);
      }
 }
    
-
+public String convertTime(float time){
+    
+                    int sec = (int) (time % 60);
+		    int min = (int) ((time / 60)%60);
+		    int hours = (int) ((time/60)/60);
+		 String intervalString = String.format("%02d:%02d:%02d", hours, min, sec);
+                 return intervalString;
+}
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AssignTasksBtn;
     private javax.swing.JTable finalListTable;

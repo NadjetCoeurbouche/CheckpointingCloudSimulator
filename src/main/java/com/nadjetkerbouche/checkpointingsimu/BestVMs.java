@@ -34,13 +34,20 @@ public class BestVMs implements Comparable<BestVMs>{
         return " "+ "\t" + vmID + "\t" + responseTimeExpected + "\t" + faultPercentage +  "\t" + penaltyPercentage1 + "\t" + penaltyPercentage2 + "\t" + penaltyPercentage3 + "\t" + total_penalty_cost;
      
     }
+    
 // this class used to access to Comparable methods so that we can sort data    
     @Override
     public int compareTo(BestVMs o) {
          Float t1 = Float.valueOf(this.responseTimeExpected);
          Float t2 = Float.valueOf(o.responseTimeExpected);
-
-     return t1.compareTo(t2);
+          Float t3 = Float.valueOf(this.faultPercentage);
+          Float t4 = Float.valueOf(o.faultPercentage);
+                int result;
+                result = (int)(t1 - t2);
+                if(result == 0){
+                result = t3.compareTo(t4);
+            }
+              return  result ;
      
      
     }

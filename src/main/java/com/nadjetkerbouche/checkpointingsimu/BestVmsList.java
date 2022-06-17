@@ -20,6 +20,8 @@ public class BestVmsList extends javax.swing.JFrame {
     public BestVmsList() {
         initComponents();
         tasks_list();
+        fill_table(0);
+
     }
    
     /**
@@ -48,6 +50,7 @@ public class BestVmsList extends javax.swing.JFrame {
         setBackground(new java.awt.Color(255, 255, 255));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        bestVMsTable.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         bestVMsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -67,11 +70,13 @@ public class BestVmsList extends javax.swing.JFrame {
         bestVMsTable.setGridColor(new java.awt.Color(255, 255, 255));
         jScrollPane1.setViewportView(bestVMsTable);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 80, 810, 440));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 80, 810, 200));
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 40, -1, -1));
 
+        tasksList.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         tasksList.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         tasksList.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        tasksList.setLayoutOrientation(javax.swing.JList.VERTICAL_WRAP);
         tasksList.setSelectionBackground(new java.awt.Color(204, 255, 204));
         tasksList.setSelectionForeground(new java.awt.Color(255, 255, 255));
         tasksList.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -81,7 +86,7 @@ public class BestVmsList extends javax.swing.JFrame {
         });
         jScrollPane4.setViewportView(tasksList);
 
-        getContentPane().add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 200, 440));
+        getContentPane().add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 200, 280));
 
         jButton2.setText("Generate Final assignment list");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -89,7 +94,7 @@ public class BestVmsList extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 540, -1, -1));
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 350, 290, 30));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel2.setText("Best Virtual Machines List");
@@ -111,8 +116,10 @@ public class BestVmsList extends javax.swing.JFrame {
     
     
  public String toString() {
-        return " "+ ranking + "\t" + vmID + "\t" + responseTimeExpected + "\t" + faultPercentage +  "\t" + penaltyPercentage1 + "\t" + penaltyPercentage2 + "\t" + penaltyPercentage3 + "\t" + total_penalty_cost;
-     
+        return " "+ ranking + "\t" + vmID + "\t" + responseTimeExpected + "\t" + 
+                faultPercentage +  "\t" + penaltyPercentage1 + "\t" 
+                + penaltyPercentage2 + "\t" + penaltyPercentage3 + "\t"
+                + total_penalty_cost;
     }
  
     
@@ -127,7 +134,8 @@ public void tasks_list(){
   }
   tasksList.setModel(list_model);
 }
-// sorting method by response time
+
+// sorting Best Vms List by response time and failure percentage
    public static void sort(ArrayList<BestVMs> list) {
    
         list.sort(new Comparator<BestVMs>() {
@@ -135,7 +143,15 @@ public void tasks_list(){
             public int compare(BestVMs o1, BestVMs o2) {
                 Float t1 = Float.valueOf(o1.responseTimeExpected);
                 Float t2 = Float.valueOf(o2.responseTimeExpected);
-              return  t1.compareTo(t2);
+                Float t3 = Float.valueOf(o1.faultPercentage);
+                Float t4 = Float.valueOf(o2.faultPercentage);
+                int result;
+                result = (int)(t1 - t2);
+                System.out.println(" t1 " + result );
+                if(result == 0){
+                result = t3.compareTo(t4);
+            }
+              return  result ;
                 
             }
         });
@@ -150,8 +166,6 @@ public void tasks_list(){
 
     bestVmsList = new ArrayList<BestVMs>();
    
-            
-
     DefaultTableModel vmsModel = (DefaultTableModel)bestVMsTable.getModel();
     Object data [] = new Object [8];            
                 
@@ -207,7 +221,7 @@ Collections.sort(bestVmsList);
     }//GEN-LAST:event_tasksListMousePressed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-new Final_List().setVisible(true);         // TODO add your handling code here:
+        new Final_List().setVisible(true);         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
      

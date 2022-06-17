@@ -6,6 +6,9 @@ import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 
@@ -17,39 +20,46 @@ public class monitoringTasks extends javax.swing.JFrame {
 
     int progress;
     int lastCheckpoint;
+       int sla_ID;
+    int vm_ID;
+    String response_time_expected;
+   String checkpoint_interval;
+Final_List final_list_object = new Final_List();
 
     /**
      * Creates new form monitoringTasks
      */
     public monitoringTasks() throws InterruptedException {
         initComponents();
-        
+
        exeTable();
     }
 
     public void exeTable(){
      
     DefaultTableModel exeModel = (DefaultTableModel)exeTable.getModel();
-    Object data [] = new Object [finalVmsList.size()];   
+    Object data [] = new Object [finalVmsList.size()];
+   
         for (int i = 0; i < finalVmsList.size(); i++) {
-                   
+  response_time_expected = final_list_object.convertTime(finalVmsList.get(i).responseTimeExpected);
+    checkpoint_interval = final_list_object.convertTime(finalVmsList.get(i).interval);
 data[0] = finalVmsList.get(i).slaID;
 data[1] = finalVmsList.get(i).vmID;
-data[2] = "00:00:00";
-data[3] = "00:00:00" ;
+data[2] = checkpoint_interval;
+data[3] = response_time_expected;
+
 
  exeModel.addRow(data);
 }
      }
  
-    public void timeDifference () throws ParseException{
-    String time1 = "16:00:00";
-    String time2 = "19:00:00";
+    public void timeDifference (String time1, String time2 ) throws ParseException{
+    
 
 SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
 Date date1 = format.parse(time1);
 Date date2 = format.parse(time2);
-long difference = date2.getTime() - date1.getTime(); 
+long differance = date2.getTime() - date1.getTime(); 
     }
     
        
@@ -60,18 +70,11 @@ long difference = date2.getTime() - date1.getTime();
    
             Object data [] = new Object [finalVmsList.size()];   
             float interval = finalVmsList.get(2).interval;
-            int sec = (int) (interval % 60);
-                    int min = (int) ((interval / 60)%60);
-		    int hours = (int) ((interval/60)/60);
-           
-		String intervalString = String.format("%02d:%02d:%02d", hours, min, sec);
+           String intervalString =  final_list_object.convertTime(interval);
          //String newInterval = df.format(intervalString);
-
-  
           
      exeModel.setValueAt(intervalString,2, 2);
-
-    
+ 
       return intervalString = intervalString + intervalString  ;
        
 }
@@ -99,7 +102,9 @@ long difference = date2.getTime() - date1.getTime();
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(187, 225, 250));
 
+        exeTable.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         exeTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -111,6 +116,8 @@ long difference = date2.getTime() - date1.getTime();
         exeTable.setGridColor(new java.awt.Color(255, 255, 255));
         jScrollPane1.setViewportView(exeTable);
 
+        jPanel1.setBackground(new java.awt.Color(187, 225, 250));
+
         jButton1.setText("Run tasks");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -118,10 +125,10 @@ long difference = date2.getTime() - date1.getTime();
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Failure percentage: ");
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel2.setText("Failure occurence:");
 
         timerLabel.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
@@ -151,30 +158,25 @@ long difference = date2.getTime() - date1.getTime();
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(0, 113, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(FailurePercentqge, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(1, 1, 1)
-                                .addComponent(faultOccurrenceTF1, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(FailurePercentqge, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(27, 27, 27)
-                                .addComponent(jButton1)
-                                .addGap(202, 202, 202)
-                                .addComponent(jButton2))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(181, 181, 181)
-                                .addComponent(timerLabel)))
-                        .addGap(0, 50, Short.MAX_VALUE)))
+                        .addGap(1, 1, 1)
+                        .addComponent(faultOccurrenceTF1, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addComponent(jButton1)
+                .addGap(31, 31, 31)
+                .addComponent(timerLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton2)
+                .addGap(30, 30, 30))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -187,13 +189,13 @@ long difference = date2.getTime() - date1.getTime();
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(faultOccurrenceTF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton1))
-                .addGap(29, 29, 29)
-                .addComponent(timerLabel)
-                .addContainerGap(98, Short.MAX_VALUE))
+                .addGap(68, 68, 68)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton1)
+                        .addComponent(timerLabel))
+                    .addComponent(jButton2))
+                .addContainerGap(48, Short.MAX_VALUE))
         );
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -204,29 +206,28 @@ long difference = date2.getTime() - date1.getTime();
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(101, 101, 101)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 687, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 119, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(jLabel3)
-                .addGap(18, 18, 18)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(172, 172, 172)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(94, 94, 94)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 687, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addComponent(jLabel3)))
+                .addContainerGap(126, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(71, 71, 71)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(47, 47, 47)
-                        .addComponent(jLabel3)))
-                .addGap(47, 47, 47)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addGap(22, 22, 22)
+                .addComponent(jLabel3)
+                .addGap(17, 17, 17)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(166, Short.MAX_VALUE))
         );
 
         pack();
@@ -234,11 +235,12 @@ long difference = date2.getTime() - date1.getTime();
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
     timer.start();
-
+    t1.start();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
             timer.stop();
+            
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -254,42 +256,81 @@ long difference = date2.getTime() - date1.getTime();
     
     
     
-    long startingTime = 0; //400 seconds
-
+    long startingRunTime = 0; //400 seconds
+    float timeLeft = finalVmsList.get(1).responseTimeExpected;
     
+    public String fill_interval(float interval) throws InterruptedException{
+             //    
+
+         String intervalString = final_list_object.convertTime(interval);
+        return intervalString;
+
+
+    }   
+    float interval = finalVmsList.get(2).interval;
+
+    // Thread to for checking latest checkpoint
+    Thread t1 = new Thread(new Runnable() {
+    @Override
+    public void run() {
+            DefaultTableModel exeModel = (DefaultTableModel)exeTable.getModel();
+
+        try {          
+            for(int i =0; i<5; i++){
+            exeModel.setValueAt(fill_interval(interval), 2, 2); 
+            t1.sleep((long)(finalVmsList.get(2).interval*1000));
+                interval = interval + interval ;
+            }
+        } catch (InterruptedException ex) {
+            Logger.getLogger(monitoringTasks.class.getName()).log(Level.SEVERE, null, ex);
+        } // code goes here.
+}
+});  
+    // Global timer action
 ActionListener counter = new ActionListener()
 {
     public void actionPerformed(ActionEvent e)
-    {
-        startingTime+= 12;
-        SimpleDateFormat df=new SimpleDateFormat("HH:mm:ss:S");
-      String st =  df.format(startingTime);
-      
-      timerLabel.setText(df.format(startingTime));
-      
-    /*  float interval = finalVmsList.get(2).interval;
-                    int sec = (int) (interval % 60);
-		    int min = (int) ((interval / 60)%60);
-		    int hours = (int) ((interval/60)/60);
-           
-		String intervalString = String.format("%02d:%02d:%02d", hours, min, sec);
-                
-     if(st == intervalString){
-         System.out.println("ana intervalString " + intervalString);
-         System.out.println("st");
-         intervalString = intervalString + intervalString;
-     }*/
-        if(startingTime >= 400000)
+{              
+    DefaultTableModel exeModel = (DefaultTableModel)exeTable.getModel();
+
+        startingRunTime += 1000;
+        timeLeft -= 1;
+        SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
+        String st =  df.format(startingRunTime);
+        String tl = final_list_object.convertTime(timeLeft);
+        
+ timerLabel.setText(st);
+        try {
+            exeModel.setValueAt(fill_interval(timeLeft), 1, 3);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(monitoringTasks.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+  if(timeLeft <= 0)
+        {
+            timer.stop();
+        }
+     
+     
+        if(startingRunTime >= 400000)
         {
             timer.stop();
         }
     }
 };       
-Timer timer=new Timer(1,counter);
-
+Timer timer = new Timer(1000,counter);
+ 
+   
 public void fault_tolerance(){
 
 
+    
+    
+    
+    
+    
+    
+    
 }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField FailurePercentqge;
