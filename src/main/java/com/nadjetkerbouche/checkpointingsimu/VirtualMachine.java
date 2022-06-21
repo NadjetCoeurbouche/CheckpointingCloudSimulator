@@ -32,4 +32,8 @@ public class VirtualMachine {
                 "\t" + ramCapacity + "\t" + storageCapacity + "\t" + faultPercentage + "\t" + Status;
      
     }
+
+    String vmID() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

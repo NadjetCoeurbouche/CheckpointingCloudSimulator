@@ -8,22 +8,27 @@ package com.nadjetkerbouche.checkpointingsimu;
 public class BestVMs implements Comparable<BestVMs>{
     int vmID;
     float responseTimeExpected;
+    int deadline;
     float faultPercentage;
     float penaltyPercentage1;
     float penaltyPercentage2;
     float penaltyPercentage3;
    float total_penalty_cost;
+    String status;
 
 
-    public BestVMs(int vmID, float responseTimeExpected, float faultPercentage, float penaltyPercentage1, float penaltyPercentage2, float penaltyPercentage3, float total_penalty_cost) {
+    public BestVMs(int vmID, float responseTimeExpected,  int deadline, float faultPercentage, float penaltyPercentage1, float penaltyPercentage2
+            ,float penaltyPercentage3, float total_penalty_cost,  String status) {
         this.vmID = vmID;
         this.responseTimeExpected = responseTimeExpected;
+        this.deadline = deadline;
         this.faultPercentage = faultPercentage;
         this.penaltyPercentage1 = penaltyPercentage1;
         this.penaltyPercentage2 = penaltyPercentage2;
         this.penaltyPercentage3 = penaltyPercentage3;
         this.total_penalty_cost = total_penalty_cost;
-   
+       this.status = status;
+
 }
 
     BestVMs() {
@@ -31,7 +36,8 @@ public class BestVMs implements Comparable<BestVMs>{
     }
 
     public String toString() {
-        return " "+ "\t" + vmID + "\t" + responseTimeExpected + "\t" + faultPercentage +  "\t" + penaltyPercentage1 + "\t" + penaltyPercentage2 + "\t" + penaltyPercentage3 + "\t" + total_penalty_cost;
+        return " "+ "\t" + vmID + "\t" + responseTimeExpected + "\t" + deadline + "\t" + faultPercentage +  "\t" + penaltyPercentage1 + "\t"
+                + penaltyPercentage2 + "\t" + penaltyPercentage3 + "\t" + total_penalty_cost + "\t" + status;
      
     }
     

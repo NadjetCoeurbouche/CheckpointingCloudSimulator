@@ -1,5 +1,6 @@
 package com.nadjetkerbouche.checkpointingsimu;
 
+import static com.nadjetkerbouche.checkpointingsimu.Final_List.finalVmsList;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -38,10 +39,11 @@ public class BestVmsList extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         bestVMsTable = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        tasksList = new javax.swing.JList<>();
         jButton2 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        tasksList = new javax.swing.JList<>();
 
         jRadioButtonMenuItem1.setSelected(true);
         jRadioButtonMenuItem1.setText("jRadioButtonMenuItem1");
@@ -56,11 +58,11 @@ public class BestVmsList extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Ranking", "vm ID", "Response time", "Failure Percentage", "10% ", "25%", "50%", "Total Penalty Cost"
+                "Ranking", "vm ID", "Response time", "Deadline", "Failure Percentage", "Total Penalty Cost", "status"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, true
+                false, false, false, false, false, true, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -70,8 +72,20 @@ public class BestVmsList extends javax.swing.JFrame {
         bestVMsTable.setGridColor(new java.awt.Color(255, 255, 255));
         jScrollPane1.setViewportView(bestVMsTable);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 80, 810, 200));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 80, 810, 340));
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 40, -1, -1));
+
+        jButton2.setText("Generate Final assignment list");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 440, 290, 30));
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel2.setText("Best Virtual Machines List");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, -1, -1));
 
         tasksList.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         tasksList.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -86,19 +100,9 @@ public class BestVmsList extends javax.swing.JFrame {
         });
         jScrollPane4.setViewportView(tasksList);
 
-        getContentPane().add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 200, 280));
+        jScrollPane3.setViewportView(jScrollPane4);
 
-        jButton2.setText("Generate Final assignment list");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 350, 290, 30));
-
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel2.setText("Best Virtual Machines List");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, -1, -1));
+        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 190, 510));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -112,6 +116,7 @@ public class BestVmsList extends javax.swing.JFrame {
     float penaltyPercentage2 ;
     float penaltyPercentage3;
     float total_penalty_cost;
+    String status;
     public static ArrayList<BestVMs> bestVmsList = null;
     
     
@@ -119,7 +124,7 @@ public class BestVmsList extends javax.swing.JFrame {
         return " "+ ranking + "\t" + vmID + "\t" + responseTimeExpected + "\t" + 
                 faultPercentage +  "\t" + penaltyPercentage1 + "\t" 
                 + penaltyPercentage2 + "\t" + penaltyPercentage3 + "\t"
-                + total_penalty_cost;
+                + total_penalty_cost + "\t" + status;
     }
  
     
@@ -156,18 +161,17 @@ public void tasks_list(){
             }
         });
     }
-   
-   
+            float meanpenalty_cost;        
+
+   int deadline;
     public ArrayList<BestVMs> fill_table(int selectedTask ){
     int insCount = vm_sla.slaList.get(selectedTask).instructionCount;
-    float delayValue1;
-    float delayValue2;
-    float delayValue3;
-
+    
+int price;
     bestVmsList = new ArrayList<BestVMs>();
    
     DefaultTableModel vmsModel = (DefaultTableModel)bestVMsTable.getModel();
-    Object data [] = new Object [8];            
+    Object data [] = new Object [9];            
                 
     for (int i =0; i < vm_sla.vmList.size(); i ++){
     
@@ -177,27 +181,61 @@ public void tasks_list(){
         penaltyPercentage1 = (float) vm_sla.slaList.get(selectedTask).price  * (float)vm_sla.slaList.get(selectedTask).penaltyPercentage1;
         penaltyPercentage2 = (float)vm_sla.slaList.get(selectedTask).price  * (float) vm_sla.slaList.get(selectedTask).penaltyPercentage2;
         penaltyPercentage3 = (float) vm_sla.slaList.get(selectedTask).price  * (float) vm_sla.slaList.get(selectedTask).penaltyPercentage3;
-        delayValue1 =  (float) (0.1 * (float) vm_sla.slaList.get(selectedTask).deadline);
-        delayValue2 =  (float) (0.25 * (float) vm_sla.slaList.get(selectedTask).deadline);
-        delayValue3 =  (float) (0.50 * (float) vm_sla.slaList.get(selectedTask).deadline);
-        total_penalty_cost = vm_sla.slaList.get(selectedTask).penaltyCost ;
+        deadline = vm_sla.slaList.get(selectedTask).deadline;
+        price =  vm_sla.slaList.get(selectedTask).price;
+       
+float delay1 = (float) (0.1 * deadline) + deadline;
+float delay2 = (float) (0.25 * deadline) + deadline;
+float delay3 = (float) (0.50 * deadline) + deadline;
 
-        BestVMs firstList = new BestVMs(vmID, responseTimeExpected, faultPercentage, penaltyPercentage1, 
-           penaltyPercentage2, penaltyPercentage3, total_penalty_cost);
-bestVmsList.add(firstList);
-Collections.sort(bestVmsList);
+       if(deadline >= responseTimeExpected){
+    meanpenalty_cost = ((penaltyPercentage1  + penaltyPercentage2 + penaltyPercentage3) /3) * price;    
+        status = "no penalty confirmed";
+       }
+else {
+    if (responseTimeExpected >= delay1 &&  responseTimeExpected < delay2 ){
+    meanpenalty_cost = ((penaltyPercentage1 + penaltyPercentage1 + penaltyPercentage2 + penaltyPercentage3) /4) * price;
+        status = "penalty confirmed case 1";
+
+    }
+    else if (responseTimeExpected >= delay2 &&  responseTimeExpected < delay3 ) {
+            meanpenalty_cost = ((penaltyPercentage1 + penaltyPercentage2 + penaltyPercentage2 + penaltyPercentage3) /4) * price;
+        status = "penalty confirmed case 2";
+
+
+
+    }
+    else{
+              meanpenalty_cost = ((penaltyPercentage1 + penaltyPercentage3 + penaltyPercentage2 + penaltyPercentage3) /4) * price;
+        status = "penalty confirmed case 3";
+
+
+    }
+       }
+  
+        BestVMs firstList = new BestVMs(vmID, responseTimeExpected,deadline, faultPercentage, penaltyPercentage1, 
+           penaltyPercentage2, penaltyPercentage3, meanpenalty_cost, status);
+
+        bestVmsList.add(firstList);
+
+        Collections.sort(bestVmsList);
 
 }
    for (int i =0; i < vm_sla.vmList.size(); i ++){
-      
+    if(bestVmsList.get(i).status != "no penalty confirmed"){
+ data[5] = bestVmsList.get(i).total_penalty_cost;
+ }
+ else{
+  data[5] = "/";
+ }   
  data[0] = i;
  data[1] = bestVmsList.get(i).vmID;
  data[2] = bestVmsList.get(i).responseTimeExpected;
- data[3] = bestVmsList.get(i).faultPercentage;
- data[4] = bestVmsList.get(i).penaltyPercentage1;
- data[5] = bestVmsList.get(i).penaltyPercentage2;
- data[6] = bestVmsList.get(i).penaltyPercentage3;
- data[7] = bestVmsList.get(i).total_penalty_cost;
+ data[3] = bestVmsList.get(i).deadline;
+ data[4] = bestVmsList.get(i).faultPercentage;
+
+ data[6] = bestVmsList.get(i).status;
+
    vmsModel.addRow(data);
 
    } 
@@ -221,11 +259,12 @@ Collections.sort(bestVmsList);
     }//GEN-LAST:event_tasksListMousePressed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        new Final_List().setVisible(true);         // TODO add your handling code here:
+        new Final_List().setVisible(true); 
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
      
-  
+
        
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable bestVMsTable;
@@ -235,6 +274,7 @@ Collections.sort(bestVmsList);
     private javax.swing.JLabel jLabel2;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JList<String> tasksList;
     // End of variables declaration//GEN-END:variables

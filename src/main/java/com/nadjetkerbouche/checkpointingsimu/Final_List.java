@@ -40,7 +40,7 @@ public class Final_List extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Task ID", "VM ID", "Response time expected", "Penalty cost", "Checkpoint count", "checkpointing interval"
+                "Task ID", "VM ID", "Response time expected", "Penalty Cost Expected", "Checkpoint count", "checkpointing interval", "status"
             }
         ));
         finalListTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
@@ -86,52 +86,62 @@ public class Final_List extends javax.swing.JFrame {
     float responseTimeExpected;
     float faultPercentage;
     float penaltyPercentage;
-   public float checkpointing;
+    public float checkpointing;
     public float interval;
     float fidelity = (float) 0.4;
+    String status ;
     
-    
-    public Final_List( int slaID, int vmID, float responseTimeExpected, float penaltyPercentage, float checkpointing, float interval) {
+    public Final_List( int slaID, int vmID, float faultPercentage, float responseTimeExpected, float penaltyPercentage, 
+            float checkpointing, float interval,   String status) {
        this.slaID = slaID;
         this.vmID = vmID;
+        this.faultPercentage =  faultPercentage;
         this.responseTimeExpected = responseTimeExpected;
         this.penaltyPercentage = penaltyPercentage;
         this.checkpointing = checkpointing;
         this.interval = interval;
+        this.status = status;
     }
     
     public String toString() {
-        return " " + slaID + "\t" + vmID + "\t" + responseTimeExpected + "\t"  + penaltyPercentage + "\t" + checkpointing + "\t" + interval;
+        return " " + slaID + "\t" + vmID + "\t" +  faultPercentage + "\t" + 
+                responseTimeExpected + "\t"  + penaltyPercentage + "\t" + checkpointing + "\t" + interval + "\t" + status;
      
     }  
  
 // Fisrt I thought of finding the highest penalty cost bcz all the tasks have the same VMs ranking
  // I need to compare current task deadline with all vms expctd res_time to calculate checkpointing interval in next step
-public void assignment(){
-     finalVmsList = new  ArrayList<Final_List>() ;   
+
+  public void assignment(){
+     
+      finalVmsList = new  ArrayList<Final_List>() ;   
     DefaultTableModel finalModel = (DefaultTableModel)finalListTable.getModel();
     Object data [] = new Object [vm_sla.slaList.size()];   
    
      for (int i =0; i < vm_sla.slaList.size(); i ++){
-         slaID =slaList.get(i).slaID;
-         vmID = bestVmsList.get(i).vmID;
-         
+            slaID =slaList.get(i).slaID;
+            vmID = bestVmsList.get(i).vmID;
+            faultPercentage = bestVmsList.get(i).faultPercentage;
+            responseTimeExpected = bestVMs.fill_table(i).get(i).responseTimeExpected; 
+            float penaltycostFactor = bestVMs.fill_table(i).get(i).total_penalty_cost / bestVMs.fill_table(0).get(0).total_penalty_cost;
+            checkpointing =   penaltycostFactor* fidelity * bestVMs.fill_table(i).get(i).responseTimeExpected* bestVMs.fill_table(i).get(i).faultPercentage;
+            interval = bestVMs.fill_table(i).get(i).responseTimeExpected / checkpointing;
+            status =  bestVMs.fill_table(i).get(i).status;
  data[0] = slaList.get(i).slaID;
  data[1] = bestVmsList.get(i).vmID;
- responseTimeExpected = bestVMs.fill_table(slaList.get(i).slaID - 1).get(i).responseTimeExpected; 
-			
  data[2] = convertTime(responseTimeExpected);
  data[3] = bestVMs.fill_table(i).get(i).total_penalty_cost;
- float penaltycostFactor = bestVMs.fill_table(i).get(i).total_penalty_cost / bestVMs.fill_table(0).get(0).total_penalty_cost;
- checkpointing =   penaltycostFactor* fidelity * bestVMs.fill_table(slaList.get(i).slaID - 1).get(i).responseTimeExpected* bestVMs.fill_table(slaList.get(i).slaID - 1).get(i).faultPercentage;
-         
- data[4] = checkpointing; 
- interval = bestVMs.fill_table(slaList.get(i).slaID - 1).get(i).responseTimeExpected / checkpointing;
-                  
+ data[4] = checkpointing;           
  data[5] = convertTime(interval);
- Final_List finalList = new Final_List  (slaID, vmID, responseTimeExpected,penaltycostFactor,checkpointing,interval );
+ data[6] = status ;
+
+
+ Final_List finalList = new Final_List  (slaID, vmID,faultPercentage, responseTimeExpected, penaltycostFactor,checkpointing,interval, status );
+ 
  finalModel.addRow(data);
+ 
  finalVmsList.add(finalList);
+
      }
 }
    
@@ -143,6 +153,7 @@ public String convertTime(float time){
 		 String intervalString = String.format("%02d:%02d:%02d", hours, min, sec);
                  return intervalString;
 }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AssignTasksBtn;
     private javax.swing.JTable finalListTable;

@@ -1,5 +1,6 @@
 package com.nadjetkerbouche.checkpointingsimu;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.File;
@@ -7,11 +8,12 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
@@ -24,7 +26,7 @@ public class VM_SLA_data_UI extends javax.swing.JFrame {
     public VM_SLA_data_UI() {
         initComponents();
          setColor(dashboardBtn); 
-
+ hi();
     }
 
     @SuppressWarnings("unchecked")
@@ -32,6 +34,7 @@ public class VM_SLA_data_UI extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
         sidePanel = new javax.swing.JPanel();
         dashboardBtn = new javax.swing.JButton();
         vmBtn = new javax.swing.JButton();
@@ -59,6 +62,8 @@ public class VM_SLA_data_UI extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 100, Short.MAX_VALUE)
         );
+
+        jLabel3.setText("jLabel3");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -115,7 +120,7 @@ public class VM_SLA_data_UI extends javax.swing.JFrame {
         sidePanel.setLayout(sidePanelLayout);
         sidePanelLayout.setHorizontalGroup(
             sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(vmBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+            .addComponent(vmBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(dashboardBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(slaBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(customerBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -123,7 +128,7 @@ public class VM_SLA_data_UI extends javax.swing.JFrame {
         sidePanelLayout.setVerticalGroup(
             sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(sidePanelLayout.createSequentialGroup()
-                .addGap(155, 155, 155)
+                .addContainerGap()
                 .addComponent(dashboardBtn)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(vmBtn)
@@ -131,7 +136,7 @@ public class VM_SLA_data_UI extends javax.swing.JFrame {
                 .addComponent(slaBtn)
                 .addGap(14, 14, 14)
                 .addComponent(customerBtn)
-                .addContainerGap(407, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         getContentPane().add(sidePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 200, 720));
@@ -291,20 +296,17 @@ public class VM_SLA_data_UI extends javax.swing.JFrame {
 public static ArrayList<SLA> slaList  = null;
 // a list to store virtual machines data
 public static ArrayList<VirtualMachine> vmList = null;
-
-    private void customerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customerBtnActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_customerBtnActionPerformed
-
-    private void vmBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vmBtnActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_vmBtnActionPerformed
  
- 
+ public void hi(){
+     String path = "com\\nadjetkerbouche\\checkpointingsimu\\images\\data-storage.png";
+ ImageIcon image = new ImageIcon(path);
+    JLabel label = new JLabel("", image, JLabel.CENTER);
+    sidePanel.add( label, BorderLayout.CENTER );
+ }
     // searching for file path
     private String filePath(){
  
-JFileChooser fileChooser = new JFileChooser();        
+    JFileChooser fileChooser = new JFileChooser();        
       String filePath = null ;
       int result = fileChooser.showOpenDialog(this);
         if (result == JFileChooser.APPROVE_OPTION) {
@@ -372,10 +374,6 @@ slaList.add(sla);
         
     }//GEN-LAST:event_importSLAFileBtnActionPerformed
 
-    private void slaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_slaBtnActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_slaBtnActionPerformed
-
         // method to load Virtual Machines data from text file 
 
     private void importVMFileBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_importVMFileBtn1ActionPerformed
@@ -437,6 +435,18 @@ vmList.add(vm);
     private void bestVMsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bestVMsActionPerformed
 new BestVmsList().setVisible(true);    }//GEN-LAST:event_bestVMsActionPerformed
 
+    private void slaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_slaBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_slaBtnActionPerformed
+
+    private void customerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customerBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_customerBtnActionPerformed
+
+    private void vmBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vmBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_vmBtnActionPerformed
+
     private void dashboardBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dashboardBtnActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_dashboardBtnActionPerformed
@@ -494,6 +504,7 @@ new BestVmsList().setVisible(true);    }//GEN-LAST:event_bestVMsActionPerformed
     private javax.swing.JButton importVMFileBtn1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
