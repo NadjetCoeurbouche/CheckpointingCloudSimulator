@@ -90,7 +90,6 @@ public class BestVmsList extends javax.swing.JFrame {
         tasksList.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         tasksList.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         tasksList.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        tasksList.setLayoutOrientation(javax.swing.JList.VERTICAL_WRAP);
         tasksList.setSelectionBackground(new java.awt.Color(204, 255, 204));
         tasksList.setSelectionForeground(new java.awt.Color(255, 255, 255));
         tasksList.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -241,27 +240,27 @@ else {
    } 
    return bestVmsList;
     }
-    private void tasksListMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tasksListMousePressed
-                
-                DefaultTableModel vmsModel = (DefaultTableModel)bestVMsTable.getModel();
-              
-                // every time I click on the task ID the table have to be cleared from previous data
-                vmsModel.setRowCount(0);
-                
-        int index = tasksList.getSelectedIndex();
-
-        Object taskID = tasksList.getSelectedValue();  
-        
-        Integer selectedTask = Integer.parseInt(taskID.toString());
-        
-                fill_table(index);
-                
-    }//GEN-LAST:event_tasksListMousePressed
-
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         new Final_List().setVisible(true); 
 
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void tasksListMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tasksListMousePressed
+
+        DefaultTableModel vmsModel = (DefaultTableModel)bestVMsTable.getModel();
+
+        // every time I click on the task ID the table have to be cleared from previous data
+        vmsModel.setRowCount(0);
+
+        int index = tasksList.getSelectedIndex();
+
+        Object taskID = tasksList.getSelectedValue();
+
+        Integer selectedTask = Integer.parseInt(taskID.toString());
+
+        fill_table(index);
+
+    }//GEN-LAST:event_tasksListMousePressed
 
      
 
