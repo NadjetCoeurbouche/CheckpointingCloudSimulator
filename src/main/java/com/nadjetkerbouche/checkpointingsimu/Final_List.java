@@ -88,6 +88,7 @@ public class Final_List extends javax.swing.JFrame {
     float penaltyPercentage;
     public float checkpointing;
     public float interval;
+    float totalPenalty;
     float fidelity = (float) 0.4;
     String status ;
     
@@ -127,16 +128,20 @@ public class Final_List extends javax.swing.JFrame {
             checkpointing =   penaltycostFactor* fidelity * bestVMs.fill_table(i).get(i).responseTimeExpected* bestVMs.fill_table(i).get(i).faultPercentage;
             interval = bestVMs.fill_table(i).get(i).responseTimeExpected / checkpointing;
             status =  bestVMs.fill_table(i).get(i).status;
+            totalPenalty = bestVMs.fill_table(i).get(i).total_penalty_cost;
  data[0] = slaList.get(i).slaID;
  data[1] = bestVmsList.get(i).vmID;
  data[2] = convertTime(responseTimeExpected);
- data[3] = bestVMs.fill_table(i).get(i).total_penalty_cost;
+ if( status == "no penalty confirmed"){
+  data[3] = "0";
+ }else{
+ data[3] = totalPenalty; }
  data[4] = checkpointing;           
  data[5] = convertTime(interval);
  data[6] = status ;
 
 
- Final_List finalList = new Final_List  (slaID, vmID,faultPercentage, responseTimeExpected, penaltycostFactor,checkpointing,interval, status );
+ Final_List finalList = new Final_List  (slaID, vmID,faultPercentage, responseTimeExpected, totalPenalty,checkpointing,interval, status );
  
  finalModel.addRow(data);
  

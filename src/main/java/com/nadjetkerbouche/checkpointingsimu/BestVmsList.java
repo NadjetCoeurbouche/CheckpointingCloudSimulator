@@ -58,11 +58,11 @@ public class BestVmsList extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Ranking", "vm ID", "Response time", "Deadline", "Failure Percentage", "Total Penalty Cost", "status"
+                "Ranking", "vm ID", "Response time", "Deadline", "Failure Percentage", "status"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, true, true
+                false, false, false, false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -72,7 +72,7 @@ public class BestVmsList extends javax.swing.JFrame {
         bestVMsTable.setGridColor(new java.awt.Color(255, 255, 255));
         jScrollPane1.setViewportView(bestVMsTable);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 80, 810, 340));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 100, 920, 410));
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 40, -1, -1));
 
         jButton2.setText("Generate Final assignment list");
@@ -81,7 +81,7 @@ public class BestVmsList extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 440, 290, 30));
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 530, 290, 30));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel2.setText("Best Virtual Machines List");
@@ -101,7 +101,7 @@ public class BestVmsList extends javax.swing.JFrame {
 
         jScrollPane3.setViewportView(jScrollPane4);
 
-        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 190, 510));
+        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 170, 510));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -221,19 +221,14 @@ else {
 
 }
    for (int i =0; i < vm_sla.vmList.size(); i ++){
-    if(bestVmsList.get(i).status != "no penalty confirmed"){
- data[5] = bestVmsList.get(i).total_penalty_cost;
- }
- else{
-  data[5] = "/";
- }   
+    
  data[0] = i;
  data[1] = bestVmsList.get(i).vmID;
  data[2] = bestVmsList.get(i).responseTimeExpected;
  data[3] = bestVmsList.get(i).deadline;
  data[4] = bestVmsList.get(i).faultPercentage;
 
- data[6] = bestVmsList.get(i).status;
+ data[5] = bestVmsList.get(i).status;
 
    vmsModel.addRow(data);
 
