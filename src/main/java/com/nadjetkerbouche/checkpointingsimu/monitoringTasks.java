@@ -48,9 +48,11 @@ Final_List final_list_object = new Final_List();
         DefaultTableModel noFTExeModel = (DefaultTableModel)noFTTable.getModel();
 
     Object data [] = new Object [finalVmsList.size()];
-   int b=0;
+  
+    int b=0;
    float responstime =0;
-        for (int i = 0; i < finalVmsList.size(); i++) {
+   // getting data from the final list
+       for (int i = 0; i < finalVmsList.size(); i++) {
             while (b < vm_sla.slaList.size()) {                
                    if(finalVmsList.get(i).slaID == vm_sla.slaList.get(b).slaID){
                     deadline = vm_sla.slaList.get(b).deadline;
@@ -58,11 +60,18 @@ Final_List final_list_object = new Final_List();
                  }  
                    b++;
                 }
+            b=0;
+                   /* for (int ik = 0; ik < finalVmsList.size(); ik++) {
+                        System.out.println("final l " + finalVmsList.get(ik));
+                    }*/
   response_time_expected = final_list_object.convertTime(finalVmsList.get(i).responseTimeExpected);
     checkpoint_interval = final_list_object.convertTime(finalVmsList.get(i).interval);
 data[0] = finalVmsList.get(i).slaID;
+
 data[1] = finalVmsList.get(i).vmID;
 data[2] = responstime;
+                        System.out.println("responsetime " + responstime);
+
 data[3] = deadline;
 data[4] = "";
 data[5] = "";
@@ -71,18 +80,9 @@ data[7] = "pending";
 
  exeModel.addRow(data);
  noFTExeModel.addRow(data);
-}
+ }
      }
-      // calculate  time difference
 
-    public void timeDifference (String time1, String time2 ) throws ParseException{
-    
-
-SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
-Date date1 = format.parse(time1);
-Date date2 = format.parse(time2);
-long differance = date2.getTime() - date1.getTime(); 
-    }
     
        
    
@@ -346,7 +346,10 @@ long differance = date2.getTime() - date1.getTime();
 
     private void runTasksButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_runTasksButtonActionPerformed
                DefaultTableModel exeModel = (DefaultTableModel)exeTable.getModel();
-
+               
+ for(int oo=0; oo< exeModel.getRowCount(); oo++){
+    exeModel.setValueAt("in progress", oo, 7);
+    }
     timer.start();
     
         t1.start();
@@ -368,7 +371,7 @@ long differance = date2.getTime() - date1.getTime();
 
     private void fault_tolerance_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fault_tolerance_buttonActionPerformed
    fault_tolerance();
-without_FT();
+    without_FT();
    // TODO add your handling code here:
     }//GEN-LAST:event_fault_tolerance_buttonActionPerformed
 
@@ -378,7 +381,8 @@ without_FT();
    String failureO;
     int fp;
  ArrayList<FailedTask> failedTasksList = null;
-    
+  
+ // injecting faults
  public void failure(){
         
         DefaultTableModel exeModel = (DefaultTableModel)exeTable.getModel();
@@ -387,14 +391,18 @@ without_FT();
          fp = (int) Integer.parseInt(failureP) ;
          
         int s = exeModel.getRowCount()-1;
-
+        
+      // calculate int number of vm failed
         int vmFailure = (vm_sla.slaList.size() * fp )/100;
        int nbvf = vm_sla.slaList.size() - vmFailure;
         System.out.println("vm fail " + vmFailure );
+        
+        // change the status field of the task
         while (s >= nbvf) {
                     exeModel.setValueAt("failed", s, 7); 
                     s--;
         }
+        // store failed tasks data in failedTasksList arrayList
  failedTasksList = new ArrayList<FailedTask>();
 
         for(int i = 0; i< exeModel.getRowCount(); i++){
@@ -411,6 +419,7 @@ without_FT();
 }
         
     }
+ 
     long startingRunTime = 0; //400 seconds
     float timeLeft = finalVmsList.get(1).responseTimeExpected;
     
@@ -450,9 +459,7 @@ ActionListener counter = new ActionListener()
 {              
     DefaultTableModel exeModel = (DefaultTableModel)exeTable.getModel();
 
-    for(int oo=0; oo< exeModel.getRowCount(); oo++){
-    exeModel.setValueAt("in progress", oo, 7);
-    }
+   
         startingRunTime += 1000;
        // timeLeft -= 1;
         SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
@@ -480,18 +487,18 @@ ActionListener counter = new ActionListener()
 };       
 Timer timer = new Timer(1000,counter);
 
-                ArrayList<Final_List> updatedList = new ArrayList<Final_List>();
+      ArrayList<Final_List> updatedList = new ArrayList<Final_List>();
     int vCPU = 0;
-         int ins_count = 0;
-          float new_response_time;
-          float previouseResponseTime;
+    int ins_count = 0;
+     float new_response_time;
+     float previouseResponseTime;
     float exePercentage;
-   float last_checkpoint;
-         int j=0;
-    int nbInsLeft;
-int newVCPU; 
-int slaID ;
-                int vmID;
+    float last_checkpoint;
+      int j=0;
+       int nbInsLeft;
+   int newVCPU; 
+   int slaID ;
+                   int vmID;
                 float faultPercentage;
                 float responseTimeExpected;
                 float penaltycostFactor;
@@ -500,7 +507,7 @@ int slaID ;
                 int newBestListSize;
                 int l;
                 int i = 0;    
-                int b =0;
+                int b;
                  float wasted_time;
 float final_exe_time ;
  int deadline;
@@ -548,6 +555,7 @@ int price;
                 j++;
 
          }
+         b=0;
                           //extract SLA details  
                 while (b < vm_sla.slaList.size()) {
                     if(failedTasksList.get(i).taskId == vm_sla.slaList.get(b).slaID){
@@ -678,8 +686,7 @@ else {
 CheckpointingFinalResultsClass checkpointingResultsObject = new CheckpointingFinalResultsClass (sla_ID, final_exe_time, penalty_cost, price, faultPercentage, approach_case);
                 resultsList.add(checkpointingResultsObject);
                 
-     data[2] = deadline ;
-     data[3] =  final_exe_time; 
+     data[2] = final_exe_time ;
     
      data[4] = final_list_object.convertTime((int) lastCheckpoint); 
      if( deadline >= final_exe_time){
@@ -692,7 +699,6 @@ CheckpointingFinalResultsClass checkpointingResultsObject = new CheckpointingFin
      data[8] = vmID;
 
      exeModel.setValueAt(data[2], s, 2);
-     exeModel.setValueAt(data[3], s, 3);
      exeModel.setValueAt(data[4], s, 4);
      exeModel.setValueAt(data[5], s, 5);
      exeModel.setValueAt(data[6], s, 6);
@@ -765,13 +771,13 @@ Final_List updatedfinalListObject = new Final_List  (slaID, vmID,faultPercentage
                           //extract SLA details  
                 while (b < vm_sla.slaList.size()) {
                     if(failedTasksList.get(i).taskId == vm_sla.slaList.get(b).slaID){
-                   ins_count =  vm_sla.slaList.get(b).instructionCount;       
-                    deadline = vm_sla.slaList.get(b).deadline;
-                     price =  vm_sla.slaList.get(b).price;
-                       penaltyPercentage1 = vm_sla.slaList.get(b).penaltyPercentage1;
-                        penaltyPercentage2 = vm_sla.slaList.get(b).penaltyPercentage2;
-                        penaltyPercentage3 = vm_sla.slaList.get(b).penaltyPercentage3;
-                     penalty_cost = (penaltyPercentage1+penaltyPercentage2+penaltyPercentage3)* price;
+                        ins_count =  vm_sla.slaList.get(b).instructionCount;       
+                         deadline = vm_sla.slaList.get(b).deadline;
+                          price =  vm_sla.slaList.get(b).price;
+                            penaltyPercentage1 = vm_sla.slaList.get(b).penaltyPercentage1;
+                             penaltyPercentage2 = vm_sla.slaList.get(b).penaltyPercentage2;
+                             penaltyPercentage3 = vm_sla.slaList.get(b).penaltyPercentage3;
+                          penalty_cost = (penaltyPercentage1+penaltyPercentage2+penaltyPercentage3)* price;
 
 
                 }
