@@ -192,12 +192,12 @@ float delay3 = (float) (0.50 * deadline) + deadline;
         status = "no penalty confirmed";
        }
 else {
-    if (responseTimeExpected >= delay1 &&  responseTimeExpected < delay2 ){
+    if (responseTimeExpected > deadline &&  responseTimeExpected <= delay1){
     meanpenalty_cost = ((penaltyPercentage1 + penaltyPercentage1 + penaltyPercentage2 + penaltyPercentage3) /4) * price;
         status = "penalty confirmed case 1";
 
     }
-    else if (responseTimeExpected >= delay2 &&  responseTimeExpected < delay3 ) {
+    else if (responseTimeExpected > delay1 &&  responseTimeExpected <= delay2) {
             meanpenalty_cost = ((penaltyPercentage1 + penaltyPercentage2 + penaltyPercentage2 + penaltyPercentage3) /4) * price;
         status = "penalty confirmed case 2";
 

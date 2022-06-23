@@ -117,9 +117,9 @@ public class Final_List extends javax.swing.JFrame {
      
       finalVmsList = new  ArrayList<Final_List>() ;   
     DefaultTableModel finalModel = (DefaultTableModel)finalListTable.getModel();
-    Object data [] = new Object [vm_sla.slaList.size()];   
+    Object data [] = new Object [slaList.size()];   
    
-     for (int i =0; i < vm_sla.slaList.size(); i ++){
+     for (int i =0; i < slaList.size(); i ++){
             slaID =slaList.get(i).slaID;
             vmID = bestVmsList.get(i).vmID;
             faultPercentage = bestVmsList.get(i).faultPercentage;

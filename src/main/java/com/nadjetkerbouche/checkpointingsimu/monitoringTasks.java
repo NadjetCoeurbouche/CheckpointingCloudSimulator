@@ -28,6 +28,7 @@ public class monitoringTasks extends javax.swing.JFrame {
     String response_time_expected;
    String checkpoint_interval;
    float interval;
+    float finalExeTimeResult;
 Final_List final_list_object = new Final_List();
     BestVmsList bestVMs = new BestVmsList();
 
@@ -48,7 +49,8 @@ Final_List final_list_object = new Final_List();
         DefaultTableModel noFTExeModel = (DefaultTableModel)noFTTable.getModel();
 
     Object data [] = new Object [finalVmsList.size()];
-  
+     Object dataNOFT [] = new Object [finalVmsList.size()];
+
     int b=0;
    float responstime =0;
    // getting data from the final list
@@ -70,8 +72,6 @@ data[0] = finalVmsList.get(i).slaID;
 
 data[1] = finalVmsList.get(i).vmID;
 data[2] = responstime;
-                        System.out.println("responsetime " + responstime);
-
 data[3] = deadline;
 data[4] = "";
 data[5] = "";
@@ -79,7 +79,16 @@ data[6] = "";
 data[7] = "pending";
 
  exeModel.addRow(data);
- noFTExeModel.addRow(data);
+
+dataNOFT[0] = finalVmsList.get(i).slaID;
+
+dataNOFT[1] = finalVmsList.get(i).vmID;
+dataNOFT[2] = responstime;
+dataNOFT[3] = deadline;
+dataNOFT[4] = "";
+dataNOFT[5] = "";
+dataNOFT[6] = "pending";
+ noFTExeModel.addRow(dataNOFT);
  }
      }
 
@@ -111,12 +120,14 @@ data[7] = "pending";
         jScrollPane1 = new javax.swing.JScrollPane();
         exeTable = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
-        textAreaWithFT = new java.awt.TextArea();
+        jLabel6 = new javax.swing.JLabel();
+        totalPenLabel = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         noFTTable = new javax.swing.JTable();
-        textAreaWithoutFT = new java.awt.TextArea();
+        jLabel7 = new javax.swing.JLabel();
+        totalCostNoCheckpointing = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(187, 225, 250));
@@ -232,7 +243,10 @@ data[7] = "pending";
         exeTable.setGridColor(new java.awt.Color(255, 255, 255));
         jScrollPane1.setViewportView(exeTable);
 
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel4.setText("With Checkpointing");
+
+        jLabel6.setText("Total Penalty cost: ");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -243,24 +257,29 @@ data[7] = "pending";
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel4)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(143, 143, 143)
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(totalPenLabel)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 67, Short.MAX_VALUE)
-                        .addComponent(textAreaWithFT, javax.swing.GroupLayout.PREFERRED_SIZE, 627, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 625, Short.MAX_VALUE)
+                        .addGap(14, 14, 14))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addComponent(jLabel4)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel6)
+                    .addComponent(totalPenLabel))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5)
-                .addComponent(textAreaWithFT, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addContainerGap(121, Short.MAX_VALUE))
         );
 
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel5.setText("Without Checkpointing");
 
         noFTTable.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
@@ -269,11 +288,13 @@ data[7] = "pending";
 
             },
             new String [] {
-                "Task ID", "VM ID", "Response time", "Deadline", "Last checkpoint", "penalty cost", "Case", "Status"
+                "Task ID", "VM ID", "Response time", "Deadline", "penalty cost", "Case", "Status", "New VM ID"
             }
         ));
         noFTTable.setGridColor(new java.awt.Color(255, 255, 255));
         jScrollPane2.setViewportView(noFTTable);
+
+        jLabel7.setText("Total Penaly cost:");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -281,60 +302,61 @@ data[7] = "pending";
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 601, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(17, 17, 17)
-                        .addComponent(jLabel5))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(16, 16, 16)
-                        .addComponent(textAreaWithoutFT, javax.swing.GroupLayout.PREFERRED_SIZE, 628, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 601, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jLabel5)
+                        .addGap(86, 86, 86)
+                        .addComponent(jLabel7)
+                        .addGap(18, 18, 18)
+                        .addComponent(totalCostNoCheckpointing)))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(17, 17, 17)
-                .addComponent(jLabel5)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel7)
+                    .addComponent(totalCostNoCheckpointing))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(textAreaWithoutFT, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-                .addContainerGap())
+                .addContainerGap(120, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(jLabel3)
-                .addGap(123, 123, 123)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
-                .addComponent(fault_tolerance_button)
-                .addContainerGap(130, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 530, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(123, 123, 123)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(33, 33, 33)
+                        .addComponent(fault_tolerance_button))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(1206, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(22, 22, 22)
-                            .addComponent(jLabel3)
-                            .addGap(160, 160, 160))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(fault_tolerance_button)))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(fault_tolerance_button))
+                        .addGap(28, 28, 28))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -346,9 +368,12 @@ data[7] = "pending";
 
     private void runTasksButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_runTasksButtonActionPerformed
                DefaultTableModel exeModel = (DefaultTableModel)exeTable.getModel();
-               
+               DefaultTableModel noFTExeModel = (DefaultTableModel)noFTTable.getModel();
+
  for(int oo=0; oo< exeModel.getRowCount(); oo++){
     exeModel.setValueAt("in progress", oo, 7);
+       noFTExeModel.setValueAt("in progress", oo, 6);
+
     }
     timer.start();
     
@@ -370,8 +395,10 @@ data[7] = "pending";
     }//GEN-LAST:event_faultOccurrenceTFActionPerformed
 
     private void fault_tolerance_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fault_tolerance_buttonActionPerformed
-   fault_tolerance();
-    without_FT();
+    
+
+        fault_tolerance();
+without_FT();
    // TODO add your handling code here:
     }//GEN-LAST:event_fault_tolerance_buttonActionPerformed
 
@@ -386,6 +413,7 @@ data[7] = "pending";
  public void failure(){
         
         DefaultTableModel exeModel = (DefaultTableModel)exeTable.getModel();
+        DefaultTableModel noFTExeModel = (DefaultTableModel)noFTTable.getModel();
 
         failureP = FailurePercentageTF.getText().toString();
          fp = (int) Integer.parseInt(failureP) ;
@@ -395,11 +423,11 @@ data[7] = "pending";
       // calculate int number of vm failed
         int vmFailure = (vm_sla.slaList.size() * fp )/100;
        int nbvf = vm_sla.slaList.size() - vmFailure;
-        System.out.println("vm fail " + vmFailure );
-        
+     
         // change the status field of the task
         while (s >= nbvf) {
                     exeModel.setValueAt("failed", s, 7); 
+                    noFTExeModel.setValueAt("failed", s, 6); 
                     s--;
         }
         // store failed tasks data in failedTasksList arrayList
@@ -421,10 +449,9 @@ data[7] = "pending";
     }
  
     long startingRunTime = 0; //400 seconds
-    float timeLeft = finalVmsList.get(1).responseTimeExpected;
+    //float timeLeft = finalVmsList.get(1).responseTimeExpected;
     
     public String fill_interval(float interval) throws InterruptedException{
-             //    
 
         String intervalString = final_list_object.convertTime(interval);
         return intervalString;
@@ -521,6 +548,9 @@ float final_exe_time ;
     float Sumpenalty_costNormal;
     int fo;
 int price;
+float loss;
+float totalLoss = 0;
+float totalLossNoFt =0;
  ArrayList<CheckpointingFinalResultsClass> resultsList = new ArrayList<CheckpointingFinalResultsClass>();
 
   // updating failed tasks to new virtual machines
@@ -544,12 +574,10 @@ int price;
          vmID = bestVmsList.get(l).vmID ;
          faultPercentage = bestVmsList.get(l).faultPercentage;
          String status = "in progress";
-               System.out.println(" ana VM zina ga3 fihom " + vmID );
         
          while (j < vm_sla.vmList.size()) {
                 if(failedTasksList.get(i).vmID == vm_sla.vmList.get(j).vmID){
                                 vCPU =  vm_sla.vmList.get(j).computeCapacity;
-                                               System.out.println(failedTasksList.get(i).vmID + "vm" + "vcpu = " + vCPU );
 
                 }                      
                 j++;
@@ -567,30 +595,28 @@ int price;
                         penaltyPercentage3 = vm_sla.slaList.get(b).penaltyPercentage3;
                      penalty_cost = (penaltyPercentage1+penaltyPercentage2+penaltyPercentage3)* price;
 
-                 System.out.println(failedTasksList.get(i).taskId  + "ins_count  " + ins_count + " deadline " + deadline + "priceee " + price);
-
+                        System.out.println(" price : " + price);
                 }
                       b++;
                 }
                 
                 // calculate response time    
                previouseResponseTime = (int)(ins_count / vCPU);
-                    System.out.println(failedTasksList.get(i).taskId + " ana previous res " + previouseResponseTime);
-                // getting last checkpoint    
-                int p =0;
+
+               // getting last checkpoint    
+                int p2 =0;
                 
-        while( p < finalVmsList.size()){
-           if(finalVmsList.get(p).slaID == failedTasksList.get(i).taskId){
-             interval = finalVmsList.get(p).interval;
+        while( p2 < finalVmsList.size()){
+           if(finalVmsList.get(p2).slaID == failedTasksList.get(i).taskId){
+             interval = finalVmsList.get(p2).interval;
              
            }
-           p++;
+           p2++;
         }
-                            System.out.println(slaID + " ana interval " + interval);
-        int failureOT =  fp;
+                   System.out.println(interval + " -------------------- interva in sec " );
 
                 lastCheckpoint =  (int) ((int)((fo/1000)/interval)  * interval);
-                   System.out.println(lastCheckpoint+ " lastCheckpoint in sec " );
+                   System.out.println(lastCheckpoint + " lastCheckpoint in sec " );
 
                 // getting execution percentage of the failed task
                 exePercentage = (lastCheckpoint * 100)/ previouseResponseTime;
@@ -617,48 +643,54 @@ int price;
             System.out.println(" new_response_time " + new_response_time );
 
 
-            wasted_time = failureOT - lastCheckpoint;
-                        System.out.println(" wasted_time " + wasted_time );
-           final_exe_time = lastCheckpoint + wasted_time + new_response_time;
-                        System.out.println(" final_exe_time " + final_exe_time );
-
+            wasted_time = (fo/1000) - lastCheckpoint;
             
-       
+                        System.out.println(" wasted_time " + wasted_time );
+                        
+           final_exe_time = lastCheckpoint + wasted_time + new_response_time;
+
+ 
+
 float delay1 = (float) (0.1 * deadline) + deadline;
 float delay2 = (float) (0.25 * deadline) + deadline;
 float delay3 = (float) (0.50 * deadline) + deadline;
-                                    System.out.println( " deadline " + deadline ); 
 
        if(deadline >= final_exe_time){
                                  approach_case = "no penalty";
+                                 loss = 0;
 }
 else {
-    if (final_exe_time >= delay1 &&  final_exe_time < delay2 ){
+    if (final_exe_time > deadline &&  final_exe_time <= delay1 ){
     penalty_cost = ((penaltyPercentage1 + penaltyPercentage1 + penaltyPercentage2 + penaltyPercentage3) /4) * price;
                                     approach_case = "case 1";
+                                    loss = penaltyPercentage1*price;
 
     }
-    else if (final_exe_time >= delay2 &&  final_exe_time < delay3 ) {
+    else if (final_exe_time > delay1 &&  final_exe_time <= delay2 ) {
             penalty_cost = ((penaltyPercentage1 + penaltyPercentage2 + penaltyPercentage2 + penaltyPercentage3) /4) * price;
+                                    loss = penaltyPercentage2*price;
 
                                  approach_case = "case 2";
 
 
     }
-    else{
+    else {
               penalty_cost = ((penaltyPercentage1 + penaltyPercentage3 + penaltyPercentage2 + penaltyPercentage3) /4) * price;
+                                    loss = penaltyPercentage3*price;
 
                                     approach_case = "case 3";
 
     }
        }
+                               System.out.println(" price : " + price);
+
        float sumNormalResTime = 0;
        float sumFailedTaskResTime = 0;
 
         
-         failureOT =  fp;
 
  int kb=0;
+ // to display normal tasks
          while( kb < (finalVmsList.size()- failedTasksList.size())){
              Sumpenalty_costNormal += finalVmsList.get(kb).totalPenalty;
              sumNormalResTime +=  finalVmsList.get(kb).responseTimeExpected;
@@ -678,22 +710,18 @@ else {
            kb++;
 }
 
-                   System.out.println("sumNormalResTime "+ sumNormalResTime);
 
     
 
 
-CheckpointingFinalResultsClass checkpointingResultsObject = new CheckpointingFinalResultsClass (sla_ID, final_exe_time, penalty_cost, price, faultPercentage, approach_case);
+CheckpointingFinalResultsClass checkpointingResultsObject = new CheckpointingFinalResultsClass (sla_ID, final_exe_time, loss, price, faultPercentage, approach_case);
                 resultsList.add(checkpointingResultsObject);
                 
      data[2] = final_exe_time ;
-    
+
      data[4] = final_list_object.convertTime((int) lastCheckpoint); 
-     if( deadline >= final_exe_time){
-               penalty_cost = 0;
-               }else{
-                penalty_cost = finalVmsList.get(kb).penaltyPercentage; }
-     data[5] = penalty_cost;           
+    
+     data[5] = loss;           
      data[6] = approach_case ;
      data[7] =  "Done";
      data[8] = vmID;
@@ -707,176 +735,233 @@ CheckpointingFinalResultsClass checkpointingResultsObject = new CheckpointingFin
 
                  s++;     
                  l++;
-           
-Final_List updatedfinalListObject = new Final_List  (slaID, vmID,faultPercentage, final_exe_time, penaltycostFactor, checkpointing,interval,
+          
+Final_List updatedfinalListObject = new Final_List  (slaID, vmID, faultPercentage, final_exe_time, loss, checkpointing, interval,
                        "in progress" );
              
     
      updatedList.add(updatedfinalListObject);
-      for(int r = 0; r < resultsList.size(); r++){
-       sumFailedTaskResTime += resultsList.get(r).final_response_time;    
-       System.out.println("updatedList " + resultsList.get(r));
-       Sumpenalty_costFailed  += resultsList.get(r).penaltyCost;
-                System.out.println("sumFailedTaskResTime "+ sumFailedTaskResTime);
+     
+    
+           
+      finalExeTimeResult = sumFailedTaskResTime + sumNormalResTime;
 
-   } 
-      float finalExeTimeResult = sumFailedTaskResTime + sumNormalResTime;
-            int totalPenaltyCostC = 0 ;
 
-                           System.out.println("finalExeTimeResult "+ finalExeTimeResult);
- 
-      textAreaWithFT.setText("Final execution time = " + finalExeTimeResult + " Total Penalty cost: " );
-                   System.out.println(" ana final exe time with FT " + finalExeTimeResult );
   
  }  
-              
-     }  
+ 
+      
+           
                              i++;
-                             
-  
+     }  
+   finalExecutionStatistics();
+
+
+    
  }       
 
   
-            
- private void without_FT() {
-     
-         DefaultTableModel noFTExeModel = (DefaultTableModel)noFTTable.getModel();
+            public void finalExecutionStatistics(){
+            DefaultTableModel exeModel = (DefaultTableModel)exeTable.getModel();
+            DefaultTableModel noFTExeModel = (DefaultTableModel)exeTable.getModel();
 
+             for (int kbs = 0; kbs < slaList.size(); kbs++){
+        float sum = Float.parseFloat(exeModel.getValueAt(kbs, 5)+"");
+        float sumNOFT = Float.parseFloat(noFTExeModel.getValueAt(kbs, 5)+"");
+
+        totalLoss += sum;
+    }
+               
+       totalPenLabel.setText( totalLoss + " DA");
+              totalCostNoCheckpointing.setText( totalLossNoFt + " DA");            
+
+            }
+            
+               public void finalExecutionStatisticsNOFT(){
+            DefaultTableModel noFTExeModel = (DefaultTableModel)noFTTable.getModel();
+
+             for (int kbs = 0; kbs < slaList.size(); kbs++){
+        float sumNOFT = Float.parseFloat(noFTExeModel.getValueAt(kbs, 4)+"");
+
+        totalLossNoFt += sumNOFT;
+    }
+               
+              totalCostNoCheckpointing.setText( totalLossNoFt + " DA");            
+
+            }
+            
+                   int vCPU2 = 0;
+int ins_count2 = 0;
+ float new_response_time2;
+  int j2=0;
+   int nbInsLeft2;
+int newVCPU2; 
+int slaID2;
+                float wasted_time2;
+
+               int vmID2;
+            float faultPercentage2;
+            float responseTimeExpected2;
+            float penaltycostFactor2;
+            int s2;
+            int l2 = finalVmsList.size();
+            int i2 = 0;    
+            int b2;
+float final_exe_time2;
+int deadline2;
+float penalty_cost2;
+          String approach_case2;
+           float penaltyPercentage1noFT;
+float penaltyPercentage2noFT;
+float penaltyPercentage3noFT;
+float totalPenaltyCost2;
+float Sumpenalty_costFailed2;
+float Sumpenalty_costNormal2;
+int fo2;
+int price2;
+float loss2;
+               
+ private void without_FT() {
+   System.out.println("new vm without ft" );
      
- String fault_occurrence_time =  faultOccurrenceTF.getText().toString();
+       
+         DefaultTableModel noFTExeModel = (DefaultTableModel)noFTTable.getModel();
+     
+     
+
+            String fault_occurrence_time =  faultOccurrenceTF.getText().toString();
+               fo2 = (int) Integer.parseInt(fault_occurrence_time) ;
+
        Object data [] = new Object [vm_sla.slaList.size()];                   
-                  l = finalVmsList.size(); 
-                s = noFTExeModel.getRowCount()-2;
- // new machine 
-       while( i < failedTasksList.size()){
+                  int sizeFailed = failedTasksList.size();
+                s2 = noFTExeModel.getRowCount() - sizeFailed;
+    // new machine 
+       while( i2 < failedTasksList.size()){
            // checking for available new machine 
-               if(bestVmsList.get(l).vmID != failedTasksList.get(i).vmID){
-                   
-                   
-         slaID = failedTasksList.get(i).taskId;
-         vmID = bestVmsList.get(l).vmID ;
-         faultPercentage = bestVmsList.get(l).faultPercentage;
+               if(bestVmsList.get(l2).vmID != failedTasksList.get(i2).vmID){
+
+         slaID2 = failedTasksList.get(i2).taskId;
+         vmID2 = bestVmsList.get(l2).vmID ;
+         faultPercentage2 = bestVmsList.get(l2).faultPercentage;
          String status = "in progress";
-               System.out.println(" ana VM zina ga3 fihom " + vmID );
         
-         while (j < vm_sla.vmList.size()) {
-                if(failedTasksList.get(i).vmID == vm_sla.vmList.get(j).vmID){
-                                vCPU =  vm_sla.vmList.get(j).computeCapacity;
-                                               System.out.println(failedTasksList.get(i).vmID + "vm" + "vcpu = " + vCPU );
+         while (j2 < vm_sla.vmList.size()) {
+                if(failedTasksList.get(i2).vmID == vm_sla.vmList.get(j2).vmID){
+                                vCPU2 =  vm_sla.vmList.get(j2).computeCapacity;
 
                 }                      
-                j++;
+                j2++;
 
          }
-                          //extract SLA details  
-                while (b < vm_sla.slaList.size()) {
-                    if(failedTasksList.get(i).taskId == vm_sla.slaList.get(b).slaID){
-                        ins_count =  vm_sla.slaList.get(b).instructionCount;       
-                         deadline = vm_sla.slaList.get(b).deadline;
-                          price =  vm_sla.slaList.get(b).price;
-                            penaltyPercentage1 = vm_sla.slaList.get(b).penaltyPercentage1;
-                             penaltyPercentage2 = vm_sla.slaList.get(b).penaltyPercentage2;
-                             penaltyPercentage3 = vm_sla.slaList.get(b).penaltyPercentage3;
-                          penalty_cost = (penaltyPercentage1+penaltyPercentage2+penaltyPercentage3)* price;
-
+         b2=0;
+             
+                    //extract SLA details  
+                while (b2 < vm_sla.slaList.size()) {
+                    if(failedTasksList.get(i2).taskId == vm_sla.slaList.get(b2).slaID){
+                   ins_count2 =  vm_sla.slaList.get(b2).instructionCount;       
+                    deadline2 = vm_sla.slaList.get(b2).deadline;
+                     price2 =  vm_sla.slaList.get(b2).price;
+                       penaltyPercentage1noFT = vm_sla.slaList.get(b2).penaltyPercentage1;
+                        penaltyPercentage2noFT = vm_sla.slaList.get(b2).penaltyPercentage2;
+                        penaltyPercentage3noFT = vm_sla.slaList.get(b2).penaltyPercentage3;
+                     penalty_cost2 = (penaltyPercentage1noFT + penaltyPercentage2noFT + penaltyPercentage3noFT)* price;
 
                 }
-                      b++;
+                      b2++;
                 }
                 
-                  System.out.println(failedTasksList.get(i).taskId  + "ins_count  " + ins_count + " deadline " + deadline + "priceee " + price);
-
-                // getting last checkpoint    
-                int p =0;
-        while( p < finalVmsList.size()){
-           if(finalVmsList.get(p).slaID == failedTasksList.get(i).taskId){
-             interval = finalVmsList.get(p).interval ;
-             
-           }
-           p++;
-        }
-        
-        int failureOT =  Integer.parseInt(fault_occurrence_time);
-              
+            
                    int o = 0;
-                   System.out.println("an vm id " + vmID);
                    while(o < VM_SLA_data_UI.vmList.size()){
-                    if(vmID == VM_SLA_data_UI.vmList.get(o).vmID){
-                          newVCPU = VM_SLA_data_UI.vmList.get(o).computeCapacity;
+                    if(vmID2 == VM_SLA_data_UI.vmList.get(o).vmID){
+                          newVCPU2 = VM_SLA_data_UI.vmList.get(o).computeCapacity;
 
                    }     
                     o++;   
 
                    }
-                               System.out.println(" newVCPU " + newVCPU );
 
 
-            new_response_time = nbInsLeft / newVCPU;
-            System.out.println(" new_response_time " + new_response_time );
+            new_response_time2 = ins_count2 / newVCPU2;
 
 
-            wasted_time = failureOT;
-                        System.out.println(" wasted_time " + wasted_time );
-           final_exe_time = wasted_time + new_response_time;
-                        System.out.println( " final_exe_time " + final_exe_time ); 
+                wasted_time2 = (fo/1000);
+            
+                        
+           final_exe_time2 = wasted_time2 + new_response_time2;
 
-float delay1 = (float) (0.1 * deadline) + deadline;
-float delay2 = (float) (0.25 * deadline) + deadline;
-float delay3 = (float) (0.50 * deadline) + deadline;
-                                    System.out.println( " deadle " + deadline ); 
 
-       if(deadline >= final_exe_time){
-                                 approach_case = "first approach case";
+float delay1 = (float) (0.1 * deadline2) + deadline2;
+float delay2 = (float) (0.25 * deadline2) + deadline2;
+float delay3 = (float) (0.50 * deadline2) + deadline2;
+
+       if(deadline2 >= final_exe_time2){
+                                 approach_case2 = "no penalty";
+                                 loss2 = 0;
 }
 else {
-    if (final_exe_time >= delay1 &&  final_exe_time < delay2 ){
-    penalty_cost = ((penaltyPercentage1 + penaltyPercentage1 + penaltyPercentage2 + penaltyPercentage3) /4) * price;
-                                    approach_case = "case 1";
+    if (final_exe_time2 > deadline2 &&  final_exe_time2 <= delay1 ){
+    penalty_cost2 = ((penaltyPercentage1noFT + penaltyPercentage1noFT + penaltyPercentage2noFT + penaltyPercentage3noFT) /4) * price2;
+                                    approach_case2 = "case 1";
+                                    loss2 = penaltyPercentage1noFT * price2;
 
     }
-    else if (final_exe_time >= delay2 &&  final_exe_time < delay3 ) {
-            penalty_cost = ((penaltyPercentage1 + penaltyPercentage2 + penaltyPercentage2 + penaltyPercentage3) /4) * price;
+    else if (final_exe_time > delay1 &&  final_exe_time <= delay2 ) {
+            penalty_cost2 = ((penaltyPercentage1noFT + penaltyPercentage2noFT + penaltyPercentage2noFT + penaltyPercentage3noFT) /4) * price2;
+                                    loss2 = penaltyPercentage2noFT * price2;
 
-                                 approach_case = "case 2";
+                                 approach_case2 = "case 2";
 
-
-    }
-    else{
-              penalty_cost = ((penaltyPercentage1 + penaltyPercentage3 + penaltyPercentage2 + penaltyPercentage3) /4) * price;
-
-                                    approach_case = "case 2";
 
     }
+    else {
+           penalty_cost2 = ((penaltyPercentage1noFT + penaltyPercentage3noFT + penaltyPercentage2noFT + penaltyPercentage3noFT) /4) * price2;
+                                    loss2 = penaltyPercentage3noFT * price2;
 
+                                 approach_case2 = "case 3";
+    }
+       }
+
+       float sumNormalResTime = 0;
+       float sumFailedTaskResTime = 0;
+
+        
+
+ int kb=0;
+ // to display normal tasks
+         while( kb < (finalVmsList.size()- failedTasksList.size())){
+            status =finalVmsList.get(kb).status;
+
+               if( status == "no penalty confirmed"){
+               penalty_cost = 0;
+               }
+             noFTExeModel.setValueAt(penalty_cost, kb, 4);
+             noFTExeModel.setValueAt( status, kb, 5);
+                          noFTExeModel.setValueAt( "Done", kb, 6);
+
+
+           kb++;
 }
-       
 
-      
-  Final_List updatedfinalListObject = new Final_List  (slaID, vmID,faultPercentage, new_response_time, penaltycostFactor, checkpointing,interval, status );
-     updatedList.add(updatedfinalListObject);
+
+    noFTExeModel.setValueAt(final_exe_time2, s2, 2);
+      noFTExeModel.setValueAt(loss2, s2, 4);
+     noFTExeModel.setValueAt(approach_case2, s2, 5);
+     noFTExeModel.setValueAt("Done", s2, 6);
+     noFTExeModel.setValueAt(vmID2, s2, 7);
+
+                 s2++;     
+                 l2++;
+          
+
      
-CheckpointingFinalResultsClass checkpointingResultsObject = new CheckpointingFinalResultsClass (sla_ID, final_exe_time, penalty_cost, price, faultPercentage, approach_case);
-                resultsList.add(checkpointingResultsObject);
-            
-     data[1] = vmID;
-     data[2] = deadline ;
-     data[3] =  faultPercentage;    
-     data[4] = final_list_object.convertTime((int) interval);           
-     data[5] =  final_list_object.convertTime((int) new_response_time);
-     data[6] = "in progress";
-
-     noFTExeModel.setValueAt(data[1], s, 1);
-     noFTExeModel.setValueAt(data[2], s, 2);
-     noFTExeModel.setValueAt(data[3], s, 3);
-     noFTExeModel.setValueAt(data[4], s, 4);
-     noFTExeModel.setValueAt(data[5], s, 5);
-     noFTExeModel.setValueAt(approach_case, s, 6);
-                 s++;     
-                 l++;
-            }  
+ }  
+                             i2++;
      }  
-                             i++;
-                             
+
+       finalExecutionStatisticsNOFT();
+               
+
   
  }           
 
@@ -890,6 +975,8 @@ CheckpointingFinalResultsClass checkpointingResultsObject = new CheckpointingFin
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
@@ -898,9 +985,9 @@ CheckpointingFinalResultsClass checkpointingResultsObject = new CheckpointingFin
     private javax.swing.JTable noFTTable;
     private javax.swing.JButton runTasksButton;
     private javax.swing.JButton stopTimerButton;
-    private java.awt.TextArea textAreaWithFT;
-    private java.awt.TextArea textAreaWithoutFT;
     private javax.swing.JLabel timerLabel;
+    private javax.swing.JLabel totalCostNoCheckpointing;
+    private javax.swing.JLabel totalPenLabel;
     // End of variables declaration//GEN-END:variables
 
    
