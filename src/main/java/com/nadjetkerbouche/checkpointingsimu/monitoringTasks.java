@@ -1138,7 +1138,7 @@ float previouseResponseTime3;
 
                fo3 = (int) Integer.parseInt(fault_occurrence_time) /1000 ;
                interval3 = (int) Integer.parseInt(fixed_interval) /1000 ;
-               saving_ch_time = (int) Integer.parseInt(saving_checkpoint_time) ;
+               saving_ch_time = (int) Integer.parseInt(saving_checkpoint_time)/1000 ;
 
        Object data [] = new Object [vm_sla.slaList.size()];                   
                   int sizeFailed = failedTasksList.size();
@@ -1214,7 +1214,7 @@ float previouseResponseTime3;
 
             // getting instruction count left
               nbInsLeft3 = (int) ((100 - exePercentage3 )* ins_count3)/100; 
-              wasted_time3 = (fo3/1000) - lastCheckpoint3;
+              wasted_time3 = fo3 - lastCheckpoint3;
             int totalSavingChTime = totalCheckpoints * saving_ch_time;
                         
            final_exe_time3 = wasted_time3 + new_response_time3 + lastCheckpoint3 + totalSavingChTime ;
