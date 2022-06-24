@@ -45,11 +45,13 @@ Final_List final_list_object = new Final_List();
      // fill execution table function
     public void exeTable(){
      
-    DefaultTableModel exeModel = (DefaultTableModel)exeTable.getModel();
+        DefaultTableModel exeModel = (DefaultTableModel)exeTable.getModel();
         DefaultTableModel noFTExeModel = (DefaultTableModel)noFTTable.getModel();
+        DefaultTableModel fixedChExeModel = (DefaultTableModel)FixedCheckPointTable.getModel();
 
     Object data [] = new Object [finalVmsList.size()];
      Object dataNOFT [] = new Object [finalVmsList.size()];
+     Object dataFixedCheckpointing [] = new Object [finalVmsList.size()];
 
     int b=0;
    float responstime =0;
@@ -81,14 +83,25 @@ data[7] = "pending";
  exeModel.addRow(data);
 
 dataNOFT[0] = finalVmsList.get(i).slaID;
-
 dataNOFT[1] = finalVmsList.get(i).vmID;
 dataNOFT[2] = responstime;
 dataNOFT[3] = deadline;
 dataNOFT[4] = "";
 dataNOFT[5] = "";
 dataNOFT[6] = "pending";
- noFTExeModel.addRow(dataNOFT);
+noFTExeModel.addRow(dataNOFT);
+
+dataFixedCheckpointing[0] = finalVmsList.get(i).slaID;
+dataFixedCheckpointing[1] = finalVmsList.get(i).vmID;
+dataFixedCheckpointing[2] = "";
+dataFixedCheckpointing[3] = responstime;
+dataFixedCheckpointing[4] = deadline;
+dataFixedCheckpointing[5] = "";
+dataFixedCheckpointing[6] = "";
+dataFixedCheckpointing[7] = "";
+dataFixedCheckpointing[8] = "pending";
+fixedChExeModel.addRow(dataFixedCheckpointing);
+
  }
      }
 
@@ -106,6 +119,7 @@ dataNOFT[6] = "pending";
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jProgressBar1 = new javax.swing.JProgressBar();
         jPanel1 = new javax.swing.JPanel();
         runTasksButton = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -114,6 +128,10 @@ dataNOFT[6] = "pending";
         stopTimerButton = new javax.swing.JButton();
         FailurePercentageTF = new javax.swing.JTextField();
         faultOccurrenceTF = new javax.swing.JTextField();
+        fixedChIntervalTF = new javax.swing.JTextField();
+        checkpointSavingTimeTF = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         fault_tolerance_button = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
@@ -131,6 +149,10 @@ dataNOFT[6] = "pending";
         jLabel7 = new javax.swing.JLabel();
         totalCostNoCheckpointing = new javax.swing.JLabel();
         noFTslaVio = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        FixedCheckPointTable = new javax.swing.JTable();
+        fixedChLabel = new javax.swing.JLabel();
+        totalCostFixed = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(187, 225, 250));
@@ -148,7 +170,7 @@ dataNOFT[6] = "pending";
         jLabel1.setText("Failure percentage: ");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel2.setText("Fault occurence (miliseconds):");
+        jLabel2.setText("Fixed Checkpoint interval (miliseconds):");
 
         timerLabel.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         timerLabel.setText(" 00:00:00");
@@ -172,56 +194,80 @@ dataNOFT[6] = "pending";
             }
         });
 
+        fixedChIntervalTF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fixedChIntervalTFActionPerformed(evt);
+            }
+        });
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel8.setText("Fault occurence (miliseconds):");
+
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel9.setText("Checkpoint Saving Time  (miliseconds):");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel1)
-                        .addGap(107, 107, 107))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(110, Short.MAX_VALUE)
-                        .addComponent(jLabel2)
-                        .addGap(68, 68, 68)))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(FailurePercentageTF, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(faultOccurrenceTF, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
-            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(35, 35, 35)
-                .addComponent(runTasksButton)
-                .addGap(67, 67, 67)
-                .addComponent(timerLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(stopTimerButton)
-                .addGap(32, 32, 32))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(runTasksButton)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(timerLabel))
+                                .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(stopTimerButton)
+                                .addGap(23, 23, 23))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(65, 65, 65)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(checkpointSavingTimeTF, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(fixedChIntervalTF, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(FailurePercentageTF, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE)
+                            .addComponent(faultOccurrenceTF))))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(18, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel1)
-                    .addComponent(FailurePercentageTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(47, 47, 47)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(faultOccurrenceTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(FailurePercentageTF, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(faultOccurrenceTF, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(stopTimerButton)
-                            .addComponent(timerLabel)))
+                        .addComponent(fixedChIntervalTF, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(checkpointSavingTimeTF, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addComponent(runTasksButton)))
-                .addGap(13, 13, 13))
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel9)))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(runTasksButton)
+                    .addComponent(stopTimerButton)
+                    .addComponent(timerLabel))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -258,37 +304,42 @@ dataNOFT[6] = "pending";
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel4)
-                .addGap(143, 143, 143)
-                .addComponent(jLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(totalPenLabel)
-                .addContainerGap(173, Short.MAX_VALUE))
-            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addComponent(SLAViolationCH)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(slaViolation)
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 633, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel4)
+                                .addGap(44, 44, 44)
+                                .addComponent(jLabel6)
+                                .addGap(105, 105, 105)
+                                .addComponent(totalPenLabel))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(39, 39, 39)
+                                .addComponent(slaViolation)))
+                        .addGap(0, 24, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(16, 16, 16)
+                .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jLabel6)
                     .addComponent(totalPenLabel))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(30, 30, 30)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(slaViolation)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(24, 24, 24)
                 .addComponent(SLAViolationCH)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -327,9 +378,9 @@ dataNOFT[6] = "pending";
                         .addGap(18, 18, 18)
                         .addComponent(totalCostNoCheckpointing))
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(225, 225, 225)
+                        .addGap(269, 269, 269)
                         .addComponent(noFTslaVio)))
-                .addContainerGap(89, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -341,45 +392,78 @@ dataNOFT[6] = "pending";
                     .addComponent(totalCostNoCheckpointing))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(noFTslaVio)
-                .addContainerGap(63, Short.MAX_VALUE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
+
+        FixedCheckPointTable.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        FixedCheckPointTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Task ID", "VM ID", "New VM ID", "Response Time", "Deadline", "Last Checkpoint", "Penalty cost", "Penalty case", "Progress Status"
+            }
+        ));
+        FixedCheckPointTable.setGridColor(new java.awt.Color(255, 255, 255));
+        jScrollPane3.setViewportView(FixedCheckPointTable);
+
+        fixedChLabel.setText("jLabel10");
+
+        totalCostFixed.setText("jLabel10");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(fault_tolerance_button))
-                        .addGap(93, 93, 93)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(1157, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(35, 35, 35)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(fault_tolerance_button))
+                                .addGap(56, 56, 56)
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 903, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(fixedChLabel)
+                            .addComponent(totalCostFixed))))
+                .addGap(0, 35, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
+                        .addGap(28, 28, 28)
                         .addComponent(jLabel3)
-                        .addGap(43, 43, 43)
-                        .addComponent(fault_tolerance_button)))
-                .addGap(28, 28, 28)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(fault_tolerance_button))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addComponent(totalCostFixed)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(fixedChLabel)))
+                .addContainerGap(352, Short.MAX_VALUE))
         );
 
         pack();
@@ -388,11 +472,12 @@ dataNOFT[6] = "pending";
     private void runTasksButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_runTasksButtonActionPerformed
                DefaultTableModel exeModel = (DefaultTableModel)exeTable.getModel();
                DefaultTableModel noFTExeModel = (DefaultTableModel)noFTTable.getModel();
+        DefaultTableModel fixedChExeModel = (DefaultTableModel)FixedCheckPointTable.getModel();
 
  for(int oo=0; oo< exeModel.getRowCount(); oo++){
     exeModel.setValueAt("in progress", oo, 7);
        noFTExeModel.setValueAt("in progress", oo, 6);
-
+   fixedChExeModel.setValueAt("in progress", oo, 8);
     }
     timer.start();
     
@@ -418,8 +503,13 @@ dataNOFT[6] = "pending";
 
         fault_tolerance();
 without_FT();
+FixedCheckpointing();
    // TODO add your handling code here:
     }//GEN-LAST:event_fault_tolerance_buttonActionPerformed
+
+    private void fixedChIntervalTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fixedChIntervalTFActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fixedChIntervalTFActionPerformed
 
     
     
@@ -433,6 +523,7 @@ without_FT();
         
         DefaultTableModel exeModel = (DefaultTableModel)exeTable.getModel();
         DefaultTableModel noFTExeModel = (DefaultTableModel)noFTTable.getModel();
+        DefaultTableModel fixedChExeModel = (DefaultTableModel)FixedCheckPointTable.getModel();
 
         failureP = FailurePercentageTF.getText().toString();
          fp = (int) Integer.parseInt(failureP) ;
@@ -446,7 +537,8 @@ without_FT();
         // change the status field of the task
         while (s >= nbvf) {
                     exeModel.setValueAt("failed", s, 7); 
-                    noFTExeModel.setValueAt("failed", s, 6); 
+                    noFTExeModel.setValueAt("failed", s, 6);
+                    fixedChExeModel.setValueAt("failed", s, 8);
                     s--;
         }
         // store failed tasks data in failedTasksList arrayList
@@ -614,7 +706,6 @@ float totalLossNoFt =0;
                         penaltyPercentage3 = vm_sla.slaList.get(b).penaltyPercentage3;
                      penalty_cost = (penaltyPercentage1+penaltyPercentage2+penaltyPercentage3)* price;
 
-                        System.out.println(" price : " + price);
                 }
                       b++;
                 }
@@ -632,21 +723,16 @@ float totalLossNoFt =0;
            }
            p2++;
         }
-                   System.out.println(interval + " -------------------- interva in sec " );
 
                 lastCheckpoint =  (int) ((int)((fo/1000)/interval)  * interval);
-                   System.out.println(lastCheckpoint + " lastCheckpoint in sec " );
 
                 // getting execution percentage of the failed task
                 exePercentage = (lastCheckpoint * 100)/ previouseResponseTime;
-               System.out.println(exePercentage+ " exePercentage " );
 
              // getting instruction count left
               nbInsLeft = (int) ((100 - exePercentage )* ins_count)/100; 
-                   System.out.println("nb ins left " + nbInsLeft );
                  
                    int o = 0;
-                   System.out.println("an vm id " + vmID);
                    while(o < VM_SLA_data_UI.vmList.size()){
                     if(vmID == VM_SLA_data_UI.vmList.get(o).vmID){
                           newVCPU = VM_SLA_data_UI.vmList.get(o).computeCapacity;
@@ -655,17 +741,12 @@ float totalLossNoFt =0;
                     o++;   
 
                    }
-                               System.out.println(" newVCPU " + newVCPU );
 
 
             new_response_time = nbInsLeft / newVCPU;
-            System.out.println(" new_response_time " + new_response_time );
-
 
             wasted_time = (fo/1000) - lastCheckpoint;
-            
-                        System.out.println(" wasted_time " + wasted_time );
-                        
+                                    
            final_exe_time = lastCheckpoint + wasted_time + new_response_time;
 
  
@@ -701,7 +782,6 @@ else {
 
     }
        }
-                               System.out.println(" price : " + price);
 
        float sumNormalResTime = 0;
        float sumFailedTaskResTime = 0;
@@ -736,7 +816,7 @@ else {
 CheckpointingFinalResultsClass checkpointingResultsObject = new CheckpointingFinalResultsClass (sla_ID, final_exe_time, loss, price, faultPercentage, approach_case);
                 resultsList.add(checkpointingResultsObject);
                 
-     data[2] = final_exe_time ;
+     data[2] = final_list_object.convertTime((int)final_exe_time) ;
 
      data[4] = final_list_object.convertTime((int) lastCheckpoint); 
     
@@ -812,11 +892,31 @@ Final_List updatedfinalListObject = new Final_List  (slaID, vmID, faultPercentag
     }
                   noFTslaVio.setText("SLA Violation " + slaVio);
 
-              totalCostNoCheckpointing.setText( totalLossNoFt + " DA");            
+              totalCostFixed.setText( totalLossNoFt + " DA");            
 
             }
+             float  totalLossFixed;
+               
+            public void finalExecutionStatisticsFixed(){
+        DefaultTableModel fixedChExeModel = (DefaultTableModel)FixedCheckPointTable.getModel();
+           int slaVio = 0;
+
+             for (int kbs = 0; kbs < slaList.size(); kbs++){
+        float sumFixed = Float.parseFloat(fixedChExeModel.getValueAt(kbs, 6)+"");
+
+        totalLossFixed += sumFixed;
+         if(fixedChExeModel.getValueAt(kbs, 7) != "no penalty"){
+           slaVio++;
+        }
+    }
+              fixedChLabel.setText("SLA Violation " + slaVio);
+
+              totalCostNoCheckpointing.setText( totalLossFixed + " DA");            
+
             
-                   int vCPU2 = 0;
+            }
+            
+               int vCPU2 = 0;
 int ins_count2 = 0;
  float new_response_time2;
   int j2=0;
@@ -848,7 +948,6 @@ int price2;
 float loss2;
                
  private void without_FT() {
-   System.out.println("new vm without ft" );
      
        
          DefaultTableModel noFTExeModel = (DefaultTableModel)noFTTable.getModel();
@@ -970,7 +1069,7 @@ else {
 }
 
 
-    noFTExeModel.setValueAt(final_exe_time2, s2, 2);
+    noFTExeModel.setValueAt(final_list_object.convertTime((int)final_exe_time2), s2, 2);
       noFTExeModel.setValueAt(loss2, s2, 4);
      noFTExeModel.setValueAt(approach_case2, s2, 5);
      noFTExeModel.setValueAt("Done", s2, 6);
@@ -990,13 +1089,222 @@ else {
 
   
  }           
+ 
+ 
+           
+               int vCPU3 = 0;
+int ins_count3 = 0;
+ float new_response_time3;
+  int j3=0;
+   int nbInsLeft3;
+int newVCPU3; 
+int slaID3;
+      float wasted_time3;
+
+               int vmID3;
+            float faultPercentage3;
+            float responseTimeExpected3;
+            float penaltycostFactor3;
+            int s3;
+            int l3 = finalVmsList.size();
+            int i3 = 0;    
+            int b3;
+float final_exe_time3;
+int deadline3;
+float penalty_cost3;
+          String approach_case3;
+           float penaltyPercentage1Fixed3;
+float penaltyPercentage2Fixed;
+float penaltyPercentage3Fixed;
+float totalPenaltyCost3;
+float Sumpenalty_costFailed3;
+float Sumpenalty_costNormal3;
+int fo3;
+int price3;
+float loss3;
+      int interval3;
+int lastCheckpoint3 ;
+float exePercentage3;
+int saving_ch_time;
+float previouseResponseTime3;
+
+ private void FixedCheckpointing() {
+   
+             DefaultTableModel fixedChExeModel = (DefaultTableModel)FixedCheckPointTable.getModel();
+
+            String fault_occurrence_time =  faultOccurrenceTF.getText().toString();
+             String saving_checkpoint_time =  checkpointSavingTimeTF.getText().toString();
+            String fixed_interval =  fixedChIntervalTF.getText().toString();
+
+               fo3 = (int) Integer.parseInt(fault_occurrence_time) /1000 ;
+               interval3 = (int) Integer.parseInt(fixed_interval) /1000 ;
+               saving_ch_time = (int) Integer.parseInt(saving_checkpoint_time) ;
+
+       Object data [] = new Object [vm_sla.slaList.size()];                   
+                  int sizeFailed = failedTasksList.size();
+                s3 = fixedChExeModel.getRowCount() - sizeFailed;
+    // new machine 
+       while( i3 < failedTasksList.size()){
+           // checking for available new machine 
+               if(bestVmsList.get(l3).vmID != failedTasksList.get(i3).vmID){
+
+         slaID3 = failedTasksList.get(i3).taskId;
+         vmID3 = bestVmsList.get(l3).vmID ;
+         faultPercentage3 = bestVmsList.get(l3).faultPercentage;
+         String status = "in progress";
+        
+         
+         while (j3 < vm_sla.vmList.size()) {
+                if(failedTasksList.get(i3).vmID == vm_sla.vmList.get(j3).vmID){
+                                vCPU3 =  vm_sla.vmList.get(j3).computeCapacity;
+
+                }                      
+                j3++;
+
+         }
+         b3=0;
+             
+
+           
+                    //extract SLA details  
+                while (b3 < vm_sla.slaList.size()) {
+                    if(failedTasksList.get(i3).taskId == vm_sla.slaList.get(b3).slaID){
+                   ins_count3 =  vm_sla.slaList.get(b3).instructionCount;       
+                    deadline3 = vm_sla.slaList.get(b3).deadline;
+                     price3 =  vm_sla.slaList.get(b3).price;
+                       penaltyPercentage1Fixed3 = vm_sla.slaList.get(b3).penaltyPercentage1;
+                        penaltyPercentage2Fixed = vm_sla.slaList.get(b3).penaltyPercentage2;
+                        penaltyPercentage3Fixed = vm_sla.slaList.get(b3).penaltyPercentage3;
+                     penalty_cost3 = (penaltyPercentage1Fixed3 + penaltyPercentage2Fixed + penaltyPercentage3Fixed)* price;
+
+                }
+                      b3++;
+                }
+                
+                  
+            
+                   int o = 0;
+                   while(o < VM_SLA_data_UI.vmList.size()){
+                    if(vmID3 == VM_SLA_data_UI.vmList.get(o).vmID){
+                          newVCPU3 = VM_SLA_data_UI.vmList.get(o).computeCapacity;
+
+                   }     
+                    o++;   
+
+                   } 
+                  
+                   System.out.println( " fo 3 ------ " + fo3 );
+
+                   System.out.println( " Interval 3 ------ " + interval3 );
+                   
+                   lastCheckpoint3 =  (int) ((int)(fo3/interval3) * interval3);
+                  
+                   System.out.println(lastCheckpoint3 + " lastCheckpoint in sec " );
+                  
+                   int totalCheckpoints = lastCheckpoint3 /interval3;
+                 
+                // calculate response time    
+               previouseResponseTime3 = (int)(ins_count3 / vCPU3);
+            
+               // getting execution percentage of the failed task
+                exePercentage3 = (lastCheckpoint3 * 100)/ previouseResponseTime3;
+               System.out.println(exePercentage3 + " exePercentage " );
+
+            new_response_time3 = ins_count3 / newVCPU3;
+
+            // getting instruction count left
+              nbInsLeft3 = (int) ((100 - exePercentage3 )* ins_count3)/100; 
+              wasted_time3 = (fo3/1000) - lastCheckpoint3;
+            int totalSavingChTime = totalCheckpoints * saving_ch_time;
+                        
+           final_exe_time3 = wasted_time3 + new_response_time3 + lastCheckpoint3 + totalSavingChTime ;
+
+
+float delay1 = (float) (0.1 * deadline3) + deadline3;
+float delay2 = (float) (0.25 * deadline3) + deadline3;
+float delay3 = (float) (0.50 * deadline3) + deadline3;
+
+       if(deadline3 >= final_exe_time3){
+                                 approach_case3 = "no penalty";
+                                 loss3 = 0;
+}
+else {
+    if (final_exe_time3 > deadline3 &&  final_exe_time3 <= delay1 ){
+    penalty_cost3 = ((penaltyPercentage1Fixed3 + penaltyPercentage1Fixed3+ penaltyPercentage2Fixed + penaltyPercentage3Fixed) /4) * price3;
+                                    approach_case3 = "case 1";
+                                    loss3 = penaltyPercentage1Fixed3 * price3;
+
+    }
+    else if (final_exe_time3 > delay1 &&  final_exe_time3 <= delay2 ) {
+             penalty_cost3 = ((penaltyPercentage1Fixed3 + penaltyPercentage2Fixed+ penaltyPercentage2Fixed + penaltyPercentage3Fixed) /4) * price3;
+                                    approach_case3 = "case 2";
+                                    loss3 = penaltyPercentage2Fixed * price3;
+    }
+    else {
+              penalty_cost3 = ((penaltyPercentage1Fixed3 + penaltyPercentage3Fixed+ penaltyPercentage2Fixed + penaltyPercentage3Fixed) /4) * price3;
+                                    approach_case3 = "case 3";
+                                    loss3 = penaltyPercentage3Fixed * price3;
+    }
+       }
+
+       float sumNormalResTime = 0;
+       float sumFailedTaskResTime = 0;
+
+        
+
+ int kb=0;
+ // to display normal tasks
+         while( kb < (finalVmsList.size()- failedTasksList.size())){
+            status =finalVmsList.get(kb).status;
+
+               if( status == "no penalty"){
+               penalty_cost3 = 0;
+               }
+           
+               fixedChExeModel.setValueAt(final_list_object.convertTime((int)lastCheckpoint3), kb, 5);
+
+             fixedChExeModel.setValueAt(penalty_cost3, kb, 6);
+             fixedChExeModel.setValueAt( status, kb, 7);
+             fixedChExeModel.setValueAt( "Done", kb, 8);
+
+
+           kb++;
+}
+
+
+     fixedChExeModel.setValueAt(vmID3, s3, 2);
+     fixedChExeModel.setValueAt(final_list_object.convertTime((int)final_exe_time3), s3, 3);
+          fixedChExeModel.setValueAt(final_list_object.convertTime((int)lastCheckpoint3), s3, 5);
+
+     fixedChExeModel.setValueAt(loss3, s3, 6);
+     fixedChExeModel.setValueAt(approach_case3, s3, 7);
+     fixedChExeModel.setValueAt("Done", s3, 8);
+
+                 s3++;     
+                 l3++;
+          
+
+     
+ }  
+                             i3++;
+     }  
+
+       finalExecutionStatisticsFixed();
+               
+
+  
+ }           
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField FailurePercentageTF;
+    private javax.swing.JTable FixedCheckPointTable;
     private javax.swing.JLabel SLAViolationCH;
+    private javax.swing.JTextField checkpointSavingTimeTF;
     private javax.swing.JTable exeTable;
     private javax.swing.JTextField faultOccurrenceTF;
     private javax.swing.JButton fault_tolerance_button;
+    private javax.swing.JTextField fixedChIntervalTF;
+    private javax.swing.JLabel fixedChLabel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -1004,17 +1312,22 @@ else {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable noFTTable;
     private javax.swing.JLabel noFTslaVio;
     private javax.swing.JButton runTasksButton;
     private javax.swing.JLabel slaViolation;
     private javax.swing.JButton stopTimerButton;
     private javax.swing.JLabel timerLabel;
+    private javax.swing.JLabel totalCostFixed;
     private javax.swing.JLabel totalCostNoCheckpointing;
     private javax.swing.JLabel totalPenLabel;
     // End of variables declaration//GEN-END:variables

@@ -125,8 +125,12 @@ public class Final_List extends javax.swing.JFrame {
             faultPercentage = bestVmsList.get(i).faultPercentage;
             responseTimeExpected = bestVMs.fill_table(i).get(i).responseTimeExpected; 
             float penaltycostFactor = bestVMs.fill_table(i).get(i).total_penalty_cost / bestVMs.fill_table(0).get(0).total_penalty_cost;
-            checkpointing =   penaltycostFactor* fidelity * bestVMs.fill_table(i).get(i).responseTimeExpected* bestVMs.fill_table(i).get(i).faultPercentage;
+            checkpointing =   Math.round(penaltycostFactor* fidelity * bestVMs.fill_table(i).get(i).responseTimeExpected * bestVMs.fill_table(i).get(i).faultPercentage);
+            if(checkpointing == 0){
+            interval = 0;
+            } else{
             interval = bestVMs.fill_table(i).get(i).responseTimeExpected / checkpointing;
+            }
             status =  bestVMs.fill_table(i).get(i).status;
             totalPenalty = bestVMs.fill_table(i).get(i).total_penalty_cost;
  data[0] = slaList.get(i).slaID;
@@ -136,7 +140,7 @@ public class Final_List extends javax.swing.JFrame {
   data[3] = "0";
  }else{
  data[3] = totalPenalty; }
- data[4] = checkpointing;           
+ data[4] =  checkpointing;           
  data[5] = convertTime(interval);
  data[6] = status ;
 
