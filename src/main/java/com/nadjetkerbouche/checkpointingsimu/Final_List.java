@@ -132,7 +132,7 @@ public class Final_List extends javax.swing.JFrame {
  data[0] = slaList.get(i).slaID;
  data[1] = bestVmsList.get(i).vmID;
  data[2] = convertTime(responseTimeExpected);
- if( status == "no penalty confirmed"){
+ if( status == "no penalty"){
   data[3] = "0";
  }else{
  data[3] = totalPenalty; }

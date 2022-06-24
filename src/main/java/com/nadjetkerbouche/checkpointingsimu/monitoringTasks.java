@@ -122,12 +122,15 @@ dataNOFT[6] = "pending";
         jLabel4 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         totalPenLabel = new javax.swing.JLabel();
+        SLAViolationCH = new javax.swing.JLabel();
+        slaViolation = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         noFTTable = new javax.swing.JTable();
         jLabel7 = new javax.swing.JLabel();
         totalCostNoCheckpointing = new javax.swing.JLabel();
+        noFTslaVio = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(187, 225, 250));
@@ -248,23 +251,30 @@ dataNOFT[6] = "pending";
 
         jLabel6.setText("Total Penalty cost: ");
 
+        slaViolation.setText("jLabel8");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addGap(143, 143, 143)
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(totalPenLabel)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 625, Short.MAX_VALUE)
-                        .addGap(14, 14, 14))))
+                .addComponent(jLabel4)
+                .addGap(143, 143, 143)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(totalPenLabel)
+                .addContainerGap(173, Short.MAX_VALUE))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addComponent(SLAViolationCH)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(slaViolation)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 633, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -276,7 +286,11 @@ dataNOFT[6] = "pending";
                     .addComponent(totalPenLabel))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(121, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(slaViolation)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(SLAViolationCH)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -296,6 +310,8 @@ dataNOFT[6] = "pending";
 
         jLabel7.setText("Total Penaly cost:");
 
+        noFTslaVio.setText("jLabel8");
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -309,8 +325,11 @@ dataNOFT[6] = "pending";
                         .addGap(86, 86, 86)
                         .addComponent(jLabel7)
                         .addGap(18, 18, 18)
-                        .addComponent(totalCostNoCheckpointing)))
-                .addContainerGap(28, Short.MAX_VALUE))
+                        .addComponent(totalCostNoCheckpointing))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(225, 225, 225)
+                        .addComponent(noFTslaVio)))
+                .addContainerGap(89, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -322,7 +341,9 @@ dataNOFT[6] = "pending";
                     .addComponent(totalCostNoCheckpointing))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(120, Short.MAX_VALUE))
+                .addGap(32, 32, 32)
+                .addComponent(noFTslaVio)
+                .addContainerGap(63, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -332,31 +353,29 @@ dataNOFT[6] = "pending";
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(123, 123, 123)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(33, 33, 33)
-                        .addComponent(fault_tolerance_button))
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(fault_tolerance_button))
+                        .addGap(93, 93, 93)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(1206, Short.MAX_VALUE))
+                .addContainerGap(1157, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(fault_tolerance_button))
-                        .addGap(28, 28, 28))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(22, 22, 22)
                         .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                        .addGap(43, 43, 43)
+                        .addComponent(fault_tolerance_button)))
+                .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -697,7 +716,7 @@ else {
                interval = finalVmsList.get(kb).interval;  
                status =finalVmsList.get(kb).status;
 
-               if( status == "no penalty confirmed"){
+               if( status == "no penalty"){
                penalty_cost = 0;
                }
              normal_lastCheckpoint =  (int) ((int)((fo/1000)/interval)  * interval);
@@ -763,29 +782,36 @@ Final_List updatedfinalListObject = new Final_List  (slaID, vmID, faultPercentag
   
             public void finalExecutionStatistics(){
             DefaultTableModel exeModel = (DefaultTableModel)exeTable.getModel();
-            DefaultTableModel noFTExeModel = (DefaultTableModel)exeTable.getModel();
-
+           int slaVio = 0;
              for (int kbs = 0; kbs < slaList.size(); kbs++){
         float sum = Float.parseFloat(exeModel.getValueAt(kbs, 5)+"");
-        float sumNOFT = Float.parseFloat(noFTExeModel.getValueAt(kbs, 5)+"");
-
         totalLoss += sum;
+        if(exeModel.getValueAt(kbs, 6) != "no penalty"){
+           slaVio++;
+        }
+        
     }
                
        totalPenLabel.setText( totalLoss + " DA");
+       slaViolation.setText("SLA Violation " + slaVio);
               totalCostNoCheckpointing.setText( totalLossNoFt + " DA");            
 
             }
             
                public void finalExecutionStatisticsNOFT(){
             DefaultTableModel noFTExeModel = (DefaultTableModel)noFTTable.getModel();
+           int slaVio = 0;
 
              for (int kbs = 0; kbs < slaList.size(); kbs++){
         float sumNOFT = Float.parseFloat(noFTExeModel.getValueAt(kbs, 4)+"");
 
         totalLossNoFt += sumNOFT;
+         if(noFTExeModel.getValueAt(kbs, 5) != "no penalty"){
+           slaVio++;
+        }
     }
-               
+                  noFTslaVio.setText("SLA Violation " + slaVio);
+
               totalCostNoCheckpointing.setText( totalLossNoFt + " DA");            
 
             }
@@ -932,7 +958,7 @@ else {
          while( kb < (finalVmsList.size()- failedTasksList.size())){
             status =finalVmsList.get(kb).status;
 
-               if( status == "no penalty confirmed"){
+               if( status == "no penalty"){
                penalty_cost = 0;
                }
              noFTExeModel.setValueAt(penalty_cost, kb, 4);
@@ -967,6 +993,7 @@ else {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField FailurePercentageTF;
+    private javax.swing.JLabel SLAViolationCH;
     private javax.swing.JTable exeTable;
     private javax.swing.JTextField faultOccurrenceTF;
     private javax.swing.JButton fault_tolerance_button;
@@ -983,7 +1010,9 @@ else {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable noFTTable;
+    private javax.swing.JLabel noFTslaVio;
     private javax.swing.JButton runTasksButton;
+    private javax.swing.JLabel slaViolation;
     private javax.swing.JButton stopTimerButton;
     private javax.swing.JLabel timerLabel;
     private javax.swing.JLabel totalCostNoCheckpointing;

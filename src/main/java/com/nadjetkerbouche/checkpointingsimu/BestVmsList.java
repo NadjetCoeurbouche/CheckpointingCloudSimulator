@@ -189,7 +189,7 @@ float delay3 = (float) (0.50 * deadline) + deadline;
 
        if(deadline >= responseTimeExpected){
     meanpenalty_cost = ((penaltyPercentage1  + penaltyPercentage2 + penaltyPercentage3) /3) * price;    
-        status = "no penalty confirmed";
+        status = "no penalty";
        }
 else {
     if (responseTimeExpected > deadline &&  responseTimeExpected <= delay1){
