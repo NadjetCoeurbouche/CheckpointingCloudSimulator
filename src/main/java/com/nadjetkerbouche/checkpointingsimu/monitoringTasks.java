@@ -120,6 +120,8 @@ fixedChExeModel.addRow(dataFixedCheckpointing);
     private void initComponents() {
 
         jProgressBar1 = new javax.swing.JProgressBar();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jPanel3 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         runTasksButton = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -134,14 +136,6 @@ fixedChExeModel.addRow(dataFixedCheckpointing);
         jLabel9 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         fault_tolerance_button = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        exeTable = new javax.swing.JTable();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        totalPenLabel = new javax.swing.JLabel();
-        SLAViolationCH = new javax.swing.JLabel();
-        slaViolation = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -153,13 +147,24 @@ fixedChExeModel.addRow(dataFixedCheckpointing);
         FixedCheckPointTable = new javax.swing.JTable();
         fixedChLabel = new javax.swing.JLabel();
         totalCostFixed = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        exeTable = new javax.swing.JTable();
+        jLabel4 = new javax.swing.JLabel();
+        slaViolation = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        totalPenLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(187, 225, 250));
 
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel3.setToolTipText("Monitoring");
+
         jPanel1.setBackground(new java.awt.Color(187, 225, 250));
 
         runTasksButton.setText("Run tasks");
+        runTasksButton.setOpaque(true);
         runTasksButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 runTasksButtonActionPerformed(evt);
@@ -214,14 +219,15 @@ fixedChExeModel.addRow(dataFixedCheckpointing);
                 .addGap(35, 35, 35)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(runTasksButton)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(timerLabel))
-                                .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel2)
+                                .addComponent(jLabel9))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(9, 9, 9)
+                                .addComponent(runTasksButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(timerLabel)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -245,104 +251,47 @@ fixedChExeModel.addRow(dataFixedCheckpointing);
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1)
-                    .addComponent(FailurePercentageTF, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(8, 8, 8)
+                        .addComponent(FailurePercentageTF, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(faultOccurrenceTF, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(faultOccurrenceTF, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(fixedChIntervalTF, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(checkpointSavingTimeTF, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(checkpointSavingTimeTF, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel9)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(runTasksButton)
+                    .addComponent(timerLabel)
                     .addComponent(stopTimerButton)
-                    .addComponent(timerLabel))
-                .addContainerGap(30, Short.MAX_VALUE))
+                    .addComponent(runTasksButton))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel3.setText("Monitoring");
 
         fault_tolerance_button.setText("Fault tolerance");
+        fault_tolerance_button.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         fault_tolerance_button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 fault_tolerance_buttonActionPerformed(evt);
             }
         });
 
-        exeTable.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
-        exeTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Task ID", "VM ID", "Response Time", "Deadline", "Last checkpoint", "penalty cost", "Case", "Status", "New VM ID "
-            }
-        ));
-        exeTable.setGridColor(new java.awt.Color(255, 255, 255));
-        jScrollPane1.setViewportView(exeTable);
-
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel4.setText("With Checkpointing");
-
-        jLabel6.setText("Total Penalty cost: ");
-
-        slaViolation.setText("jLabel8");
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(SLAViolationCH)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel4)
-                                .addGap(44, 44, 44)
-                                .addComponent(jLabel6)
-                                .addGap(105, 105, 105)
-                                .addComponent(totalPenLabel))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(39, 39, 39)
-                                .addComponent(slaViolation)))
-                        .addGap(0, 24, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel6)
-                    .addComponent(totalPenLabel))
-                .addGap(30, 30, 30)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(slaViolation)
-                .addGap(24, 24, 24)
-                .addComponent(SLAViolationCH)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel5.setText("Without Checkpointing");
@@ -363,40 +312,6 @@ fixedChExeModel.addRow(dataFixedCheckpointing);
 
         noFTslaVio.setText("jLabel8");
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 601, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addComponent(jLabel5)
-                        .addGap(86, 86, 86)
-                        .addComponent(jLabel7)
-                        .addGap(18, 18, 18)
-                        .addComponent(totalCostNoCheckpointing))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(269, 269, 269)
-                        .addComponent(noFTslaVio)))
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel7)
-                    .addComponent(totalCostNoCheckpointing))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(noFTslaVio)
-                .addContainerGap(13, Short.MAX_VALUE))
-        );
-
         FixedCheckPointTable.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         FixedCheckPointTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -413,103 +328,192 @@ fixedChExeModel.addRow(dataFixedCheckpointing);
 
         totalCostFixed.setText("jLabel10");
 
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel10.setText("Fixed Checkpointing Interval");
+
+        exeTable.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
+        exeTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Task ID", "VM ID", "Response Time", "Deadline", "Last checkpoint", "penalty cost", "Case", "Status", "New VM ID "
+            }
+        ));
+        exeTable.setGridColor(new java.awt.Color(255, 255, 255));
+        jScrollPane1.setViewportView(exeTable);
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel4.setText("With Checkpointing");
+
+        slaViolation.setText("jLabel8");
+
+        jLabel6.setText("Total Penalty cost: ");
+
+        totalPenLabel.setText("jLabel11");
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addGap(450, 450, 450)
+                                .addComponent(totalCostNoCheckpointing))
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addGap(99, 99, 99)
+                                .addComponent(jLabel7)
+                                .addGap(33, 33, 33)
+                                .addComponent(totalPenLabel)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 388, Short.MAX_VALUE)
+                        .addComponent(noFTslaVio)
+                        .addGap(147, 147, 147))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addContainerGap())
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addGap(130, 130, 130)
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(slaViolation)
+                        .addGap(143, 143, 143))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel10)
+                        .addGap(109, 109, 109)
+                        .addComponent(totalCostFixed)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(fixedChLabel)
+                        .addGap(137, 137, 137))))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(totalCostNoCheckpointing)
+                        .addComponent(noFTslaVio))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel5)
+                            .addComponent(totalPenLabel))))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(slaViolation)
+                    .addComponent(jLabel6))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(fixedChLabel)
+                    .addComponent(totalCostFixed)
+                    .addComponent(jLabel10))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(23, 23, 23))
+        );
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(81, 81, 81)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
+                    .addComponent(fault_tolerance_button, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 164, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(192, 192, 192))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(47, 47, 47)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(18, 18, 18)
+                        .addComponent(fault_tolerance_button, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jScrollPane4.setViewportView(jPanel3);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(35, 35, 35)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(fault_tolerance_button))
-                                .addGap(56, 56, 56)
-                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 903, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(fixedChLabel)
-                            .addComponent(totalCostFixed))))
-                .addGap(0, 35, Short.MAX_VALUE))
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 1230, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(fault_tolerance_button))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addComponent(totalCostFixed)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(fixedChLabel)))
-                .addContainerGap(352, Short.MAX_VALUE))
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 999, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void runTasksButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_runTasksButtonActionPerformed
-               DefaultTableModel exeModel = (DefaultTableModel)exeTable.getModel();
-               DefaultTableModel noFTExeModel = (DefaultTableModel)noFTTable.getModel();
-        DefaultTableModel fixedChExeModel = (DefaultTableModel)FixedCheckPointTable.getModel();
-
- for(int oo=0; oo< exeModel.getRowCount(); oo++){
-    exeModel.setValueAt("in progress", oo, 7);
-       noFTExeModel.setValueAt("in progress", oo, 6);
-   fixedChExeModel.setValueAt("in progress", oo, 8);
-    }
-    timer.start();
-    
-        t1.start();
-    }//GEN-LAST:event_runTasksButtonActionPerformed
-
-    private void stopTimerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopTimerButtonActionPerformed
-            timer.stop();
-            
-        // TODO add your handling code here:
-    }//GEN-LAST:event_stopTimerButtonActionPerformed
-
-    private void FailurePercentageTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FailurePercentageTFActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_FailurePercentageTFActionPerformed
-
-    private void faultOccurrenceTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_faultOccurrenceTFActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_faultOccurrenceTFActionPerformed
-
     private void fault_tolerance_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fault_tolerance_buttonActionPerformed
-    
 
         fault_tolerance();
-without_FT();
-FixedCheckpointing();
-   // TODO add your handling code here:
+        without_FT();
+        FixedCheckpointing();
+        // TODO add your handling code here:
     }//GEN-LAST:event_fault_tolerance_buttonActionPerformed
 
     private void fixedChIntervalTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fixedChIntervalTFActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_fixedChIntervalTFActionPerformed
+
+    private void faultOccurrenceTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_faultOccurrenceTFActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_faultOccurrenceTFActionPerformed
+
+    private void FailurePercentageTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FailurePercentageTFActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_FailurePercentageTFActionPerformed
+
+    private void stopTimerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopTimerButtonActionPerformed
+        timer.stop();
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_stopTimerButtonActionPerformed
+
+    private void runTasksButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_runTasksButtonActionPerformed
+        DefaultTableModel exeModel = (DefaultTableModel)exeTable.getModel();
+        DefaultTableModel noFTExeModel = (DefaultTableModel)noFTTable.getModel();
+        DefaultTableModel fixedChExeModel = (DefaultTableModel)FixedCheckPointTable.getModel();
+
+        for(int oo=0; oo< exeModel.getRowCount(); oo++){
+            exeModel.setValueAt("in progress", oo, 7);
+            noFTExeModel.setValueAt("in progress", oo, 6);
+            fixedChExeModel.setValueAt("in progress", oo, 8);
+        }
+        timer.start();
+
+        t1.start();
+    }//GEN-LAST:event_runTasksButtonActionPerformed
 
     
     
@@ -524,23 +528,74 @@ FixedCheckpointing();
         DefaultTableModel exeModel = (DefaultTableModel)exeTable.getModel();
         DefaultTableModel noFTExeModel = (DefaultTableModel)noFTTable.getModel();
         DefaultTableModel fixedChExeModel = (DefaultTableModel)FixedCheckPointTable.getModel();
+        String fault_occurrence_time =  faultOccurrenceTF.getText().toString();
+        float fo = (float) Integer.parseInt(fault_occurrence_time)/1000 ;
 
         failureP = FailurePercentageTF.getText().toString();
          fp = (int) Integer.parseInt(failureP) ;
          
         int s = exeModel.getRowCount()-1;
-        
+        int s2 = exeModel.getRowCount()-1;
+        int s3 = exeModel.getRowCount()-1;
+        int m = exeModel.getRowCount()-1;
+        int m2 = exeModel.getRowCount()-1;
+        int m3 = exeModel.getRowCount()-1;
       // calculate int number of vm failed
         int vmFailure = (vm_sla.slaList.size() * fp )/100;
        int nbvf = vm_sla.slaList.size() - vmFailure;
      
         // change the status field of the task
-        while (s >= nbvf) {
-                    exeModel.setValueAt("failed", s, 7); 
-                    noFTExeModel.setValueAt("failed", s, 6);
-                    fixedChExeModel.setValueAt("failed", s, 8);
-                    s--;
-        }
+                while (s > 0) {         
+            if(fo <= (float) exeModel.getValueAt(s, 2) && m >= nbvf ){
+                     exeModel.setValueAt("failed", s, 7); 
+                        m--; 
+            }
+                   
+
+                     
+                s--;
+
+
+     }
+                    while (s > 0) {         
+            if(fo <= (float) exeModel.getValueAt(s, 2) && m >= nbvf ){
+                     exeModel.setValueAt("failed", s, 7); 
+                        m--; 
+            }
+                   
+
+                     
+                s--;
+
+
+     }
+                    
+                        while (s2 > 0) {         
+            if(fo <= (float)noFTExeModel.getValueAt(s2, 2)  && m2 >= nbvf ){
+                    noFTExeModel.setValueAt("failed", s2, 6);
+                    m2--; 
+            }
+                   
+
+                     
+                s2--;
+
+
+     }
+       
+ 
+            while (s3 > 0) {         
+            if(fo <= (float)fixedChExeModel.getValueAt(s3, 3) && m3 >= nbvf ){
+                    fixedChExeModel.setValueAt("failed", s3, 8);       
+                    m3--; 
+            }
+                             
+                s3--;
+
+
+     }
+         
+    
         // store failed tasks data in failedTasksList arrayList
  failedTasksList = new ArrayList<FailedTask>();
 
@@ -1298,7 +1353,6 @@ else {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField FailurePercentageTF;
     private javax.swing.JTable FixedCheckPointTable;
-    private javax.swing.JLabel SLAViolationCH;
     private javax.swing.JTextField checkpointSavingTimeTF;
     private javax.swing.JTable exeTable;
     private javax.swing.JTextField faultOccurrenceTF;
@@ -1306,6 +1360,7 @@ else {
     private javax.swing.JTextField fixedChIntervalTF;
     private javax.swing.JLabel fixedChLabel;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1315,12 +1370,13 @@ else {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTable noFTTable;
     private javax.swing.JLabel noFTslaVio;
     private javax.swing.JButton runTasksButton;

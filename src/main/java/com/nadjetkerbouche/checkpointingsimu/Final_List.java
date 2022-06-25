@@ -5,6 +5,8 @@ import static com.nadjetkerbouche.checkpointingsimu.VM_SLA_data_UI.slaList;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JLabel;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -30,6 +32,7 @@ public class Final_List extends javax.swing.JFrame {
         finalListTable = new javax.swing.JTable();
         AssignTasksBtn = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -48,7 +51,7 @@ public class Final_List extends javax.swing.JFrame {
         finalListTable.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(finalListTable);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 870, 260));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 1030, 340));
 
         AssignTasksBtn.setText("Run tasks");
         AssignTasksBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -56,11 +59,14 @@ public class Final_List extends javax.swing.JFrame {
                 AssignTasksBtnActionPerformed(evt);
             }
         });
-        getContentPane().add(AssignTasksBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 390, -1, -1));
+        getContentPane().add(AssignTasksBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 460, -1, -1));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setText("Tasks Final Assignement List");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, -1, -1));
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1080, 600));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -146,7 +152,9 @@ public class Final_List extends javax.swing.JFrame {
 
 
  Final_List finalList = new Final_List  (slaID, vmID,faultPercentage, responseTimeExpected, totalPenalty,checkpointing,interval, status );
- 
+ DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+centerRenderer.setHorizontalAlignment( JLabel.CENTER );
+finalListTable.setDefaultRenderer(String.class, centerRenderer);
  finalModel.addRow(data);
  
  finalVmsList.add(finalList);
@@ -167,6 +175,7 @@ public String convertTime(float time){
     private javax.swing.JButton AssignTasksBtn;
     private javax.swing.JTable finalListTable;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

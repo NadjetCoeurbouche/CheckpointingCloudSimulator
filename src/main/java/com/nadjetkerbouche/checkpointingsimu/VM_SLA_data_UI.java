@@ -15,6 +15,7 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -25,8 +26,6 @@ public class VM_SLA_data_UI extends javax.swing.JFrame {
 
     public VM_SLA_data_UI() {
         initComponents();
-         setColor(dashboardBtn); 
- hi();
     }
 
     @SuppressWarnings("unchecked")
@@ -207,6 +206,7 @@ public class VM_SLA_data_UI extends javax.swing.JFrame {
         jLabel2.setText("Virtual Machines");
 
         clearTableBtn.setText("Clear Table");
+        clearTableBtn.setOpaque(true);
         clearTableBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 clearTableBtnActionPerformed(evt);
@@ -215,11 +215,12 @@ public class VM_SLA_data_UI extends javax.swing.JFrame {
 
         importVMFileBtn1.setBackground(new java.awt.Color(50, 130, 184));
         importVMFileBtn1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        importVMFileBtn1.setForeground(new java.awt.Color(187, 225, 250));
+        importVMFileBtn1.setForeground(new java.awt.Color(255, 255, 255));
         importVMFileBtn1.setText("Import VMs Data");
         importVMFileBtn1.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         importVMFileBtn1.setBorderPainted(false);
         importVMFileBtn1.setFocusPainted(false);
+        importVMFileBtn1.setOpaque(true);
         importVMFileBtn1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 importVMFileBtn1ActionPerformed(evt);
@@ -228,11 +229,10 @@ public class VM_SLA_data_UI extends javax.swing.JFrame {
 
         importSLAFileBtn.setBackground(new java.awt.Color(50, 130, 184));
         importSLAFileBtn.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        importSLAFileBtn.setForeground(new java.awt.Color(187, 225, 250));
+        importSLAFileBtn.setForeground(new java.awt.Color(255, 255, 255));
         importSLAFileBtn.setText("Import SLAs Data");
         importSLAFileBtn.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         importSLAFileBtn.setBorderPainted(false);
-        importSLAFileBtn.setFocusPainted(false);
         importSLAFileBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 importSLAFileBtnActionPerformed(evt);
@@ -292,148 +292,128 @@ public class VM_SLA_data_UI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-// a list to store tasks data
-public static ArrayList<SLA> slaList  = null;
-// a list to store virtual machines data
-public static ArrayList<VirtualMachine> vmList = null;
- 
- public void hi(){
-     String path = "com\\nadjetkerbouche\\checkpointingsimu\\images\\data-storage.png";
- ImageIcon image = new ImageIcon(path);
-    JLabel label = new JLabel("", image, JLabel.CENTER);
-    sidePanel.add( label, BorderLayout.CENTER );
- }
-    // searching for file path
-    private String filePath(){
- 
-    JFileChooser fileChooser = new JFileChooser();        
-      String filePath = null ;
-      int result = fileChooser.showOpenDialog(this);
-        if (result == JFileChooser.APPROVE_OPTION) {
-            File selectedFile = fileChooser.getSelectedFile();
-             filePath =  selectedFile.getAbsolutePath();
-            System.out.println("Selected file: " + filePath);
-    
-}  
-      return filePath;
 
-    }     
-     
     // method to load SLA data text file 
     private void importSLAFileBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_importSLAFileBtnActionPerformed
-        
+
         // slaTable model to insert SLA data
         DefaultTableModel model = (DefaultTableModel)slaTable.getModel();
-        
+
         // Defining BufferReader instance
         BufferedReader br = null;
-       
+
         // initialzing slaList
-         slaList = new ArrayList<SLA>();
+        slaList = new ArrayList<SLA>();
 
         try {
             // initialzing BufferReader instance using filePath method
             br = new BufferedReader(new FileReader(filePath()));
-            
+
         } catch (FileNotFoundException ex) {
             Logger.getLogger(VM_SLA_data_UI.class.getName()).log(Level.SEVERE, null, ex);
         }
-       
-      
+
         // get lines from txt file
         Object[] tableLines = br.lines().toArray();
 
         // extratct data from lines
-         for(int i = 0; i < tableLines.length; i++)
-            {
-                String line = tableLines[i].toString().trim();
-                String[] dataRow = line.split(" ");
-                // insert data from dataRow Array to slaTable model    
-                model.addRow(dataRow);
- 
-                // initializing sla instance 
-                    int slaID = Integer.parseInt(dataRow[0]);
-                    int customerID = Integer.parseInt(dataRow[1]);
-                    int instructionCount = Integer.parseInt(dataRow[2]);
-                    int responseTime = Integer.parseInt(dataRow[3]);
-                    int deadline = Integer.parseInt(dataRow[4]); 
-                    int price = Integer.parseInt(dataRow[5]);
-                    float penaltyPercentage1 = Float.parseFloat(dataRow[6]);
-                    float penaltyPercentage2 = Float.parseFloat(dataRow[7]);
-                    float penaltyPercentage3 = Float.parseFloat(dataRow[8]);
-                    String status = dataRow[9];
-                    float penaltyCost = (((penaltyPercentage1 + penaltyPercentage2 + penaltyPercentage3)*price)/3);
+        for(int i = 0; i < tableLines.length; i++)
+        {
+            String line = tableLines[i].toString().trim();
+            String[] dataRow = line.split(" ");
+            // insert data from dataRow Array to slaTable model
+            model.addRow(dataRow);
 
-SLA sla = new SLA(slaID, customerID, instructionCount, responseTime, deadline, price, penaltyPercentage1, penaltyPercentage2, penaltyPercentage3, penaltyCost, status);
-// adding initilized sla instance to our slaList
-slaList.add(sla);
+            // initializing sla instance
+            int slaID = Integer.parseInt(dataRow[0]);
+            int customerID = Integer.parseInt(dataRow[1]);
+            int instructionCount = Integer.parseInt(dataRow[2]);
+            int responseTime = Integer.parseInt(dataRow[3]);
+            int deadline = Integer.parseInt(dataRow[4]);
+            int price = Integer.parseInt(dataRow[5]);
+            float penaltyPercentage1 = Float.parseFloat(dataRow[6]);
+            float penaltyPercentage2 = Float.parseFloat(dataRow[7]);
+            float penaltyPercentage3 = Float.parseFloat(dataRow[8]);
+            String status = dataRow[9];
+            float penaltyCost = (((penaltyPercentage1 + penaltyPercentage2 + penaltyPercentage3)*price)/3);
+
+            SLA sla = new SLA(slaID, customerID, instructionCount, responseTime, deadline, price, penaltyPercentage1, penaltyPercentage2, penaltyPercentage3, penaltyCost, status);
+
+            DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+            centerRenderer.setHorizontalAlignment( JLabel.CENTER );
+            slaTable.setDefaultRenderer(String.class, centerRenderer);
+            // adding initilized sla instance to our slaList
+            slaList.add(sla);
 
         }
-         Collections.sort(slaList);
+        Collections.sort(slaList);
 
-        
     }//GEN-LAST:event_importSLAFileBtnActionPerformed
 
         // method to load Virtual Machines data from text file 
 
     private void importVMFileBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_importVMFileBtn1ActionPerformed
-      
+
         // Initializing vmList
         vmList = new ArrayList<VirtualMachine>();
-        
+
         // Defining BufferReader instance
         BufferedReader br = null;
-     
+
         // Defining vmsTable Model
         DefaultTableModel model = (DefaultTableModel)vmsTable.getModel();
-        
+
         try {
             // Initializing BufferReader instance
             br = new BufferedReader(new FileReader(filePath()));
-            
+
         } catch (FileNotFoundException ex) {
             Logger.getLogger(VM_SLA_data_UI.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         // get lines from txt file
         Object[] tableLines = br.lines().toArray();
-        
+
         // extratct data from lines
         for (Object tableLine : tableLines) {
             String line = tableLine.toString().trim();
             String[] dataRow = line.split(" ");
-   
+
             // set data to jtable model
             model.addRow(dataRow);
-            
-            // Initializing the vm instance
-             int vmID = Integer.parseInt(dataRow[0]);
-             String vType = dataRow[1];
-             int vCPU = Integer.parseInt(dataRow[2]);
-             int vRAM = Integer.parseInt(dataRow[3]);
-             int vStorage = Integer.parseInt(dataRow[4]);
-             float failure = Float.parseFloat(dataRow[5]);
-             String status = dataRow[6];
-             
-             
-VirtualMachine vm = new VirtualMachine(vmID, vType, vCPU, vRAM, vStorage, failure, status);
 
-// adding vms to vmList
-vmList.add(vm);
+            // Initializing the vm instance
+            int vmID = Integer.parseInt(dataRow[0]);
+            String vType = dataRow[1];
+            int vCPU = Integer.parseInt(dataRow[2]);
+            int vRAM = Integer.parseInt(dataRow[3]);
+            int vStorage = Integer.parseInt(dataRow[4]);
+            float failure = Float.parseFloat(dataRow[5]);
+            String status = dataRow[6];
+
+            VirtualMachine vm = new VirtualMachine(vmID, vType, vCPU, vRAM, vStorage, failure, status);
+
+            DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+            centerRenderer.setHorizontalAlignment( JLabel.CENTER );
+            vmsTable.setDefaultRenderer(String.class, centerRenderer);
+            // adding vms to vmList
+            vmList.add(vm);
         }
-            
-            }//GEN-LAST:event_importVMFileBtn1ActionPerformed
+
+    }//GEN-LAST:event_importVMFileBtn1ActionPerformed
 
     // Clear table button
     private void clearTableBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearTableBtnActionPerformed
- DefaultTableModel tabVM = (DefaultTableModel) vmsTable.getModel();
+        DefaultTableModel tabVM = (DefaultTableModel) vmsTable.getModel();
         tabVM.setRowCount(0);
         DefaultTableModel tabSLA = (DefaultTableModel) slaTable.getModel();
-        tabSLA.setRowCount(0);    }//GEN-LAST:event_clearTableBtnActionPerformed
+    }//GEN-LAST:event_clearTableBtnActionPerformed
 
     // Generate best vms list button
     private void bestVMsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bestVMsActionPerformed
-new BestVmsList().setVisible(true);    }//GEN-LAST:event_bestVMsActionPerformed
+        new BestVmsList().setVisible(true); 
+
+    }//GEN-LAST:event_bestVMsActionPerformed
 
     private void slaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_slaBtnActionPerformed
         // TODO add your handling code here:
@@ -450,23 +430,29 @@ new BestVmsList().setVisible(true);    }//GEN-LAST:event_bestVMsActionPerformed
     private void dashboardBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dashboardBtnActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_dashboardBtnActionPerformed
+// a list to store tasks data
+public static ArrayList<SLA> slaList  = null;
+// a list to store virtual machines data
+public static ArrayList<VirtualMachine> vmList = null;
+ 
+ 
+    // searching for file path
+    private String filePath(){
+ 
+    JFileChooser fileChooser = new JFileChooser();        
+      String filePath = null ;
+      int result = fileChooser.showOpenDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+             filePath =  selectedFile.getAbsolutePath();
+            System.out.println("Selected file: " + filePath);
+    
+}  
+      return filePath;
 
+    }     
+     
     
-        private void setColor(JButton pane)
-    {
-        pane.setBackground(new Color(50, 130, 184));
-    }
-    
-    private void resetColor(JPanel [] pane, JPanel [] indicators)
-    {
-        for(int i=0;i<pane.length; i++){
-           pane[i].setBackground(new Color(23,35,51));
-           
-        } for(int i=0;i<indicators.length;i++){
-           indicators[i].setOpaque(false);           
-        }
-        
-    }
     
     /**
      * @param args the command line arguments

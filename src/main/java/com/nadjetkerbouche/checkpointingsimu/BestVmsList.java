@@ -44,6 +44,8 @@ public class BestVmsList extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         jScrollPane4 = new javax.swing.JScrollPane();
         tasksList = new javax.swing.JList<>();
+        jLabel3 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
 
         jRadioButtonMenuItem1.setSelected(true);
         jRadioButtonMenuItem1.setText("jRadioButtonMenuItem1");
@@ -70,9 +72,10 @@ public class BestVmsList extends javax.swing.JFrame {
             }
         });
         bestVMsTable.setGridColor(new java.awt.Color(255, 255, 255));
+        bestVMsTable.setSelectionBackground(new java.awt.Color(102, 204, 255));
         jScrollPane1.setViewportView(bestVMsTable);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 100, 920, 410));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 100, 920, 480));
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 40, -1, -1));
 
         jButton2.setText("Generate Final assignment list");
@@ -81,11 +84,11 @@ public class BestVmsList extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 530, 290, 30));
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 600, 290, 30));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel2.setText("Best Virtual Machines List");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, -1, -1));
+        jLabel2.setText("Tasks List");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, -1, -1));
 
         tasksList.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         tasksList.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -101,7 +104,14 @@ public class BestVmsList extends javax.swing.JFrame {
 
         jScrollPane3.setViewportView(jScrollPane4);
 
-        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 170, 510));
+        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 170, 490));
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel3.setText("Best Virtual Machines List");
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 60, -1, -1));
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1160, 680));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -266,6 +276,8 @@ else {
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
