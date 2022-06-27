@@ -344,7 +344,7 @@ fixedChExeModel.addRow(dataFixedCheckpointing);
         jScrollPane1.setViewportView(exeTable);
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel4.setText("With Checkpointing");
+        jLabel4.setText("Proposed Approach");
 
         slaViolation.setText("jLabel8");
 
@@ -367,10 +367,8 @@ fixedChExeModel.addRow(dataFixedCheckpointing);
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addGap(99, 99, 99)
-                                .addComponent(jLabel7)
-                                .addGap(33, 33, 33)
-                                .addComponent(totalPenLabel)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 388, Short.MAX_VALUE)
+                                .addComponent(jLabel7)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 470, Short.MAX_VALUE)
                         .addComponent(noFTslaVio)
                         .addGap(147, 147, 147))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
@@ -383,6 +381,8 @@ fixedChExeModel.addRow(dataFixedCheckpointing);
                         .addComponent(jLabel4)
                         .addGap(130, 130, 130)
                         .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(totalPenLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(slaViolation)
                         .addGap(143, 143, 143))
@@ -405,15 +405,15 @@ fixedChExeModel.addRow(dataFixedCheckpointing);
                         .addContainerGap()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7)
-                            .addComponent(jLabel5)
-                            .addComponent(totalPenLabel))))
+                            .addComponent(jLabel5))))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(slaViolation)
-                    .addComponent(jLabel6))
+                    .addComponent(jLabel6)
+                    .addComponent(totalPenLabel))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
@@ -533,44 +533,32 @@ fixedChExeModel.addRow(dataFixedCheckpointing);
 
         failureP = FailurePercentageTF.getText().toString();
          fp = (int) Integer.parseInt(failureP) ;
-         
+        //int m = exeModel.getRowCount()-1;
         int s = exeModel.getRowCount()-1;
-        int s2 = exeModel.getRowCount()-1;
+     /*   int s2 = exeModel.getRowCount()-1;
         int s3 = exeModel.getRowCount()-1;
-        int m = exeModel.getRowCount()-1;
         int m2 = exeModel.getRowCount()-1;
-        int m3 = exeModel.getRowCount()-1;
+        int m3 = exeModel.getRowCount()-1;*/
+     
+     
       // calculate int number of vm failed
         int vmFailure = (vm_sla.slaList.size() * fp )/100;
        int nbvf = vm_sla.slaList.size() - vmFailure;
      
         // change the status field of the task
-                while (s > 0) {         
-            if(fo <= (float) exeModel.getValueAt(s, 2) && m >= nbvf ){
+                while (s > nbvf) {         
+            if(fo <= (float) exeModel.getValueAt(s, 2)){
                      exeModel.setValueAt("failed", s, 7); 
-                        m--; 
-            }
-                   
+                    noFTExeModel.setValueAt("failed", s, 6);
+                    fixedChExeModel.setValueAt("failed", s, 8);       
 
+            }
                      
                 s--;
-
-
      }
-                    while (s > 0) {         
-            if(fo <= (float) exeModel.getValueAt(s, 2) && m >= nbvf ){
-                     exeModel.setValueAt("failed", s, 7); 
-                        m--; 
-            }
-                   
-
-                     
-                s--;
-
-
-     }
+            
                     
-                        while (s2 > 0) {         
+           /*             while (s2 > 0) {         
             if(fo <= (float)noFTExeModel.getValueAt(s2, 2)  && m2 >= nbvf ){
                     noFTExeModel.setValueAt("failed", s2, 6);
                     m2--; 
@@ -581,10 +569,10 @@ fixedChExeModel.addRow(dataFixedCheckpointing);
                 s2--;
 
 
-     }
+     }*/
        
  
-            while (s3 > 0) {         
+        /*    while (s3 > 0) {         
             if(fo <= (float)fixedChExeModel.getValueAt(s3, 3) && m3 >= nbvf ){
                     fixedChExeModel.setValueAt("failed", s3, 8);       
                     m3--; 
@@ -594,7 +582,7 @@ fixedChExeModel.addRow(dataFixedCheckpointing);
 
 
      }
-         
+         */
     
         // store failed tasks data in failedTasksList arrayList
  failedTasksList = new ArrayList<FailedTask>();
@@ -730,8 +718,9 @@ float totalLossNoFt =0;
                   l = finalVmsList.size(); 
                   int sizeFailed = failedTasksList.size();
                 s = exeModel.getRowCount() - sizeFailed;
- // new machine 
+    // new machine 
        while( i < failedTasksList.size()){
+           System.out.println("im failed task id in FT methodd " + failedTasksList.get(i).vmID );
            // checking for available new machine 
                if(bestVmsList.get(l).vmID != failedTasksList.get(i).vmID){
                    
@@ -744,6 +733,7 @@ float totalLossNoFt =0;
          while (j < vm_sla.vmList.size()) {
                 if(failedTasksList.get(i).vmID == vm_sla.vmList.get(j).vmID){
                                 vCPU =  vm_sla.vmList.get(j).computeCapacity;
+           System.out.println("im failed task id in FT vCPU 9dim " + vCPU);
 
                 }                      
                 j++;
@@ -792,10 +782,10 @@ float totalLossNoFt =0;
                     if(vmID == VM_SLA_data_UI.vmList.get(o).vmID){
                           newVCPU = VM_SLA_data_UI.vmList.get(o).computeCapacity;
 
-                   }     
-                    o++;   
+                        }     
+                         o++;   
 
-                   }
+                        }
 
 
             new_response_time = nbInsLeft / newVCPU;
@@ -871,9 +861,9 @@ else {
 CheckpointingFinalResultsClass checkpointingResultsObject = new CheckpointingFinalResultsClass (sla_ID, final_exe_time, loss, price, faultPercentage, approach_case);
                 resultsList.add(checkpointingResultsObject);
                 
-     data[2] = final_list_object.convertTime((int)final_exe_time) ;
+     data[2] =/* final_list_object.convertTime((int)final_exe_time)*/ final_exe_time ;
 
-     data[4] = final_list_object.convertTime((int) lastCheckpoint); 
+     data[4] = /*final_list_object.convertTime((int) lastCheckpoint)*/ lastCheckpoint; 
     
      data[5] = loss;           
      data[6] = approach_case ;
@@ -892,20 +882,12 @@ CheckpointingFinalResultsClass checkpointingResultsObject = new CheckpointingFin
           
 Final_List updatedfinalListObject = new Final_List  (slaID, vmID, faultPercentage, final_exe_time, loss, checkpointing, interval,
                        "in progress" );
-             
     
      updatedList.add(updatedfinalListObject);
-     
-    
            
       finalExeTimeResult = sumFailedTaskResTime + sumNormalResTime;
 
-
-  
- }  
- 
-      
-           
+ }             
                              i++;
      }  
    finalExecutionStatistics();

@@ -28,14 +28,29 @@ public class Final_List extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        finalListTable = new javax.swing.JTable();
-        AssignTasksBtn = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
+        AssignTasksBtn = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        finalListTable = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel1.setText("Tasks Final Assignement List");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, -1, -1));
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        AssignTasksBtn.setText("Run tasks");
+        AssignTasksBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AssignTasksBtnActionPerformed(evt);
+            }
+        });
+        jPanel1.add(AssignTasksBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 560, 130, 40));
 
         finalListTable.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         finalListTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -51,22 +66,9 @@ public class Final_List extends javax.swing.JFrame {
         finalListTable.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(finalListTable);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 1030, 340));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 120, 1030, 400));
 
-        AssignTasksBtn.setText("Run tasks");
-        AssignTasksBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                AssignTasksBtnActionPerformed(evt);
-            }
-        });
-        getContentPane().add(AssignTasksBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 460, -1, -1));
-
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel1.setText("Tasks Final Assignement List");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, -1, -1));
-
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1080, 600));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1270, 760));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
